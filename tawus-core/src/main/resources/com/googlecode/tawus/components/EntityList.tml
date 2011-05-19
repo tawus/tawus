@@ -1,0 +1,12 @@
+<div xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd' xmlns:p="tapestry:parameter">
+   <div class='t-entity-grid'>
+      <!-- The Grid -->
+      <t:grid t:id='grid'>
+         <p:selectionCell>
+            <t:if test='isMultipleSelection'>
+               <t:checkbox t:value='selection'/>
+            </t:if>
+         </p:selectionCell>
+      </t:grid>
+   </div>
+</div>

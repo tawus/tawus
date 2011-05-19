@@ -1,0 +1,12 @@
+<t:container xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <td class='${context.cssClassPrefix}-label'>
+      <t:delegate to='label' />
+      <t:if test='context.showHelp'>
+         <div class='help-text'>${context.helpText}</div>
+      </t:if>
+   </td>
+   <td colspan='${context.columnspan}' rowspan='${context.rowspan}'
+      class='${context.cssClassPrefix}-editor'>
+      <t:delegate to='editor' />
+   </td>
+</t:container>

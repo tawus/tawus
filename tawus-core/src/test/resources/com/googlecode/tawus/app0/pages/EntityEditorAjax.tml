@@ -1,0 +1,16 @@
+<t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+	<div t:type='zone'>
+		<div id='message'>${message}</div>
+		<form t:type='form' t:zone='zone'>
+			<table>
+				<t:tawus.entityeditor object='user'
+					include='User Details/3;name,id,age;gender,department/2;address/3;otherDepartments/3' />
+				<tr>
+					<td colspan='3'>
+						<input type='submit' id='save' value='save' />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</t:layout>

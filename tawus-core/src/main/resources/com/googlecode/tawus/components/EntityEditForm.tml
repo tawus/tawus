@@ -1,0 +1,29 @@
+<html xmlns:p='tapestry:parameter'
+	xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+	<t:form t:validate='object' t:id='form' t:autofocus='autofocus'
+		t:zone='prop:zone' t:clientValidation='prop:clientValidation'>
+		<t:errors />
+		<table>
+			<t:tawus.entityeditor showHelp='prop:showHelp'
+				t:updatable='updatable' overrides='this' model='model' t:add='prop:add'
+				t:include='prop:include' object='object' />
+		</table>
+		<t:delegate to='buttonPanel' />
+	</t:form>
+
+	<t:block id='defaultButtonPanel'>
+		<div class='e-button-panel'>
+			<t:if test='updatable'>
+				<t:submit t:id='save' name='save' value='Save' />
+			</t:if>
+			<t:if test='deletable'>
+				<t:tawus.button t:type='button' name='delete' zone='prop:zone' t:id='delete'
+					clientId='delete' t:event='delete'>Delete</t:tawus.button>
+			</t:if>
+			<t:if test='cancelable'>
+				<t:tawus.button t:type='button' name='cancel' zone='prop:zone' t:id='cancel'
+					clientId='cancel' t:event='cancel'>Cancel</t:tawus.button>
+			</t:if>
+		</div>
+	</t:block>
+</html>

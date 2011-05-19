@@ -1,0 +1,29 @@
+<t:container xmlns:p='tapestry:parameter'
+	xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+	<t:loop source='rows' value='currentRow'>
+		<tr>
+			<t:loop encoder='columnEncoder' source='columns' value='currentColumn'>
+				<t:if test='currentColumn.literal'>
+					<td class='${currentColumn.cssClass}' colspan='${currentColumn.colspan}'
+						rowspan='${currentColumn.rowspan}'>
+						${currentColumn.property}
+                  </td>
+					<p:else>
+						<t:delegate to='component' />
+					</p:else>
+				</t:if>
+			</t:loop>
+		</tr>
+	</t:loop>
+	<t:block id='read'>
+	   <td>${propertyModel.label}</td>
+		<td class='${currentColumn.cssClass}' colspan='${fieldColspan}'
+			rowspan='${currentColumn.rowspan}'>
+			<t:propertyDisplay t:id='propertyDisplay'/>
+     </td>
+	</t:block>
+
+	<t:block id='write'>
+		<t:tawus.entityPropertyEditor t:id='propertyField' />
+	</t:block>
+</t:container>

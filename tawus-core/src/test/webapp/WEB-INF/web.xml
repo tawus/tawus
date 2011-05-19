@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+        PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<!--suppress WebProperties -->
+<web-app>
+
+	<display-name>Integration Test</display-name>
+
+	<context-param>
+		<param-name>tapestry.app-package</param-name>
+		<param-value>com.googlecode.tawus.app0</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>tawus-model-packages</param-name>
+		<param-value>com.googlecode.tawus.app0.models</param-value>
+	</context-param>
+
+	<filter>
+		<filter-name>app</filter-name>
+		<filter-class>com.googlecode.tawus.TapestryTawusFilter</filter-class>
+	</filter>
+
+
+	<filter-mapping>
+		<filter-name>app</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<welcome-file-list>
+		<welcome-file>Index</welcome-file>
+	</welcome-file-list>
+
+</web-app>

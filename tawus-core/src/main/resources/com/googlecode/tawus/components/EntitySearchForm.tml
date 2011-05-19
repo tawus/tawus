@@ -1,0 +1,18 @@
+<html xmlns:p='tapestry:parameter'
+	xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+	<div class='t-entity-search-form'>
+		<t:form t:id='form' t:clientValidation='none' t:zone='prop:grid.zone'>
+			<t:errors />
+			<table>
+				<t:tawus.entityeditor t:id='editor' />
+			</table>
+			<t:delegate to='buttonPanel' />
+		</t:form>
+	</div>
+	<t:block id='defaultButtonPanel'>
+		<div class='e-button-panel'>
+			<t:submit t:id='search' name='search' value='Search' />
+			<t:submit t:id='cancel' name='cancel' value='Cancel' />
+		</div>
+	</t:block>
+</html>

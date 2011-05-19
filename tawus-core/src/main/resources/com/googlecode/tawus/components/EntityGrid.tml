@@ -1,0 +1,39 @@
+<div xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd' xmlns:p="tapestry:parameter">
+   <div class='t-entity-grid'>
+      <t:zone t:id='gridZone'>
+         <t:delegate to='activeBlock' />
+      </t:zone>
+   </div>
+
+   <t:block t:id='gridBlock'>
+      <t:if test='showNewLink'>
+         <div class='t-entity-new'>
+            <t:actionLink t:zone='inherit:zone' class='t-entity-new-link' t:id='newActionLink'>${newMessage}</t:actionLink>
+         </div>
+      </t:if>
+
+      <!-- Search Block -->
+      <t:if test='searchable'>
+         <t:delegate to='search' />
+      </t:if>
+      
+      <!-- The Grid -->
+      <t:grid t:id='grid'>
+         <p:actionCell>
+            <t:if test='showEditLink'>
+               <t:actionLink t:context='prop:editActionContext'
+                  t:zone='inherit:zone' t:id='editActionLink'>${editActionContent}</t:actionLink>
+               <p:else>${editActionContent}
+               </p:else>
+            </t:if>
+         </p:actionCell>
+      </t:grid>
+   </t:block>
+
+   <t:block t:id='defaultEditorBlock'>
+   </t:block>
+
+   <t:block t:id='defaultSearchBlock'>
+   </t:block>
+
+</div>
