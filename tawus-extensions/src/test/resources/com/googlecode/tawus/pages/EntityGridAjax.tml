@@ -1,0 +1,12 @@
+<t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'
+	xmlns:p='tapestry:parameter'>
+	<div t:type='zone' t:id='zone'>
+		<t:tawus.entitygrid t:criteria='criteria' t:zone='zone'
+			add='sortColumn' exclude='otherDepartments,dob' actionProperty='name'
+			reorder='name,id,address,age,gender,department,sortColumn'>
+			<p:sortColumnCell>
+				<div class='sortColumn'>${sortColumn}</div>
+			</p:sortColumnCell>
+		</t:tawus.entitygrid>
+	</div>
+</t:layout>

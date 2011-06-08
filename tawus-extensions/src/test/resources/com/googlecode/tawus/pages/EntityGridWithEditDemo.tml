@@ -1,0 +1,12 @@
+<t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'
+   xmlns:p='tapestry:parameter'>
+   <t:tawus.entitygrid t:criteria='criteria'
+      actionProperty='name' t:id='grid' t:object='user'
+      include='name,id,address,age,gender,department'>
+      <p:editor>
+         <t:tawus.entityeditform grid='grid' include='name,id,address;age,gender,department'/>
+      </p:editor>
+   </t:tawus.entitygrid>
+   <div id='message'>${message}</div>
+   <div id='sortColumn'>${sortColumn}</div>
+</t:layout>

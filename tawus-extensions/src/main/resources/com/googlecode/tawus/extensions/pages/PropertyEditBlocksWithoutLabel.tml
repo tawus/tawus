@@ -1,0 +1,126 @@
+<div xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd"
+   xmlns:p='tapestry:parameter'>
+
+   <t:block id="text">
+      <t:tawus.tdEditor>
+         <p:label>
+            <t:label for='textField' />
+         </p:label>
+         <p:editor>
+            <input t:id="textField" />
+         </p:editor>
+      </t:tawus.tdEditor>
+   </t:block>
+
+   <t:block id="number">
+      <t:tawus.tdEditor>
+         <p:label>
+            <t:label for='numberfield' />
+         </p:label>
+         <p:editor>
+            <input t:id="numberField" class="t-number" />
+         </p:editor>
+      </t:tawus.tdEditor>
+   </t:block>
+
+
+   <t:block id="enum">
+      <t:tawus.tdEditor>
+         <p:label>
+            <t:label for='select' />
+         </p:label>
+         <p:editor>
+            <input t:id="select" />
+         </p:editor>
+      </t:tawus.tdEditor>
+   </t:block>
+
+   <t:block id="boolean">
+      <t:tawus.tdEditor>
+         <p:label>
+            <t:label for='checkboxField' />
+         </p:label>
+         <p:editor>
+            <input t:id='checkboxField' />
+         </p:editor>
+      </t:tawus.tdEditor>
+   </t:block>
+
+   <t:block id="date">
+      <t:tawus.tdEditor>
+         <p:label>
+            <t:label for='dateField' />
+         </p:label>
+         <p:editor>
+            <input t:id='dateField' />
+         </p:editor>
+      </t:tawus.tdEditor>
+   </t:block>
+
+   <t:block id="calendar">
+      <t:tawus.tdEditor>
+         <p:label>
+            <t:label for='calendarField' />
+         </p:label>
+         <p:editor>
+            <input t:id='calendarField' />
+         </p:editor>
+      </t:tawus.tdEditor>
+   </t:block>
+
+   <t:block id='time'>
+      <t:tawus.tdEditor>
+         <p:label>
+            <t:label for='timeField' />
+         </p:label>
+         <p:editor>
+            <input t:id="timeField" />
+         </p:editor>
+      </t:tawus.tdEditor>
+   </t:block>
+
+   <t:block id="password">
+      <t:tawus.tdEditor>
+         <p:label>
+            <t:label for='passwordField' />
+         </p:label>
+         <p:editor>
+            <input t:id="passwordField" />
+         </p:editor>
+      </t:tawus.tdEditor>
+   </t:block>
+
+   <t:block id="long_text">
+      <t:tawus.tdEditor>
+         <p:label>
+            <t:label for='textarea' />
+         </p:label>
+         <p:editor>
+            <input t:id="textarea" />
+         </p:editor>
+      </t:tawus.tdEditor>
+   </t:block>
+
+   <t:block id='entity'>
+      <t:tawus.tdEditor>
+         <p:label>
+            <t:label for='entitySelect' />
+         </p:label>
+         <p:editor>
+            <input t:id="entitySelect" />
+         </p:editor>
+      </t:tawus.tdEditor>
+   </t:block>
+
+   <t:block id='entity_list'>
+      <t:tawus.tdEditor>
+         <p:label>
+            <t:label for='entityPalette' />
+         </p:label>
+         <p:editor>
+            <input t:id="entityPalette" />
+         </p:editor>
+      </t:tawus.tdEditor>
+   </t:block>
+
+</div>

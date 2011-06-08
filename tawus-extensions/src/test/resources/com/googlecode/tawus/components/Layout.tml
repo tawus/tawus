@@ -1,0 +1,11 @@
+<html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+	<head>
+		<title>Tawus Testing Suite</title>
+	</head>
+	<body>
+		<div id='content'>
+			<t:body />
+		</div>
+
+	</body>
+</html>

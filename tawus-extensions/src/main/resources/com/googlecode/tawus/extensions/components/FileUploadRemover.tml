@@ -1,0 +1,5 @@
+<t:container xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <li class='fileuploadremover' t:type='loop' source='fileNames' value='fileName'>
+      <a t:type='eventLink' t:event='inherit:event'>${message:fileuploadremover-remove} ${fileName}</a>
+   </li>
+</t:container>

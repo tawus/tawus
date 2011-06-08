@@ -1,0 +1,3 @@
+<t:container xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <t:select t:value='inherit:value' t:blankOption='never' t:encoder='encoder' t:model='model' t:id='select'/>
+</t:container>

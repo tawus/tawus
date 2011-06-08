@@ -1,0 +1,10 @@
+apply plugin: "groovy"
+apply plugin: "eclipse"
+
+sourceSets.main.java.srcDirs
+
+dependencies {
+  compile "org.apache.tapestry:tapestry-core:5.2.5"
+  testCompile "org.apache.tapestry:tapestry-test:5.2.5"
+  compile "javax.servlet:servlet-api:2.5"
+}
