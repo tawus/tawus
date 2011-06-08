@@ -1,0 +1,13 @@
+<t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+	<form t:type='form'>
+		<div t:type='zone' t:id='zone'>
+			<select t:zone='zone' t:id='user' t:type='tawus/quickselect'
+				values='users' t:label='name' t:key='id'></select>
+			<br />
+			<input type='submit' value='Submit' />
+			<br/>
+			Selected value is ${user}
+		</div>
+	</form>
+	
+</t:layout>
