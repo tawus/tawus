@@ -11,16 +11,19 @@ import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.ValidationException;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Parameter;
+import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.internal.beaneditor.BeanModelUtils;
 import org.apache.tapestry5.internal.util.CaptureResultCallback;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.BeanModelSource;
 
+import com.googlecode.tawus.ActionType;
 import com.googlecode.tawus.TawusEvents;
 import com.googlecode.tawus.TawusUtils;
 import com.googlecode.tawus.annotations.XHR;
@@ -119,10 +122,13 @@ public class EntityEditForm implements FormValidationControl, ClientElement {
    @Property(write = false)
    private boolean autoFocus = clientLogicDefaultEnabled;
 
-   @Property
    @Parameter(defaultPrefix = BindingConstants.LITERAL)
-   private String zone;
+   private String _zone;
 
+   @Property
+   @Persist
+   private String zone;
+   
    @Inject
    private EntityValidator entityValidator;
 
@@ -142,6 +148,14 @@ public class EntityEditForm implements FormValidationControl, ClientElement {
          BeanModelUtils.modify(model, add, null, null, null);
       }
    }
+   
+   void onPrepareForRenderFromForm(){
+      resources.triggerEvent(EventConstants.PREPARE_FOR_RENDER, null, null);
+   }
+   
+   void onPrepareForSubmitFromForm(){
+      resources.triggerEvent(EventConstants.PREPARE_FOR_SUBMIT, null, null);
+   }
 
    /**
     * On validate, trigger ENTITY_VALIDATE trigger
@@ -153,16 +167,18 @@ public class EntityEditForm implements FormValidationControl, ClientElement {
       resources.triggerEvent(EventConstants.VALIDATE, new Object[] { object }, null);
    }
 
-   private Object returnValue() {
+   private Object returnValue(ActionType actionType) {
       CaptureResultCallback<Object> callback = new CaptureResultCallback<Object>();
-      resources.triggerEvent(TawusEvents.FINISHED, null, callback);
+      resources.triggerEvent(TawusEvents.FINISHED, new Object[]{actionType}, callback);
       if (callback.getResult() != null) {
          return callback.getResult();
       }
 
       if (grid != null) {
-         grid.search();
-         if(zone == null){
+         if (!form.getHasErrors() && !getHasErrors()) {
+            grid.showGrid();
+         }
+         if (zone == null) {
             zone = grid.getZone();
          }
       }
@@ -173,14 +189,24 @@ public class EntityEditForm implements FormValidationControl, ClientElement {
          return null;
       }
    }
+   
+   public String getZoneId(){
+      return zone == null ? null : 
+         ((Zone)resources.getContainerResources().getEmbeddedComponent(zone)).getClientId();
+   }
 
    /**
     * If cancel button is hit
     */
    @XHR
    public Object onCancelFromCancel() {
-      resources.triggerEvent(TawusEvents.CANCEL, null, null);
-      return returnValue();
+      CaptureResultCallback<Object> callback = new CaptureResultCallback<Object>();
+      resources.triggerEvent(TawusEvents.CANCEL, null, callback);
+      if(callback.getResult() != null){
+         return callback.getResult();
+      }
+      
+      return returnValue(ActionType.CANCEL);
    }
 
    /**
@@ -198,31 +224,31 @@ public class EntityEditForm implements FormValidationControl, ClientElement {
          ex.printStackTrace();
          this.recordError(ex.getMessage());
       }
-      return returnValue();
+      return returnValue(ActionType.DELETE);
    }
 
    /**
     * On successful submission
     */
    @SuppressWarnings("unchecked")
-   public void onSuccessFromForm() {
+   public Object onSuccessFromForm() {
       try {
          CaptureResultCallback<Object> callback = new CaptureResultCallback<Object>();
          resources.triggerEvent(TawusEvents.SAVE, null, callback);
          if (callback.getResult() == null) {
             locator.get(getObjectType()).saveOrUpdate(object);
          }
+         return returnValue(ActionType.SAVE);
       } catch (Exception ex) {
-         ex.printStackTrace();
-         locator.get(getObjectType()).setIdentifier(object, null);
-         this.recordError(ex.getMessage());
+         //locator.get(getObjectType()).setIdentifier(object, null);
+         recordError(TawusUtils.stripExceptionPrefix(ex.getMessage()));
+         return returnValue(ActionType.SAVE);
       }
 
    }
-
-   @XHR
-   Object onSubmitFromForm() {
-      return returnValue();
+   
+   public Object onFailureFromForm(){
+      return returnValue(ActionType.SAVE);
    }
 
    @SuppressWarnings("rawtypes")
@@ -270,6 +296,10 @@ public class EntityEditForm implements FormValidationControl, ClientElement {
     */
    public void recordError(String errorMessage) {
       form.recordError(TawusUtils.stripExceptionPrefix(errorMessage));
+   }
+   
+   void setupRender(){
+      zone = (_zone != null ? _zone : (grid != null ? grid.getZone(): null));
    }
 
 }

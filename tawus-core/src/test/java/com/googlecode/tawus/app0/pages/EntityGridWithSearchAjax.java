@@ -16,6 +16,10 @@ public class EntityGridWithSearchAjax {
    @Property
    @Persist
    private String searchFields;
+   
+   @SuppressWarnings("unused")
+   @Property
+   private User user;
 
    void onActivate() {
 
@@ -28,7 +32,7 @@ public class EntityGridWithSearchAjax {
       searchFields = criteria.getEntity().getName() + "/" + criteria.getEntity().getAddress();
    }
 
-   void onCancel() {
+   void onCancelSearch() {
       searchFields = "none";
    }
 

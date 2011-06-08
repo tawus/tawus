@@ -17,6 +17,10 @@ public class EntityGridWithSearchDemo {
    @Persist
    private String message;
 
+   @SuppressWarnings("unused")
+   @Property
+   private User user;
+   
    void onActivate(String param){
 
       if(criteria == null){
@@ -36,7 +40,7 @@ public class EntityGridWithSearchDemo {
       message = criteria.getEntity().getName() + "/" + criteria.getEntity().getAddress();
    }
    
-   void onCancel(){
+   void onCancelSearch(){
       message = "none";
    }
    

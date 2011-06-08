@@ -22,6 +22,7 @@ import org.apache.tapestry5.corelib.internal.InternalMessages;
 import org.apache.tapestry5.internal.BeanValidationContext;
 import org.apache.tapestry5.internal.BeanValidationContextImpl;
 import org.apache.tapestry5.internal.beaneditor.BeanModelUtils;
+import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.internal.util.TapestryException;
 import org.apache.tapestry5.services.BeanEditContext;
@@ -95,6 +96,23 @@ public class EntityEditor {
 
    /** Cleanup component environment instance */
    private final CleanupEnvironment CLEANUP_ENVIRONMENT = new CleanupEnvironment();
+   
+   static class ReadOnlyOverrides implements PropertyOverrides {
+      private PropertyOverrides delegate;
+      
+      public ReadOnlyOverrides(PropertyOverrides delegate){
+         this.delegate = delegate;
+      }
+
+      public Messages getOverrideMessages() {
+         return delegate.getOverrideMessages();
+      }
+
+      public Block getOverrideBlock(String name) {
+         return delegate.getOverrideBlock(name + "ReadOnly");
+      }
+      
+   }
 
    /** Object to be edited */
    @Parameter(autoconnect = true)
@@ -143,7 +161,7 @@ public class EntityEditor {
    private EntityPropertyEditor propertyField;
    
    @SuppressWarnings("unused")
-   @Component(id = "propertyDisplay", parameters = { "overrides=overrides",
+   @Component(id = "propertyDisplay", parameters = { "overrides=readOnlyOverrides",
          "object=object", "model=propertyModel" })
    private PropertyDisplay propertyDisplay;
    
@@ -203,6 +221,10 @@ public class EntityEditor {
       return !updatable
             || (locator.get(object.getClass()).getIdentifier(getObject()) != null && model.get(
                   currentColumn.getProperty()).getAnnotation(NonUpdatable.class) != null);
+   }
+   
+   public PropertyOverrides getReadOnlyOverrides(){
+      return new ReadOnlyOverrides(overrides);
    }
 
    /**
@@ -291,7 +313,19 @@ public class EntityEditor {
    public void cleanupEnvironment() {
       environment.pop(BeanEditContext.class);
    }
-
+   
+   public String getHelpText() {
+      final Messages messages = overrides.getOverrideMessages();
+      final String message;
+      
+      if (messages.contains(currentColumn.getProperty() + "-help")) {
+         message = messages.get(currentColumn.getProperty() + "-help");
+      } else {
+         message = "";
+      }
+      return message;
+   }
+   
    void inject(ComponentResources resources, PropertyOverrides overrides,
          BeanModelSource source, Environment env) {
       this.resources = resources;
@@ -300,5 +334,6 @@ public class EntityEditor {
       this.environment = env;
       
    }
+  
 
 }

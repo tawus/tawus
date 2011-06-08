@@ -19,7 +19,6 @@ public class GenericListValueEncoder<T> implements ValueEncoder<T> {
    }
 
    public String toClient(T value) {
-      System.out.println(value);
       return propertyAdapter.get(value).toString();
    }
 

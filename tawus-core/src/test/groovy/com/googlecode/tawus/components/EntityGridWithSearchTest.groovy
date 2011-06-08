@@ -15,6 +15,7 @@ class EntityGridWithSearchTest extends TestSpecification {
       then:
       e == null
       doc.rootElement.childMarkup.contains("There is no data to display");
+      doc.rootElement.childMarkup.contains("User name(Unique)") == false
 
       //Now try a search and check if the elements are passed correctly
       when:

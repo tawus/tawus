@@ -29,7 +29,6 @@ public class EntityEditorAjax {
    
    Zone onSubmit(){
       message = user.getName() + " created";
-      System.out.println("Message : message");
       return zone;
    }
 }

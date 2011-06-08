@@ -25,7 +25,7 @@ public class EntitySearchForm {
 
    @SuppressWarnings("unused")
    @Component(id = "editor", publishParameters = "include", parameters = { "readOnly=false",
-         "validate=false", "showHelp='prop:showHelp", "overrides=this", "add=add", "model=model",
+         "validate=false", "showHelp=prop:showHelp", "overrides=this", "add=add", "model=model",
          "object=grid.searchObject" })
    private EntityEditor editor;
 
@@ -90,11 +90,12 @@ public class EntitySearchForm {
 
    void onSuccess() {
       if (search) {
-         grid.search();
+         grid.showGrid();
+         grid.enableSearch();
          resources.triggerEvent(TawusEvents.SEARCH, null, null);
       } else {
          grid.cancel();
-         resources.triggerEvent(TawusEvents.CANCEL, null, null);
+         resources.triggerEvent(TawusEvents.CANCEL_SEARCH, null, null);
       }
    }
 

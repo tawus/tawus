@@ -8,7 +8,7 @@
    <t:block t:id='gridBlock'>
       <t:if test='showNewLink'>
          <div class='t-entity-new'>
-            <t:actionLink t:zone='inherit:zone' class='t-entity-new-link' t:id='newActionLink'>${newMessage}</t:actionLink>
+            <t:actionLink t:zone='prop:zoneId' class='t-entity-new-link' t:id='newActionLink'>${newMessage}</t:actionLink>
          </div>
       </t:if>
 
@@ -22,7 +22,7 @@
          <p:actionCell>
             <t:if test='showEditLink'>
                <t:actionLink t:context='prop:editActionContext'
-                  t:zone='inherit:zone' t:id='editActionLink'>${editActionContent}</t:actionLink>
+                  t:zone='prop:zoneId' t:id='editActionLink'>${editActionContent}</t:actionLink>
                <p:else>${editActionContent}
                </p:else>
             </t:if>

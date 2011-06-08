@@ -10,6 +10,7 @@ import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.corelib.components.Grid;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.corelib.data.GridPagerPosition;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -38,7 +39,7 @@ public class EntityGrid implements GridRuntime {
    @Component(publishParameters = "add, columnIndex,empty,encoder, include, exclude, "
          + "class, lean, reorder, row,rowClass, rowIndex, rowsPerPage, "
          + "sortModel, volatile, model", parameters = { "source=source",
-         "overrides=overrides", "row=inherit:row", "inplace='inplace'", "zone=inherit:zone","pagerPosition=prop:pagerPosition"})
+         "overrides=overrides", "row=inherit:row", "inplace='inplace'", "pagerPosition=prop:pagerPosition"})
    private Grid grid;
 
    private EntityGridDataSource<?> source;
@@ -123,7 +124,7 @@ public class EntityGrid implements GridRuntime {
    @Property(write = false)
    private boolean searchable;
    
-   @Parameter
+   @Parameter(required = true)
    private Object object;
 
    @Parameter(defaultPrefix = BindingConstants.LITERAL)
@@ -146,7 +147,7 @@ public class EntityGrid implements GridRuntime {
    PropertyOverrides defaultOverrides() {
       return new PropertyOverridesDelegator(typeCoercer.coerce(resources,
             PropertyOverrides.class), typeCoercer.coerce(grid,
-            PropertyOverrides.class), new String[] { actionProperty + "Cell" });
+            PropertyOverrides.class), actionProperty + "Cell");
    }
 
    public PropertyOverrides getOverrides() {
@@ -241,8 +242,11 @@ public class EntityGrid implements GridRuntime {
       resources.triggerEvent(TawusEvents.SORT, null, null);
    }
 
-   public void search() {
+   public void showGrid() {
       setShowDetails(false);
+   }
+   
+   public void enableSearch(){
       criteria.setEnabled(true);
    }
 
@@ -255,11 +259,23 @@ public class EntityGrid implements GridRuntime {
    }
 
    public Object getObject() {
+      if(object == null){
+         try {
+            object = criteria.getType().newInstance();
+         } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+         }
+      }
       return object;
    }
-
-   public String getZone() {
+   
+   public String getZone(){
       return zone;
+   }
+
+   public String getZoneId() {
+      return zone == null ? null : ((Zone)resources.getContainerResources().getEmbeddedComponent(zone)).getClientId();
    }
    
    public boolean getShowNewLink(){

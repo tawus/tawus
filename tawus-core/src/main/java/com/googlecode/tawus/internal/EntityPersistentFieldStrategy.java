@@ -4,15 +4,17 @@ import java.io.Serializable;
 
 import org.apache.tapestry5.internal.services.AbstractSessionPersistentFieldStrategy;
 import org.apache.tapestry5.services.Request;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.googlecode.tawus.EntityNotFoundException;
 import com.googlecode.tawus.TawusUtils;
 import com.googlecode.tawus.services.EntityDAOLocator;
 
 
 public class EntityPersistentFieldStrategy extends AbstractSessionPersistentFieldStrategy {
    private final EntityDAOLocator locator;
-
+   private static final Logger logger = LoggerFactory.getLogger(EntityPersistentFieldStrategy.class);
+   
    public EntityPersistentFieldStrategy(final Request request, 
          final EntityDAOLocator locator){
       super("entity:", request);
@@ -27,9 +29,12 @@ public class EntityPersistentFieldStrategy extends AbstractSessionPersistentFiel
 
       Serializable id = locator.get(newValue.getClass()).getIdentifier(newValue);
       if(id == null){
+         logger.debug("Using default persistence strategy as id is null");
          return super.convertApplicationValueToPersisted(newValue);
       }
-      return new PersistedEntity(newValue.getClass(), id);
+      PersistedEntity persistedEntity = new PersistedEntity(newValue.getClass(), id);
+      logger.debug("converted entity " + newValue + " of type " + newValue.getClass() + " to " + persistedEntity);
+      return persistedEntity;
    }
 
    @SuppressWarnings("unchecked")
@@ -39,13 +44,10 @@ public class EntityPersistentFieldStrategy extends AbstractSessionPersistentFiel
       }
       
       @SuppressWarnings("rawtypes")
-      PersistedEntity e = (PersistedEntity)persistedValue;
-      Object entity = locator.get(e.getEntityClass()).find(e.getId());
-      if(entity == null){
-         throw new EntityNotFoundException(
-               "Could not find entity of type = " + 
-               e.getEntityClass() + " with id = " + e.getId());
-      }
+      PersistedEntity persistedEntity = (PersistedEntity)persistedValue;
+      Object entity = locator.get(persistedEntity.getEntityClass()).find(persistedEntity.getId());
+      logger.debug("converted persisted entity " + persistedEntity + " to " + entity + " of type " + 
+            (entity != null ? entity.getClass(): "unknown"));
       return entity;
    }
    

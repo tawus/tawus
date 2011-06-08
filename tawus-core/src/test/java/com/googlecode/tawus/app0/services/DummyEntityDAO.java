@@ -70,7 +70,6 @@ public abstract class DummyEntityDAO<T> implements EntityDAO<T>{
    public T get(String id) {
       for(T entity: entities){
          if(getIdentifier(entity).toString().equals(id)){
-            System.out.println("For " + entity + " using idString " + getIdentifier(entity));
             return entity;
          }
       }
@@ -82,7 +81,6 @@ public abstract class DummyEntityDAO<T> implements EntityDAO<T>{
    }
 
    public String idString(T entity) {
-      System.out.println("For " + entity + " using idString " + getIdentifier(entity));
       return getIdentifier(entity).toString();
    }
 

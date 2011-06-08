@@ -1,8 +1,5 @@
 package com.googlecode.tawus.internal;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.PropertyOverrides;
 import org.apache.tapestry5.ioc.Messages;
@@ -14,7 +11,7 @@ import org.apache.tapestry5.ioc.Messages;
 public class PropertyOverridesDelegator implements PropertyOverrides {
    private final PropertyOverrides main;
    private final PropertyOverrides local;
-   private final List<String> localProperties;
+   private final String actionProperty;
 
    /**
     * Constructor
@@ -23,17 +20,17 @@ public class PropertyOverridesDelegator implements PropertyOverrides {
     * @param localProperties properties to be locally overridden
     */
    public PropertyOverridesDelegator(final PropertyOverrides main,
-         final PropertyOverrides local, final String[] localProperties) {
+         final PropertyOverrides local, final String actionProperty) {
       this.main = main;
       this.local = local;
-      this.localProperties = Arrays.asList(localProperties);
+      this.actionProperty = actionProperty;
    }
 
    /**
     * {@inheritDoc}
     */
    public Block getOverrideBlock(final String name) {
-      if (localProperties.contains(name)) {
+      if (actionProperty.replace(".", "").equalsIgnoreCase(name)){
          return local.getOverrideBlock("actionCell");
       } else {
          return main.getOverrideBlock(name);

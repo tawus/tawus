@@ -11,6 +11,7 @@ public class EntityGridWithSearchAjaxTest extends SeleniumTestCase {
       clickAndWait("link=Entity Grid with Search");
       this.assertTextPresent("There is no data to display");
       
+      
       click("id=search");
       Thread.sleep(1000);
       
@@ -19,7 +20,7 @@ public class EntityGridWithSearchAjaxTest extends SeleniumTestCase {
 
       assertTexts("xpath=//table[@class='t-data-grid'][1]/tbody[1]/tr[1]/td[%d]", new String[] {
             "Taha", "1", "Srinagar", "32", "Male", "Computers" });
-      
+            
       type("xpath=//form[1]//input[@name='name'][1]", "Taha");
       type("xpath=//form[1]//input[@name='address'][1]", "Srinagar");
       

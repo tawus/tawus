@@ -6,7 +6,6 @@ import org.apache.tapestry5.internal.services.SessionApplicationStatePersistence
 import org.apache.tapestry5.services.ApplicationStateCreator;
 import org.apache.tapestry5.services.Request;
 
-import com.googlecode.tawus.EntityNotFoundException;
 import com.googlecode.tawus.TawusUtils;
 import com.googlecode.tawus.services.EntityDAOLocator;
 
@@ -30,13 +29,6 @@ public class EntityApplicationStatePersistenceStrategy extends
          final Object restoredEntity;
          restoredEntity = locator.get(entity.getEntityClass()).find(
                entity.getId());
-
-         if (restoredEntity == null) {
-            throw new EntityNotFoundException("Entity of type = "
-                  + entity.getEntityClass() + " and id = " + entity.getId()
-                  + " not found");
-         }
-
          return (T) restoredEntity;
       }
       return (T) object;

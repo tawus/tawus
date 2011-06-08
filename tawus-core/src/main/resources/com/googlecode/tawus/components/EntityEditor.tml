@@ -16,11 +16,16 @@
 		</tr>
 	</t:loop>
 	<t:block id='read'>
-	   <td>${propertyModel.label}</td>
+		<td>
+			<label>${propertyModel.label}</label>
+			<t:if test='showHelp'>
+				<div class='help-text'>${helpText}</div>
+			</t:if>
+		</td>
 		<td class='${currentColumn.cssClass}' colspan='${fieldColspan}'
 			rowspan='${currentColumn.rowspan}'>
-			<t:propertyDisplay t:id='propertyDisplay'/>
-     </td>
+			<t:propertyDisplay t:id='propertyDisplay' />
+		</td>
 	</t:block>
 
 	<t:block id='write'>

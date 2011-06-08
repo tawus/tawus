@@ -20,8 +20,8 @@ public class TawusUtils {
    }
    
    public static String stripExceptionPrefix(String message) {
-      if(message != null && message.matches("Exception\\s*:")){
-         return message.substring(message.indexOf(":")).trim();
+      if(message != null && message.trim().contains("Exception: ")){
+         return message.substring(message.indexOf(":")+2).trim();
       }
       return message;
     }

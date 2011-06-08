@@ -20,7 +20,6 @@ public class TapestryTawusFilter extends TapestryFilter {
    protected ModuleDef [] provideExtraModuleDefs(ServletContext context){
       String packages = context.getInitParameter(MODEL_PACKAGES);
       if(packages == null){
-         System.out.println("No packages specified");
          return new ModuleDef[]{};
       }
       

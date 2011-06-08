@@ -25,17 +25,19 @@ public class EntityPropertyEditor {
       private String cssClassPrefix;
       private int rowSpan;
       private boolean showHelp;
+      private String helpText;
 
       public SetupEnvironment(int rowSpan, int columnSpan,
-            String cssClassPrefix, boolean showHelp) {
+            String cssClassPrefix, String helpText, boolean showHelp) {
          this.rowSpan = rowSpan;
          this.columnSpan = columnSpan;
          this.cssClassPrefix = cssClassPrefix;
          this.showHelp = showHelp;
+         this.helpText = helpText;
       }
 
       public void execute(EntityPropertyEditor editor) {
-         editor.setupEnvironment(rowSpan, columnSpan, cssClassPrefix, showHelp);         
+         editor.setupEnvironment(rowSpan, columnSpan, cssClassPrefix, helpText, showHelp);         
       }
       
    }
@@ -89,7 +91,7 @@ public class EntityPropertyEditor {
    private TawusBeanBlockSource beanBlockSource;
 
    public void setupEnvironment(final int rowSpan, final int columnSpan,
-         final String cssClassPrefix,  final boolean showHelp) {
+         final String cssClassPrefix,  final String helpText, final boolean showHelp) {
       environment.push(TdEditorContext.class, new TdEditorContext() {
 
          public int getColumnSpan() {
@@ -101,7 +103,7 @@ public class EntityPropertyEditor {
          }
 
          public String getHelpText() {
-            return EntityPropertyEditor.this.getHelpText();
+            return helpText;
          }
 
          public int getRowSpan() {
@@ -121,7 +123,9 @@ public class EntityPropertyEditor {
 
    void setupRender(){
       formSupport.storeAndExecute(this, 
-            new SetupEnvironment(rowSpan, columnSpan, cssClassPrefix, showHelp
+            new SetupEnvironment(rowSpan, columnSpan, cssClassPrefix,
+                  getHelpText(),
+                  showHelp
             ));
    }
    

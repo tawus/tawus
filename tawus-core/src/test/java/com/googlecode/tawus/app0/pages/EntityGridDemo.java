@@ -12,6 +12,10 @@ public class EntityGridDemo {
    @Property
    private SearchCriteria<User> criteria;
    
+   @SuppressWarnings("unused")
+   @Property
+   private User user;
+   
    void onActivate(String param){
       if(criteria == null){
          criteria = new SearchCriteria<User>(User.class);

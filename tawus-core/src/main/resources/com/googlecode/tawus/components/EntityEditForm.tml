@@ -1,7 +1,7 @@
 <html xmlns:p='tapestry:parameter'
 	xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
 	<t:form t:validate='object' t:id='form' t:autofocus='autofocus'
-		t:zone='prop:zone' t:clientValidation='prop:clientValidation'>
+		t:zone='prop:zoneId' t:clientValidation='prop:clientValidation'>
 		<t:errors />
 		<table>
 			<t:tawus.entityeditor showHelp='prop:showHelp'
@@ -17,11 +17,11 @@
 				<t:submit t:id='save' name='save' value='Save' />
 			</t:if>
 			<t:if test='deletable'>
-				<t:tawus.button t:type='button' name='delete' zone='prop:zone' t:id='delete'
+				<t:tawus.button t:type='button' name='delete' zone='prop:zoneId' t:id='delete'
 					clientId='delete' t:event='delete'>Delete</t:tawus.button>
 			</t:if>
 			<t:if test='cancelable'>
-				<t:tawus.button t:type='button' name='cancel' zone='prop:zone' t:id='cancel'
+				<t:tawus.button t:type='button' name='cancel' zone='prop:zoneId' t:id='cancel'
 					clientId='cancel' t:event='cancel'>Cancel</t:tawus.button>
 			</t:if>
 		</div>

@@ -38,7 +38,6 @@ public class EntityEditFormDemo {
    }
    
    void onValidate(Object object) {
-      System.out.println(user);
       if (user.getName().equals(user.getAddress())) {
          form.recordError("name and address cannot be same");
       }

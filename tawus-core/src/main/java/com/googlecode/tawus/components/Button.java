@@ -94,8 +94,7 @@ public class Button implements ClientElement {
          spec.put("id", getClientId());
          spec.put("zone", zone);
          spec.put("event", clientEvent);
-         javaScriptSupport.addScript(String.format("new ButtonEvent(%s);", spec
-               .toString()));
+         javaScriptSupport.addInitializerCall("ButtonEvent", spec);
       }
 
       writer.end();// button

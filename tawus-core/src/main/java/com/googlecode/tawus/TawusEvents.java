@@ -77,5 +77,7 @@ public class TawusEvents {
    public static final String CANCEL = "cancel";
 
    public static final String SORT = "sort";
+
+   public static final String CANCEL_SEARCH = "cancelSearch";
 }
 

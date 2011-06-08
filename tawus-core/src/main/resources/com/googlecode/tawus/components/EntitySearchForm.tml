@@ -1,7 +1,7 @@
 <html xmlns:p='tapestry:parameter'
 	xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
 	<div class='t-entity-search-form'>
-		<t:form t:id='form' t:clientValidation='none' t:zone='prop:grid.zone'>
+		<t:form t:id='form' t:clientValidation='none' t:zone='prop:grid.zoneId'>
 			<t:errors />
 			<table>
 				<t:tawus.entityeditor t:id='editor' />

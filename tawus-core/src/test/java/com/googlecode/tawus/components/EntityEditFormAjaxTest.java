@@ -34,7 +34,7 @@ public class EntityEditFormAjaxTest extends SeleniumTestCase {
       select("name=department", "value=1");
       select("name=gender", "value=Male");
 
-      click("id=save");
+      click("//form[1]//input[@type='submit'][1]");
       Thread.sleep(1000);
       this.assertText("id=message", "Tawus created");
    }
