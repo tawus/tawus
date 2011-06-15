@@ -30,7 +30,7 @@ class EntityDAOProviderTest extends Specification {
       expect: userDAO != null
    }
    
-   def Registry createRegistry(Class<?> ... classes){
+   def Registry createRegistry(def ... classes){
       RegistryBuilder registerBuilder = new RegistryBuilder()
       EntityLocator entityLocator = new AbstractEntityLocator(CollectionFactory.newSet(
          "com.googlecode.tawus.app0.models")){

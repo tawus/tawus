@@ -1,10 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Tapestry Core" annotations="1.5" verbose="2">
+<suite name="Tawus Core" annotations="1.5" verbose="2">
 <test name="Integration Tests" enabled="true">
    <parameter name="tapestry.web-app-folder" value="src/test/webapp"/>
-   <!--<classes>
-      <class name='com.googlecode.tawus.components.EntityEditFormAjaxTest'/>
-   </classes>-->
   <packages>
       <package name="com.googlecode.tawus.components"/>
    </packages>
