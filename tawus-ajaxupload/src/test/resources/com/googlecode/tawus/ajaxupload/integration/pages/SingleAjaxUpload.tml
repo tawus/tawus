@@ -1,0 +1,38 @@
+<t:layout t:title='Single Ajax Upload'
+   xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <form t:id='form' t:type='form'>
+      <h3>Message</h3>
+      <div id='message'>${message}</div>
+      <br />
+
+      <h3>Content</h3>
+      <div id='content'>${fileContent}</div>
+      <br />
+
+      <table>
+         <tr><td colspan='2'><t:errors/></td></tr>
+         <tr>
+            <td>
+               <label t:type='label' t:for='textValue'></label>
+            </td>
+            <td>
+               <input type='text' t:type='textfield' t:id='textValue'
+                  t:validate='required' />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <label t:type='label' t:for='uploads'>Uploads</label>
+            </td>
+            <td>
+               <div t:id='uploads' t:validate='required' t:maxfiles='2' t:type='tawus/ajaxupload' />
+            </td>
+         </tr>
+         <tr>
+            <td colspan='2'>
+               <input type='submit' value='submit' />
+            </td>
+         </tr>
+      </table>
+   </form>
+</t:layout>

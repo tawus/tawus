@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="AjaxUpload" annotations="1.5" verbose="2">
+<test name="Integration Tests" enabled="true">
+   <parameter name="tapestry.web-app-folder" value="src/test/webapp"/>
+  <classes>
+      <class name="com.googlecode.tawus.ajaxupload.components.AjaxUploadIntegrationTest"/>
+      <class name="com.googlecode.tawus.ajaxupload.components.AjaxUploadXHRIntegrationTest"/>
+   </classes>
+</test>
+<test name="Unit Tests" enabled="true">
+  <classes>
+      <class name="com.googlecode.tawus.ajaxupload.components.AjaxUploadTest"/>
+      <class name="com.googlecode.tawus.ajaxupload.internal.services.AjaxUploadDecoderImplTest"/>
+      <class name="com.googlecode.tawus.ajaxupload.internal.AjaxUploadServletRequestFilterTest"/>
+   </classes>
+</test>
+</suite>

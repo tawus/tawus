@@ -1,0 +1,22 @@
+<t:container xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+	<t:ajaxFormLoop t:source='inherit:source' t:addrow='inherit:addrow'
+		t:encoder='encoder' t:value='inherit:value'>
+
+		<t:delegate to='readWriteBlock' />
+	</t:ajaxFormLoop>
+
+	<t:block t:id='read'>
+		<t:tawus.entitydisplay t:overrides='resources'
+			t:model='inherit:model' t:add="inherit:add" t:include="inherit:include"
+			t:object='inherit:value' />
+
+	</t:block>
+
+	<t:block t:id='write'>
+		<table>
+			<t:tawus.entityeditor overrides='this' model='inherit:model'
+				t:add='inherit:add' t:include='inherit:include' object='inherit:value' />
+		</table>
+	</t:block>
+
+</t:container>
