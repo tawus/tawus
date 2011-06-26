@@ -1,0 +1,18 @@
+
+sourceSets.main.java.srcDirs
+
+dependencies {
+   compile project(":tawus-core")
+   compile "org.hibernate:hibernate-core:3.6.0.Final"
+   compile "org.hibernate:hibernate-validator:4.1.0.Final"
+   testCompile "hsqldb:hsqldb:1.8.0.7"
+   testRuntime "cglib:cglib-nodep:2.2" 
+   testCompile "org.spockframework:spock-tapestry:0.4-groovy-1.7"
+}
+
+jar {
+    manifest {
+        attributes 'Tapestry-Module-Classes': 'com.googlecode.tawus.hibernate.services.TawusHibernateModule'
+    }
+}
+
