@@ -13,8 +13,9 @@ import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 @SupportsInformalParameters
-public class DateDisplay {
-   @Parameter(required = true, allowNull = false)
+public class DateDisplay
+{
+   @Parameter(required = true)
    private Date value;
 
    @Parameter(value = "medium", allowNull = false, defaultPrefix = BindingConstants.LITERAL)
@@ -26,54 +27,79 @@ public class DateDisplay {
    @Inject
    private ComponentResources resources;
 
-   boolean beginRender(MarkupWriter writer) {
+   boolean beginRender(MarkupWriter writer)
+   {
       writer.element("span");
-      resources.renderInformalParameters(writer);      
-      writer.write(getDateFormat().format(value));
+      resources.renderInformalParameters(writer);
+      if (value != null)
+      {
+         writer.write(getDateFormat().format(value));
+      }
       writer.end();
       return false;
    }
-   
-   DateFormat getDateFormat(){
+
+   DateFormat getDateFormat()
+   {
       String actualFormat;
-      
-      if(format.endsWith("_t")){
+
+      if (format.endsWith("_t"))
+      {
          actualFormat = format.substring(0, format.length() - 2);
-      }else if(format.endsWith("_dt")){
+      }
+      else if (format.endsWith("_dt"))
+      {
          actualFormat = format.substring(0, format.length() - 3);
-      }else {
+      }
+      else
+      {
          actualFormat = format;
       }
-      
+
       DateFormat dateFormat;
       int style = getStyle(actualFormat);
-      if(style < 0){
+      if (style < 0)
+      {
          dateFormat = new SimpleDateFormat(actualFormat, locale);
-      }else {
-         if(format.endsWith("_t")){
+      }
+      else
+      {
+         if (format.endsWith("_t"))
+         {
             dateFormat = DateFormat.getTimeInstance(style, locale);
-         }else if(format.endsWith("_dt")){
+         }
+         else if (format.endsWith("_dt"))
+         {
             dateFormat = DateFormat.getDateTimeInstance(style, style, locale);
-         }else {
+         }
+         else
+         {
             dateFormat = DateFormat.getDateInstance(style, locale);
          }
       }
       return dateFormat;
    }
-   
-   private int getStyle(String style){
+
+   private int getStyle(String style)
+   {
       int formatType = -1;
-      if ("long".equals(style)) {
+      if ("long".equals(style))
+      {
          formatType = DateFormat.LONG;
-      } else if ("medium".equals(style)) {
+      }
+      else if ("medium".equals(style))
+      {
          formatType = DateFormat.MEDIUM;
-      } else if ("full".equals(style)) {
+      }
+      else if ("full".equals(style))
+      {
          formatType = DateFormat.FULL;
-      } else if ("short".equals(style)) {
+      }
+      else if ("short".equals(style))
+      {
          formatType = DateFormat.SHORT;
       }
       return formatType;
    }
-      
-      
+
 }

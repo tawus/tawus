@@ -20,11 +20,12 @@ import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ioc.Location;
 import org.apache.tapestry5.services.BindingFactory;
 
-
-public class PagerBindingFactory implements BindingFactory {
+public class PagerBindingFactory implements BindingFactory
+{
 
    public Binding newBinding(String description, ComponentResources containerResources,
-      ComponentResources componentResources, String expression, Location location) {
+         ComponentResources componentResources, String expression, Location location)
+   {
       return new PagerBinding(location, description, containerResources, expression);
    }
 

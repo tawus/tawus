@@ -21,6 +21,7 @@ public class EntityPersistentFieldStrategy extends AbstractSessionPersistentFiel
       this.locator = locator;
    }
 
+   @Override
    @SuppressWarnings({ "unchecked", "rawtypes" })
    protected Object convertApplicationValueToPersisted(Object newValue){
       if(!TawusUtils.isEntity(newValue)){
@@ -37,6 +38,7 @@ public class EntityPersistentFieldStrategy extends AbstractSessionPersistentFiel
       return persistedEntity;
    }
 
+   @Override
    @SuppressWarnings("unchecked")
    protected Object convertPersistedToApplicationValue(Object persistedValue){
       if(!(persistedValue instanceof PersistedEntity)){

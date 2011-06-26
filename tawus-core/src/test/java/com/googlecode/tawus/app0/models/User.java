@@ -83,6 +83,7 @@ public class User {
       return department;
    }
    
+   @Override
    public String toString(){
       if(name == null){
          return "unnamed";
@@ -90,6 +91,7 @@ public class User {
       return name;
    }
    
+   @Override
    public boolean equals(Object object){
       if(object == this){
          return true;
@@ -107,6 +109,7 @@ public class User {
       return user.getName().equals(name);
    }
    
+   @Override
    public int hashCode(){
       return name.hashCode();
    }

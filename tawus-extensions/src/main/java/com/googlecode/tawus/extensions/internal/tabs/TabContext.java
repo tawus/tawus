@@ -19,26 +19,31 @@ import java.util.Map;
 
 import org.apache.tapestry5.ClientElement;
 
-public class TabContext {
+public class TabContext
+{
    private final String currentTab;
    private final String method;
    private final Map<String, ClientElement> linkMap;
 
-   public TabContext(String currentTab, String method, Map<String, ClientElement> linkMap){
+   public TabContext(String currentTab, String method, Map<String, ClientElement> linkMap)
+   {
       this.currentTab = currentTab;
       this.method = method;
       this.linkMap = linkMap;
    }
 
-   public String getCurrentTab(){
+   public String getCurrentTab()
+   {
       return currentTab;
    }
 
-   public Map<String, ClientElement> getLinkMap(){
+   public Map<String, ClientElement> getLinkMap()
+   {
       return linkMap;
    }
 
-   public String getMethod(){
+   public String getMethod()
+   {
       return method;
    }
 }

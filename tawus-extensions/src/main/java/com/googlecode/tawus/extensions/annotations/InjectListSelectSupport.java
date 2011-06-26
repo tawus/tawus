@@ -8,9 +8,12 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
-public @interface InjectListSelectSupport {
+@Target({ ElementType.FIELD })
+public @interface InjectListSelectSupport
+{
    Class<?> value();
+
    String name() default "";
+
    String label() default "";
 }

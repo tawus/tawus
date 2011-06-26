@@ -15,7 +15,8 @@
  */
 package com.googlecode.tawus.extensions;
 
-public class TabConstants {
+public class TabConstants
+{
    public static final String GET = "get";
    public static final String AJAX = "ajax";
    public static final String JAVASCRIPT = "javascript";

@@ -11,3 +11,9 @@ dependencies {
   testCompile "org.hibernate:hibernate-validator:4.1.0.Final"
   compile "javax.servlet:servlet-api:2.5"
 }
+jar {
+    manifest {
+        attributes 'Tapestry-Module-Classes': 'com.googlecode.tawus.services.TawusModule'
+    }
+}
+

@@ -25,6 +25,7 @@ public class TapestryTawusFilter extends TapestryFilter {
       
       EntityLocator entityLocator = new AbstractEntityLocator(CollectionFactory.newSet(
             TapestryInternalUtils.splitAtCommas(packages))){
+         @Override
          @SuppressWarnings("unchecked")
          public boolean isEntity(@SuppressWarnings("rawtypes") Class entityType){
             return entityType.getAnnotation(Entity.class) != null;

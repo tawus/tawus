@@ -33,6 +33,9 @@ subprojects {
       maxHeapSize = "400M"
       systemProperties["tapestry.service-reloading-enabled"] = "false"
       jvmArgs("-XX:MaxPermSize=512m")
+      logging.captureStandardOutput LogLevel.INFO 
+      getLogging().setLevel(LogLevel.INFO) 
+
    }
 
    test { useJUnit(); }

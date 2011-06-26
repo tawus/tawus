@@ -17,6 +17,7 @@ package com.googlecode.tawus.extensions.components;
 
 import com.googlecode.tawus.extensions.base.AbstractPager;
 
-public class NextPreviousPager extends AbstractPager {
+public class NextPreviousPager extends AbstractPager
+{
 
 }

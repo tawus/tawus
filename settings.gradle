@@ -1,1 +1,1 @@
-include "tawus-core", "tawus-hibernate", "tawus-extensions"
+include "tawus-core", "tawus-hibernate", "tawus-extensions", "tawus-ajaxupload"

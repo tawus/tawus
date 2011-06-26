@@ -66,6 +66,7 @@ public class EntityEditor {
       /**
        * {@inheritDocs}
        */
+      @Override
       public String toString() {
          return "BeanEditor.doPrepare()";
       }
@@ -88,6 +89,7 @@ public class EntityEditor {
       /**
        * {@inheritDocs}
        */
+      @Override
       public String toString() {
          return "BeanEditor.cleanupEnviroment()";
       }

@@ -8,3 +8,9 @@ dependencies {
   testCompile "org.apache.tapestry:tapestry-test:5.2.5"
   compile "javax.servlet:servlet-api:2.5"
 }
+jar {
+    manifest {
+        attributes 'Tapestry-Module-Classes': 'com.googlecode.tawus.extensions.services.TawusExtensionsModule'
+    }
+}
+

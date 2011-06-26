@@ -24,6 +24,7 @@ public class PageTesterWithEntityDef extends PageTester {
    public ModuleDef [] provideExtraModuleDefs(){
       EntityLocator entityLocator = new AbstractEntityLocator(CollectionFactory.newSet(
             "com.googlecode.tawus.app0.models")){
+         @Override
          @SuppressWarnings("unchecked")
          public boolean isEntity(@SuppressWarnings("rawtypes") Class entityType){
             return entityType.getAnnotation(Entity.class) != null;

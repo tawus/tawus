@@ -19,6 +19,7 @@ public class EntityApplicationStatePersistenceStrategy extends
       this.locator = locator;
    }
 
+   @Override
    @SuppressWarnings("unchecked")
    public <T> T get(final Class<T> ssoClass,
          final ApplicationStateCreator<T> creator) {
@@ -34,6 +35,7 @@ public class EntityApplicationStatePersistenceStrategy extends
       return (T) object;
    }
 
+   @Override
    @SuppressWarnings({ "unchecked", "rawtypes" })
    public <T> void set(Class<T> ssoClass, T sso) {
       final String key = buildKey(ssoClass);

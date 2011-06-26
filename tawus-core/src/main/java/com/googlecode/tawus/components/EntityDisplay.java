@@ -89,7 +89,6 @@ public class EntityDisplay {
    private String currentRow;
 
    /** Current column */
-   @SuppressWarnings("unused")
    @Property
    private TableColumn currentColumn;
 
@@ -142,6 +141,11 @@ public class EntityDisplay {
 
    void setupRender(){
       doPrepare();
+   }
+   
+   
+   public int getFieldColspan() {
+      return currentColumn.getColspan() - 1;
    }
    
 }

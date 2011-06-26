@@ -62,6 +62,7 @@ public class PropertyEditBlocksWithoutLabel extends PropertyEditBlocks {
    @Inject
    private CriteriaSource criteriaSource;
 
+   @Override
    public PropertyEditContext getContext() {
       return context;
    }

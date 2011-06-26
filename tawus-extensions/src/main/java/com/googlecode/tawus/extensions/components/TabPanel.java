@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.Block;
 import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.Import;
@@ -42,7 +41,8 @@ import com.googlecode.tawus.extensions.internal.tabs.TabContext;
  * javascript, ajax or http-get
  */
 @Import(library = "tab-panel.js", stylesheet = "tab-panel.css")
-public class TabPanel {
+public class TabPanel
+{
 
    /**
     * Default request method to be used for all tabs
@@ -65,7 +65,8 @@ public class TabPanel {
    @Inject
    private ComponentResources resources;
 
-   public String[] getTabs() {
+   public String[] getTabs()
+   {
       /** Split parameter 'tabs' into a string array */
       return TapestryInternalUtils.splitAtCommas(tabs);
    }
@@ -89,71 +90,89 @@ public class TabPanel {
    @Parameter(value = "true", defaultPrefix = BindingConstants.LITERAL)
    private boolean _volatile;
 
-   public Tab getCurrentTab() {
+   public Tab getCurrentTab()
+   {
       return (Tab) resources.getContainerResources().getEmbeddedComponent(tab);
    }
 
-   public String getCurrentLinkClass() {
+   public String getCurrentLinkClass()
+   {
       String cssClass;
-      if (getCurrentTab().getDisabled()) {
+      if (getCurrentTab().getDisabled())
+      {
          cssClass = "t-tab-disabled";
-      } else if (currentTabId.equals(((Component) getCurrentTab())
-            .getComponentResources().getId())) {
+      }
+      else if (currentTabId.equals(((Component) getCurrentTab()).getComponentResources().getId()))
+      {
          cssClass = "t-tab-active";
-      } else {
+      }
+      else
+      {
          cssClass = "t-tab-enabled";
       }
       return cssClass;
    }
 
-   public String getCurrentMethod() {
+   public String getCurrentMethod()
+   {
       String method = getCurrentTab().getMethod();
-      if (method == null) {
+      if (method == null)
+      {
          method = this.method;
       }
-      if (TabConstants.JAVASCRIPT.equalsIgnoreCase(method)) {
-         linkMap.put(((Component) getCurrentTab()).getComponentResources()
-               .getId(), javaScriptLink);
+      if (TabConstants.JAVASCRIPT.equalsIgnoreCase(method))
+      {
+         linkMap.put(((Component) getCurrentTab()).getComponentResources().getId(), javaScriptLink);
       }
       return method;
    }
 
-   public boolean isGetMethod() {
+   public boolean isGetMethod()
+   {
       return TabConstants.GET.equalsIgnoreCase(getCurrentMethod());
    }
 
-   public boolean isAjaxMethod() {
+   public boolean isAjaxMethod()
+   {
       return TabConstants.AJAX.equalsIgnoreCase(getCurrentMethod());
    }
 
-   public boolean isJavaScriptMethod() {
+   public boolean isJavaScriptMethod()
+   {
       return TabConstants.JAVASCRIPT.equalsIgnoreCase(getCurrentMethod());
    }
 
-   void onActionFromLink(String id) {
-      if (_volatile) {
+   void onActionFromLink(String id)
+   {
+      if (_volatile)
+      {
          resources.getPage().getComponentResources().discardPersistentFieldChanges();
       }
       currentTabId = id;
    }
 
-   Block onActionFromAjaxLink(String id) {
+   Zone onActionFromAjaxLink(String id)
+   {
       currentTabId = id;
-      return tabPanel.getBody();
+      return tabPanel;
    }
 
-   void setupRender() {
-      if (currentTabId == null) {
+   void setupRender()
+   {
+      if (currentTabId == null)
+      {
          currentTabId = defaultTab != null ? defaultTab : getTabs()[0];
       }
    }
 
-   void beforeRenderBody() {
+   void beforeRenderBody()
+   {
       tabContext = new TabContext(currentTabId, method, linkMap);
       environment.push(TabContext.class, tabContext);
    }
 
-   void afterRenderBody() {
+   void afterRenderBody()
+   {
       environment.pop(TabContext.class);
    }
 

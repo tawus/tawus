@@ -4,21 +4,27 @@ import org.apache.tapestry5.dom.Document;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.func.Predicate;
 
-public class Traversal {
+public class Traversal
+{
 
-   public static Element down(Element e, final String tagName){
+   public static Element down(Element e, final String tagName)
+   {
       return down(e, tagName, 1);
    }
-   
-   public static Element down(Element e, final String tagName, final Integer index) {
+
+   public static Element down(Element e, final String tagName, final Integer index)
+   {
       assert e != null;
 
-      return e.getElement(new Predicate<Element>() {
+      return e.getElement(new Predicate<Element>()
+      {
          int currentIndex = 0;
 
          @Override
-         public boolean accept(Element e) {
-            if (e.getName().equals(tagName)) {
+         public boolean accept(Element e)
+         {
+            if (e.getName().equals(tagName))
+            {
                currentIndex++;
             }
             return index == currentIndex;
@@ -26,21 +32,25 @@ public class Traversal {
 
       });
    }
-   
-   public static Element down(Element e, final String attribute, final String value){
+
+   public static Element down(Element e, final String attribute, final String value)
+   {
       return down(e, attribute, value, 1);
    }
 
-   public static Element down(Element e, final String attribute, final String value,
-         final Integer index) {
+   public static Element down(Element e, final String attribute, final String value, final Integer index)
+   {
       assert e != null;
 
-      return e.getElement(new Predicate<Element>() {
+      return e.getElement(new Predicate<Element>()
+      {
          int currentIndex = 0;
 
          @Override
-         public boolean accept(Element e) {
-            if (e.getAttribute(attribute) != null && e.getAttribute(attribute).matches(value)) {
+         public boolean accept(Element e)
+         {
+            if (e.getAttribute(attribute) != null && e.getAttribute(attribute).matches(value))
+            {
                currentIndex++;
             }
             return index == currentIndex;
@@ -48,16 +58,19 @@ public class Traversal {
 
       });
    }
-   
-   public static Element child(Element e, int index){
+
+   public static Element child(Element e, int index)
+   {
       return (Element) e.getChildren().get(index);
    }
-   
-   public static boolean contains(Element e, String content){
+
+   public static boolean contains(Element e, String content)
+   {
       return e.getChildMarkup().contains(content);
    }
-   
-   public static Element root(Document doc){
+
+   public static Element root(Document doc)
+   {
       return doc.getRootElement();
    }
 }

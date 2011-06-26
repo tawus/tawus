@@ -27,8 +27,8 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import com.googlecode.tawus.extensions.TabConstants;
 import com.googlecode.tawus.extensions.internal.tabs.TabContext;
 
-
-public class Tab implements ClientElement {
+public class Tab implements ClientElement
+{
    /** Request method to use */
    @Parameter(defaultPrefix = BindingConstants.LITERAL)
    private String method;
@@ -53,57 +53,69 @@ public class Tab implements ClientElement {
 
    private String assignedClientId;
 
-   boolean setupRender(){
+   boolean setupRender()
+   {
       assignedClientId = javaScriptSupport.allocateClientId(clientId);
-      if(method == null){
+      if (method == null)
+      {
          method = tabContext.getMethod();
       }
 
       /* Render only if it is the current tab or the method is javaScript */
-      if(TabConstants.JAVASCRIPT.equalsIgnoreCase(method)){
-         javaScriptSupport.addScript(String.format(
-               "TabPanel.showTab('%s', '%s');", 
-               tabContext.getLinkMap().get(resources.getId()).getClientId(),
-               getClientId()));
+      if (TabConstants.JAVASCRIPT.equalsIgnoreCase(method))
+      {
+         javaScriptSupport.addScript(String.format("TabPanel.showTab('%s', '%s');",
+               tabContext.getLinkMap().get(resources.getId()).getClientId(), getClientId()));
          return true;
       }
 
-      if(tabContext.getCurrentTab().equals(resources.getId())){
+      if (tabContext.getCurrentTab().equals(resources.getId()))
+      {
          return true;
       }
 
       return false;
    }
 
-   void beginRender(MarkupWriter writer){
+   void beginRender(MarkupWriter writer)
+   {
       writer.element("div", "id", getClientId(), "class", getCssClass());
    }
 
-   void afterRender(MarkupWriter writer){
+   void afterRender(MarkupWriter writer)
+   {
       writer.end();
    }
 
-   public String getCssClass(){
-      if(tabContext.getCurrentTab().equals(resources.getId())){
+   public String getCssClass()
+   {
+      if (tabContext.getCurrentTab().equals(resources.getId()))
+      {
          return "t-tab-show";
-      }else {
+      }
+      else
+      {
          return "t-tab-hide";
       }
    }
 
-   public String getMethod(){
+   public String getMethod()
+   {
       return method;
    }
 
-   public String getTitle(){
+   public String getTitle()
+   {
       return title;
    }
 
-   public boolean getDisabled(){
+   public boolean getDisabled()
+   {
       return disabled;
    }
 
-   public String getClientId(){
+   public String getClientId()
+   {
       return assignedClientId;
    }
 }

@@ -18,7 +18,8 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
  */
 @SupportsInformalParameters
 @Import(library = "prototip/js/prototip.js", stylesheet = "prototip/css/prototip.css")
-public class ToolTip implements ClientElement {
+public class ToolTip implements ClientElement
+{
    @Parameter(value = "prop:componentResources.id", defaultPrefix = BindingConstants.LITERAL)
    private String clientId;
 
@@ -33,27 +34,31 @@ public class ToolTip implements ClientElement {
    @Inject
    private ComponentResources resources;
 
-   void setupRender() {
+   void setupRender()
+   {
       assignedClientId = javaScriptSupport.allocateClientId(clientId);
    }
 
-   void beginRender(final MarkupWriter writer) {
+   void beginRender(final MarkupWriter writer)
+   {
       writer.element("span", "id", getClientId());
    }
 
-   void afterRender(final MarkupWriter writer) {
+   void afterRender(final MarkupWriter writer)
+   {
       writer.end();
       JSONObject params = new JSONObject();
 
-      for (String name : resources.getInformalParameterNames()) {
+      for (String name : resources.getInformalParameterNames())
+      {
          params.put(name, resources.getInformalParameter(name, String.class));
       }
-      
-      javaScriptSupport.addScript("new Tip('%s', '%s', %s)", 
-            getClientId(), text.replace('\'', ' '), params.toString());
+
+      javaScriptSupport.addScript("new Tip('%s', '%s', %s)", getClientId(), text.replace('\'', ' '), params.toString());
    }
 
-   public String getClientId() {
+   public String getClientId()
+   {
       return assignedClientId;
    }
 }

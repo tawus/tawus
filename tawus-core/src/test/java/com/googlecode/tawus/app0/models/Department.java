@@ -25,10 +25,12 @@ public class Department {
       return name;
    }
    
+   @Override
    public String toString(){
       return name;
    }
    
+   @Override
    public boolean equals(Object object){
       if(object == this){
          return true;
@@ -46,6 +48,7 @@ public class Department {
       return department.getName().equals(name);
    }
    
+   @Override
    public int hashCode(){
       return name.hashCode();
    }

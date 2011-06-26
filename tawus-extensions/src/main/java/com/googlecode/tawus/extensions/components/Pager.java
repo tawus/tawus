@@ -20,5 +20,6 @@ import org.apache.tapestry5.annotations.Import;
 import com.googlecode.tawus.extensions.base.AbstractPager;
 
 @Import(stylesheet = "pager.css")
-public class Pager extends AbstractPager {
+public class Pager extends AbstractPager
+{
 }

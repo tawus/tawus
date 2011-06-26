@@ -21,19 +21,22 @@ import org.apache.tapestry5.ioc.Location;
 
 import com.googlecode.tawus.extensions.internal.Pageable;
 
-public class PagerBinding extends ComponentBinding{
+public class PagerBinding extends ComponentBinding
+{
 
-   public PagerBinding(Location location, String description,
-      ComponentResources resources, String componentId) {
+   public PagerBinding(Location location, String description, ComponentResources resources, String componentId)
+   {
       super(location, description, resources, componentId);
    }
-   
-   public Object get(){
-      return ((Pageable)super.get()).getPagedSource();
+
+   public Object get()
+   {
+      return ((Pageable) super.get()).getPagedSource();
    }
-   
+
    @SuppressWarnings({ "rawtypes" })
-   public Class getBindingType(){
+   public Class getBindingType()
+   {
       return Iterable.class;
    }
 

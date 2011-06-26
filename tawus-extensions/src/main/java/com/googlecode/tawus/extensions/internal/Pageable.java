@@ -15,9 +15,11 @@
  */
 package com.googlecode.tawus.extensions.internal;
 
-public interface Pageable {
+public interface Pageable
+{
    /**
     * Provides paged source
+    * 
     * @return
     */
    @SuppressWarnings({ "rawtypes" })

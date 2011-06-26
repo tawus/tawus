@@ -23,10 +23,11 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
  * @author Taha Hafeez
  * 
  */
-@Import(library = { "modal/effects.js", "modal/builder.js",
-      "modal/modalbox.js", "modal/modalboxinit.js" }, stylesheet = "modal/modalbox.css")
+@Import(library = { "modal/effects.js", "modal/builder.js", "modal/modalbox.js", "modal/modalboxinit.js" },
+      stylesheet = "modal/modalbox.css")
 @SupportsInformalParameters
-public class ModalBox implements ClientElement {
+public class ModalBox implements ClientElement
+{
 
    public static final String EVENT_TYPE = "event";
    public static final String PAGE_TYPE = "page";
@@ -44,7 +45,7 @@ public class ModalBox implements ClientElement {
 
    @Parameter(value = "event", defaultPrefix = BindingConstants.LITERAL, allowNull = false)
    private String event;
-   
+
    @Parameter(defaultPrefix = BindingConstants.LITERAL)
    private String closeEvent;
 
@@ -71,52 +72,60 @@ public class ModalBox implements ClientElement {
    /**
     * Setup render
     */
-   void setupRender() {
+   void setupRender()
+   {
       assignedClientId = javaScriptSupport.allocateClientId(clientId);
       contextArray = context == null ? new Object[] {} : context.toArray();
 
-      if (!type.equals(EVENT_TYPE) && !type.equals(PAGE_TYPE)) {
-         throw new RuntimeException("Parameter type can only be " + EVENT_TYPE
-               + " or " + PAGE_TYPE);
+      if (!type.equals(EVENT_TYPE) && !type.equals(PAGE_TYPE))
+      {
+         throw new RuntimeException("Parameter type can only be " + EVENT_TYPE + " or " + PAGE_TYPE);
       }
 
-      if (type.equals(PAGE_TYPE) && pageName == null) {
-         throw new RuntimeException(
-               "Parameter pageName cannot be null if parameter type is "
-                     + PAGE_TYPE);
+      if (type.equals(PAGE_TYPE) && pageName == null)
+      {
+         throw new RuntimeException("Parameter pageName cannot be null if parameter type is " + PAGE_TYPE);
       }
    }
 
-   void beginRender(final MarkupWriter writer) {
+   void beginRender(final MarkupWriter writer)
+   {
       writer.element("a", "href", "#", "id", getClientId());
    }
 
-   void afterRender(final MarkupWriter writer) {
+   void afterRender(final MarkupWriter writer)
+   {
       writer.end();
 
-      if (disabled) {
+      if (disabled)
+      {
          return;
       }
 
       final Link link;
-      if (EVENT_TYPE.equalsIgnoreCase(type)) {
+      if (EVENT_TYPE.equalsIgnoreCase(type))
+      {
          link = resources.createEventLink(event, contextArray);
-      } else { // if(PAGE_TYPE.equals(type)){
-         link = pageRenderLinkSource.createPageRenderLinkWithContext(pageName,
-               contextArray);
       }
-      
+      else
+      { // if(PAGE_TYPE.equals(type)){
+         link = pageRenderLinkSource.createPageRenderLinkWithContext(pageName, contextArray);
+      }
+
       String closeLink;
-      if(closeEvent != null){
+      if (closeEvent != null)
+      {
          closeLink = resources.createEventLink(event).toAbsoluteURI();
-      }else {
+      }
+      else
+      {
          closeLink = null;
       }
-      
+
       final JSONObject params = new JSONObject();
-      for (String informalParameter : resources.getInformalParameterNames()) {
-         params.put(informalParameter, resources.getInformalParameter(
-               informalParameter, String.class));
+      for (String informalParameter : resources.getInformalParameterNames())
+      {
+         params.put(informalParameter, resources.getInformalParameter(informalParameter, String.class));
       }
 
       final JSONObject spec = new JSONObject();
@@ -133,7 +142,8 @@ public class ModalBox implements ClientElement {
    /**
     * {@inheritDoc}
     */
-   public String getClientId() {
+   public String getClientId()
+   {
       return assignedClientId;
    }
 
