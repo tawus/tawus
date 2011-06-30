@@ -1,0 +1,11 @@
+<html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <head>
+   </head>
+   
+   <body>
+      <ul>
+         <li><a href='ZoneRefreshDemo'>Zone Refresh Demo</a></li>
+         <li><a href='ModalDialogDemo'>Modal Dialog Demo</a></li>
+      </ul>
+   </body>
+</html>

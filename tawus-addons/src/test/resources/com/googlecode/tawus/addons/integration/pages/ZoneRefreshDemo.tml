@@ -1,0 +1,16 @@
+<html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <head>
+   </head>
+
+   <body>
+      Fast Counter : 
+      <span t:type='zone' t:mixins='tawus/zoneRefresh' t:period='3' id='zone' t:id='zone'>
+         ${counter}
+      </span>
+
+      <br />
+      Slow Counter : 
+      <span t:type='zone' t:mixins='tawus/zoneRefresh' t:period='6' t:id='slowZone' id='slowZone'>${slowCounter}</span>
+
+   </body>
+</html>

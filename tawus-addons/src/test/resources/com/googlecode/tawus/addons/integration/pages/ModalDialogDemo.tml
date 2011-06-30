@@ -1,0 +1,22 @@
+<html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <head>
+   </head>
+
+   <body>
+      <a t:type='tawus/modaldialog' title='Hello' t:id='hello'>Open Dialog</a>
+      <div t:type='zone' id='messageZone' t:id='messageZone'>${message}</div>
+
+      <t:block t:id='helloDialog'>
+         <div id='hellomessage'>Hello World</div>
+         <br />
+         <a t:type='tawus/modaldialog' title='Goodbye' t:id='goodbye' zone='messageZone'>Continue</a>
+      </t:block>
+
+      <t:block t:id='goodbyeDialog'>
+         <div id='goodbyemessage'>Goodbye</div>
+         <br />
+         <a t:type='tawus/modaldialog' title='Hello' t:id='backToHello'>Back</a>
+      </t:block>
+   </body>
+
+</html>

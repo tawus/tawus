@@ -31,15 +31,16 @@ import com.googlecode.tawus.services.EntityDAOLocator;
  * items can be viewed or modified
  */
 @SupportsInformalParameters
-public class EntityGrid implements GridRuntime {
+public class EntityGrid implements GridRuntime
+{
 
    /**
     * Grid for displaying list of objects
     */
    @Component(publishParameters = "add, columnIndex,empty,encoder, include, exclude, "
-         + "class, lean, reorder, row,rowClass, rowIndex, rowsPerPage, "
-         + "sortModel, volatile, model", parameters = { "source=source",
-         "overrides=overrides", "row=inherit:row", "inplace='inplace'", "pagerPosition=prop:pagerPosition"})
+         + "class, lean, reorder, row,rowClass, rowIndex, rowsPerPage, " + "sortModel, volatile, model", parameters = {
+         "source=source", "overrides=overrides", "row=inherit:row", "inplace='inplace'",
+         "pagerPosition=prop:pagerPosition" })
    private Grid grid;
 
    private EntityGridDataSource<?> source;
@@ -49,7 +50,8 @@ public class EntityGrid implements GridRuntime {
     * 
     * @return data source
     */
-   public EntityGridDataSource<?> getSource() {
+   public EntityGridDataSource<?> getSource()
+   {
       return source;
    }
 
@@ -73,7 +75,8 @@ public class EntityGrid implements GridRuntime {
    @Inject
    private Block defaultSearchBlock;
 
-   public Block defaultSearch() {
+   public Block defaultSearch()
+   {
       return this.defaultSearchBlock;
    }
 
@@ -106,7 +109,8 @@ public class EntityGrid implements GridRuntime {
    @Inject
    private Block defaultEditorBlock;
 
-   public Block defaultEditor() {
+   public Block defaultEditor()
+   {
       return this.defaultEditorBlock;
    }
 
@@ -117,173 +121,205 @@ public class EntityGrid implements GridRuntime {
    @Parameter(value = "true")
    @Property(write = false)
    private boolean editable;
-   
 
    @SuppressWarnings("unused")
    @Parameter(value = "true")
    @Property(write = false)
    private boolean searchable;
-   
+
    @Parameter(required = true)
    private Object object;
 
    @Parameter(defaultPrefix = BindingConstants.LITERAL)
    private String zone;
-   
+
    @SuppressWarnings("unused")
    @Parameter(defaultPrefix = BindingConstants.LITERAL)
    @Property
    private GridPagerPosition pagerPosition;
-   
-   GridPagerPosition defaultPagerPosition(){
+
+   GridPagerPosition defaultPagerPosition()
+   {
       return GridPagerPosition.BOTH;
    }
-   
+
    /**
     * Default property override
     * 
     * @return default {@link org.apache.tapestry5.PropertyOverrides}
     */
-   PropertyOverrides defaultOverrides() {
-      return new PropertyOverridesDelegator(typeCoercer.coerce(resources,
-            PropertyOverrides.class), typeCoercer.coerce(grid,
-            PropertyOverrides.class), actionProperty + "Cell");
+   PropertyOverrides defaultOverrides()
+   {
+      return new PropertyOverridesDelegator(typeCoercer.coerce(resources, PropertyOverrides.class), typeCoercer.coerce(
+            grid, PropertyOverrides.class), actionProperty + "Cell");
    }
 
-   public PropertyOverrides getOverrides() {
+   public PropertyOverrides getOverrides()
+   {
       return overrides;
    }
 
-   
-   public boolean getInPlace(){
+   public boolean getInPlace()
+   {
       return zone != null;
    }
 
-   public Object getActiveBlock() {
+   public Object getActiveBlock()
+   {
       return showDetails ? editor : gridBlock;
    }
 
-   public String getEditActionContent() {
-      Object value = grid.getDataModel().get(actionProperty).getConduit().get(
-            grid.getRow());
+   public String getEditActionContent()
+   {
+      Object value = grid.getDataModel().get(actionProperty).getConduit().get(grid.getRow());
       return value == null ? "" : value.toString();
    }
 
-   public Object getEditActionContext() {
+   public Object getEditActionContext()
+   {
       return locator.get(criteria.getType()).getIdentifier(grid.getRow());
    }
 
    @XHR
-   Object onActionFromEditActionLink(String id) {
+   Object onActionFromEditActionLink(String id)
+   {
       setShowDetails(true);
-      resources
-            .triggerEvent(TawusEvents.SHOW_DETAILS,
-                  new Object[] { object = locator.get(criteria.getType())
-                        .get(id) }, null);      
+      resources.triggerEvent(TawusEvents.SHOW_DETAILS,
+            new Object[] { object = locator.get(criteria.getType()).get(id) }, null);
       return returnValue();
    }
 
-   private Object returnValue() {
-      if (zone != null) {
+   private Object returnValue()
+   {
+      if(zone != null)
+      {
          return resources.getContainerResources().getEmbeddedComponent(zone);
-      } else {
+      }
+      else
+      {
          return null;
       }
    }
 
    @XHR
-   Object onActionFromNewActionLink() {
+   Object onActionFromNewActionLink()
+   {
       setShowDetails(true);
-      resources.triggerEvent(TawusEvents.SHOW_DETAILS,
-            new Object[] { object = newInstance() }, null);
+      resources.triggerEvent(TawusEvents.SHOW_DETAILS, new Object[] { object = newInstance() }, null);
       return returnValue();
    }
 
-   public Object newInstance() {
-      try {
+   public Object newInstance()
+   {
+      try
+      {
          return criteria.getType().newInstance();
-      } catch (InstantiationException e) {
-         throw new RuntimeException("Could not create instance for type: "
-               + criteria.getType(), e);
-      } catch (IllegalAccessException e) {
-         throw new RuntimeException("Could not create instance for type: "
-               + criteria.getType(), e);
+      }
+      catch(InstantiationException e)
+      {
+         throw new RuntimeException("Could not create instance for type: " + criteria.getType(), e);
+      }
+      catch(IllegalAccessException e)
+      {
+         throw new RuntimeException("Could not create instance for type: " + criteria.getType(), e);
       }
    }
 
-   public void setupRender() {
+   public void setupRender()
+   {
       setShowDetails(showDetails);
    }
 
    @SuppressWarnings({ "unchecked", "rawtypes" })
-   public void setShowDetails(boolean showDetails) {
+   public void setShowDetails(boolean showDetails)
+   {
       this.showDetails = showDetails;
-      if (!showDetails) {
-         source = new EntityGridDataSource(locator.get(criteria.getType()),
-               criteria);
+      if(!showDetails)
+      {
+         source = new EntityGridDataSource(locator.get(criteria.getType()), criteria);
       }
    }
 
-   public Object getEntity() {
+   public Object getEntity()
+   {
       return object;
    }
 
-   public String getNewMessage() {
+   public String getNewMessage()
+   {
       Messages messages = overrides.getOverrideMessages();
-      if (!messages.contains("new")) {
+      if(!messages.contains("new"))
+      {
          messages = resources.getMessages();
       }
-      return messages.format("new", TawusUtils
-            .toUserPresentable(criteria.getType()));
+      return messages.format("new", TawusUtils.toUserPresentable(criteria.getType()));
    }
 
-   void onInPlaceUpdate(String zone){
+   void onInPlaceUpdate(String zone)
+   {
       setShowDetails(false);
       resources.triggerEvent(TawusEvents.SORT, null, null);
    }
 
-   public void showGrid() {
+   public void showGrid()
+   {
       setShowDetails(false);
    }
-   
-   public void enableSearch(){
+
+   public void enableSearch()
+   {
       criteria.setEnabled(true);
    }
 
-   public void cancel() {
+   public void cancel()
+   {
       criteria.setEnabled(false);
    }
 
-   public Object getSearchObject() {
+   public Object getSearchObject()
+   {
       return criteria.getEntity();
    }
 
-   public Object getObject() {
-      if(object == null){
-         try {
+   public Object getObject()
+   {
+      if(object == null)
+      {
+         try
+         {
             object = criteria.getType().newInstance();
-         } catch (Exception e) {
+         }
+         catch(Exception e)
+         {
             e.printStackTrace();
             throw new RuntimeException(e);
          }
       }
       return object;
    }
-   
-   public String getZone(){
+
+   public String getZone()
+   {
       return zone;
    }
 
-   public String getZoneId() {
-      return zone == null ? null : ((Zone)resources.getContainerResources().getEmbeddedComponent(zone)).getClientId();
+   public String getZoneId()
+   {
+      return zone == null ? null : ((Zone) resources.getContainerResources().getEmbeddedComponent(zone)).getClientId();
    }
-   
-   public boolean getShowNewLink(){
+
+   public boolean getShowNewLink()
+   {
       return editor != defaultEditorBlock && insertable;
    }
-   
-   public boolean getShowEditLink(){
+
+   public boolean getShowEditLink()
+   {
       return editor != defaultEditorBlock && editable;
    }
 
+   public boolean getShowDetails()
+   {
+      return showDetails;
+   }
 }
