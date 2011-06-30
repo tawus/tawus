@@ -72,14 +72,14 @@ public class ModalDialogTest extends SeleniumTestCase
       clickAndWait("link=Modal Dialog Demo");
       
       click("link=Open Dialog");      
-      Thread.sleep(1000);
+      Thread.sleep(1500);
       
       assertTrue(isElementPresent("MB_window"));
       assertText("MB_caption", "Hello");
       assertText("hellomessage", "Hello World");
       
       click("link=Continue");
-      Thread.sleep(1000);
+      Thread.sleep(1500);
       
       assertTrue(isElementPresent("MB_window"));
       assertText("MB_caption", "Goodbye");
@@ -87,14 +87,14 @@ public class ModalDialogTest extends SeleniumTestCase
       assertFalse(isElementPresent("hellomessage"));
       
       click("link=Back");
-      Thread.sleep(1000);
+      Thread.sleep(1500);
       
       assertTrue(isElementPresent("MB_window"));
       assertText("MB_caption", "Hello");
       assertText("hellomessage", "Hello World");
       
       click("MB_close");
-      Thread.sleep(1000);
+      Thread.sleep(1500);
       assertFalse(isElementPresent("MB_window"));
    }
 
