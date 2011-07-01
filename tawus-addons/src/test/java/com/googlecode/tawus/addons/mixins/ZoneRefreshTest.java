@@ -24,8 +24,6 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.test.TapestryTestCase;
 import org.testng.annotations.Test;
 
-import com.googlecode.tawus.addons.mixins.ZoneRefresh;
-
 public class ZoneRefreshTest extends TapestryTestCase
 {
    
@@ -39,9 +37,9 @@ public class ZoneRefreshTest extends TapestryTestCase
       
       Zone zone = mockZone();
       
-      ZoneRefresh zoneRefresh = new ZoneRefresh(context, resources, javaScriptSupport, zone, "refresh");
+      ZoneRefresh zoneRefresh = new ZoneRefresh(context, resources, javaScriptSupport, zone);
       
-      expect(resources.createEventLink("refresh", context)).andReturn(link);
+      expect(resources.createEventLink("zoneRefresh", context)).andReturn(link);
       expect(link.toAbsoluteURI()).andReturn("mylink");
       
       JSONObject params = new JSONObject();

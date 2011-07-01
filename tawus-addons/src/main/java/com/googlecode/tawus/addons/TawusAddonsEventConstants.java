@@ -32,4 +32,7 @@ public class TawusAddonsEventConstants
     * after it has been closed/hidden. 
     */
    public static final String CLOSE_DIALOG = "closeDialog";
+   
+   
+   public static final String REFRESH = "refresh";
 }

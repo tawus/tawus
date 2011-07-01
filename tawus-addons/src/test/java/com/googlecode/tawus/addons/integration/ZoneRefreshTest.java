@@ -21,20 +21,37 @@ import org.testng.annotations.Test;
 public class ZoneRefreshTest extends SeleniumTestCase
 {
    @Test
-   public void test_if_two_zones_get_updated() throws Exception
+   public void test_if_zone_with_void_event_handler_works() throws Exception
    {
       openBaseURL();
       clickAndWait("link=Zone Refresh Demo");
-      checkZoneValues(3);
+      checkZoneValues("zone", 3);
    }
-
-   private void checkZoneValues(int times) throws Exception
+   
+   @Test
+   public void test_if_zone_with_single_zone_event_handler_works() throws Exception
    {
-      Thread.sleep(1000);
+      openBaseURL();
+      clickAndWait("link=Zone Refresh Demo");
+      checkZoneValues("zone2", 3);
+   }
+   
+   @Test
+   public void test_if_zone_with_multiple_zone_event_handler_works() throws Exception
+   {
+      openBaseURL();
+      clickAndWait("link=Zone Refresh Demo");
+      checkZoneValues("zone4", 3);
+   }
+   
+
+   private void checkZoneValues(String zone, int times) throws Exception
+   {
+      Thread.sleep(300);
       for(int i = 0; i < times; ++i)
       {
-         assertText("zone", String.valueOf(i));
-         Thread.sleep(3000);
+         assertText(zone, String.valueOf(i));
+         Thread.sleep(1000);
       }
    }
 

@@ -23,10 +23,13 @@ import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.InjectContainer;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.corelib.components.Zone;
+import org.apache.tapestry5.internal.util.CaptureResultCallback;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.javascript.InitializationPriority;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
+
+import com.googlecode.tawus.addons.TawusAddonsEventConstants;
 
 /**
  * A mixin to periodically update a zone. 
@@ -48,12 +51,6 @@ public class ZoneRefresh
    @Parameter
    private Object[] context;
    
-   /**
-    * Event that will be fired periodically
-    */
-   @Parameter(value = "refresh", defaultPrefix = BindingConstants.LITERAL)
-   private String event;
-   
    @InjectContainer
    private Zone zone;
 
@@ -68,13 +65,12 @@ public class ZoneRefresh
    }
    
    //For testing purpose
-   ZoneRefresh(Object [] context, ComponentResources resources, JavaScriptSupport javaScriptSupport, Zone zone, String event)
+   ZoneRefresh(Object [] context, ComponentResources resources, JavaScriptSupport javaScriptSupport, Zone zone)
    {
       this.context = context;
       this.resources = resources;
       this.javaScriptSupport = javaScriptSupport;
       this.zone = zone;
-      this.event = event;
    }
 
    @AfterRender
@@ -91,8 +87,20 @@ public class ZoneRefresh
 
    private Object createEventLink()
    {
-      Link link = resources.createEventLink(event, context);
+      Link link = resources.createEventLink("zoneRefresh", context);
       return link.toAbsoluteURI();
+   }
+   
+   Object onZoneRefresh()
+   {
+      CaptureResultCallback<Object> callback = new CaptureResultCallback<Object>();
+      resources.triggerEvent(TawusAddonsEventConstants.REFRESH, context, callback);
+      
+      if(callback.getResult() != null){
+         return callback.getResult();
+      }
+      
+      return zone;
    }
 
 }

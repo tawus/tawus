@@ -3,14 +3,17 @@
    </head>
 
    <body>
-      Fast Counter : 
-      <span t:type='zone' t:mixins='tawus/zoneRefresh' t:period='3' id='zone' t:id='zone'>
+      Counter 1:
+      <span t:type='zone' t:mixins='tawus/zoneRefresh' t:period='1' id='zone' t:id='zone'>
          ${counter}
       </span>
 
       <br />
-      Slow Counter : 
-      <span t:type='zone' t:mixins='tawus/zoneRefresh' t:period='6' t:id='slowZone' id='slowZone'>${slowCounter}</span>
-
+      Counter 2 :
+      <span t:type='zone' t:mixins='tawus/zoneRefresh' t:period='1' t:id='zone2' id='zone2'>${counter2}</span>
+      <br />
+      Counter 3 :
+      <span t:type='zone' t:mixins='tawus/zoneRefresh' t:period='1' t:id='zone3' id='zone3'>${counter3}</span> and  
+      <span t:type='zone' t:id='zone4' id='zone4'>${counter3}</span>
    </body>
 </html>

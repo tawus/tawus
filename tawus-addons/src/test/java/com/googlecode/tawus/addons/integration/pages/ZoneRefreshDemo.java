@@ -15,6 +15,7 @@
 // 
 package com.googlecode.tawus.addons.integration.pages;
 
+import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
@@ -28,30 +29,42 @@ public class ZoneRefreshDemo
    
    @Persist
    @Property
-   private int slowCounter;
+   private int counter2;
+   
+   @Persist
+   @Property
+   private int counter3;
    
    @InjectComponent
-   private Zone zone;
+   private Zone zone2;
    
    @InjectComponent
-   private Zone slowZone;
+   private Zone zone3;
+   
+   @InjectComponent
+   private Zone zone4;
    
    void setupRender()
    {
-      slowCounter = 0;
       counter = 0;
+      counter2 = 0;
+      counter3 = 0;
    }
    
-   Zone onRefreshFromZone()
+   void onRefreshFromZone()
    {
       counter++;
-      return zone;   
    }
    
-   Zone onRefreshFromSlowZone()
+   Zone onRefreshFromZone2()
    {
-      slowCounter++;
-      return slowZone;
+      counter2++;
+      return zone2;
+   }
+   
+   Object onRefreshFromZone3(){
+      counter3++;
+      return new MultiZoneUpdate(zone3).add(zone4);
    }
 
 }
