@@ -28,7 +28,7 @@ dependencies {
 
 jar{
    manifest {
-    attributes 'Tapestry-Module-Classes': 'com.googlecode.tawus.addons.services.TapestryAddonsModule'
+    attributes 'Tapestry-Module-Classes': 'com.googlecode.tawus.addons.services.TawusAddonsModule'
    }
 }
 

@@ -51,3 +51,14 @@ Tapestry.Initializer.setupModalDialog = function(params)
 
 };
 
+Tapestry.Initializer.hideModalDialog = function(params)
+{
+   var hideDialog = function()
+   {
+      Modalbox.hide();   
+   };
+   
+   Event.observe($(params.id), params.event, hideDialog);
+
+};
+

@@ -184,7 +184,7 @@ public class EntityEditForm implements FormValidationControl, ClientElement {
       }
 
       if (zone != null) {
-         return resources.getContainerResources().getEmbeddedComponent(zone);
+         return ((Zone)resources.getContainerResources().getEmbeddedComponent(zone)).getBody();
       } else {
          return null;
       }

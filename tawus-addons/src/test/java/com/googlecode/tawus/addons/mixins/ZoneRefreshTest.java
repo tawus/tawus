@@ -14,7 +14,6 @@
 // limitations under the License.
 // 
 package com.googlecode.tawus.addons.mixins;
-
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.Link;
 import org.apache.tapestry5.corelib.components.Zone;

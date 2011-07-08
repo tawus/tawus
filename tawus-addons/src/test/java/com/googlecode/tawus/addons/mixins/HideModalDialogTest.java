@@ -16,6 +16,8 @@
 
 package com.googlecode.tawus.addons.mixins;
 
+import org.apache.tapestry5.ClientElement;
+import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.test.TapestryTestCase;
 import org.testng.annotations.Test;
@@ -27,15 +29,24 @@ public class HideModalDialogTest extends TapestryTestCase
    public void check_javascript_support_is_called()
    {
       JavaScriptSupport javaScriptSupport = mockJavaScriptSupport();
-      HideModalDialog component = new HideModalDialog(javaScriptSupport);
+      ClientElement element = mockClientElement();
+      HideModalDialog component = new HideModalDialog(javaScriptSupport, element);
       
-      javaScriptSupport.addScript("Modalbox.hide()");
+      JSONObject params = new JSONObject();
+      params.put("id", "testId");
+      javaScriptSupport.addInitializerCall("hideModalDialog", params);
+      expect(element.getClientId()).andReturn("testId");
       
       replay();
       
       component.addJavaScript();
       
       verify();
+   }
+   
+   private ClientElement mockClientElement()
+   {
+      return newMock(ClientElement.class);
    }
 
 }

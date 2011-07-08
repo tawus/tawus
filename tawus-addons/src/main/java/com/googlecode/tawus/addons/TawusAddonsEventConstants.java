@@ -34,5 +34,8 @@ public class TawusAddonsEventConstants
    public static final String CLOSE_DIALOG = "closeDialog";
    
    
+   /**
+    * Zone refresh event
+    */
    public static final String REFRESH = "refresh";
 }

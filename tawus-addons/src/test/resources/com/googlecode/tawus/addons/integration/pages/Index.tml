@@ -1,11 +1,21 @@
 <html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
    <head>
    </head>
-   
+
    <body>
       <ul>
-         <li><a href='ZoneRefreshDemo'>Zone Refresh Demo</a></li>
-         <li><a href='ModalDialogDemo'>Modal Dialog Demo</a></li>
+         <li>
+            <a href="ZoneRefreshWithHandlerReturningVoid">Zone Refresh With Event Handler Returning Void</a>
+         </li>
+         <li>
+            <a href="ZoneRefreshWithHandlerReturningZone">Zone Refresh With Event Handler Returning Zone</a>
+         </li>
+         <li>
+            <a href='ModalDialogDemo'>Modal Dialog Demo</a>
+         </li>
+         <li>
+            <a href='ModalDialogWithForm'>Modal Dialog With Form</a>
+         </li>
       </ul>
    </body>
 </html>

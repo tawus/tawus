@@ -193,7 +193,7 @@ public class EntityGrid implements GridRuntime
    {
       if(zone != null)
       {
-         return resources.getContainerResources().getEmbeddedComponent(zone);
+         return ((Zone)resources.getContainerResources().getEmbeddedComponent(zone)).getBody();
       }
       else
       {

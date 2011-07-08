@@ -9,6 +9,7 @@ import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.beaneditor.BeanModel;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.internal.beaneditor.BeanModelUtils;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.BeanModelSource;
@@ -102,7 +103,7 @@ public class EntitySearchForm {
    @XHR
    Object onSubmitFromForm() {
       if (grid.getZone() != null) {
-         return resources.getContainerResources().getEmbeddedComponent(grid.getZone());
+         return ((Zone)resources.getContainerResources().getEmbeddedComponent(grid.getZone())).getBody();
       } else {
          return null;
       }

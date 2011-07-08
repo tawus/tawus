@@ -97,5 +97,33 @@ public class ModalDialogTest extends SeleniumTestCase
       Thread.sleep(1500);
       assertFalse(isElementPresent("MB_window"));
    }
+   
+   @Test
+   public void check_if_form_can_be_submitted_in_dialog() throws Exception
+   {
+      openBaseURL();
+      clickAndWait("link=Modal Dialog With Form");
+      
+      click("link=Open Dialog With Form");      
+      Thread.sleep(1500);
+      
+      assertTrue(isElementPresent("MB_window"));
+      assertText("MB_caption", "Dialog Form");
+      assert(isElementPresent("//input[@value='submit'][1]"));
+      
+      click("//input[@value='submit'][1]");
+      Thread.sleep(1500);
+      
+      assertTrue(isElementPresent("MB_window"));
+      assertText("MB_caption", "Dialog Form");
+      assert(isElementPresent("//label[@class='t-error'][1]"));
+      
+      type("//input[@type='text'][1]", "Taha");
+      type("//textarea[1]/", "Srinagar, J&K");
+      click("//input[@value='submit'][1]");
+      Thread.sleep(1500);
+      assertTrue(isElementPresent("MB_window"));
+      assertTextPresent("Hello Taha");
+   }
 
 }

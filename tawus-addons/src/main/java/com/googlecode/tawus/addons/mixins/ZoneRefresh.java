@@ -32,15 +32,18 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import com.googlecode.tawus.addons.TawusAddonsEventConstants;
 
 /**
- * A mixin to periodically update a zone. 
- * TAP5-746
+ * <p>
+ * This mixin periodically refreshs a @{link org.apache.tapestry5.corelib.components.Zone zone}
+ * by triggering an event on the server using ajax requests. 
+ * </p>
  * 
+ * <b>Note: </b> This mixin is only meant for a @{link org.apache.tapestry5.corelib.components.Zone zone}
  */
 @Import(library = "zone-refresh.js")
 public class ZoneRefresh
 {
    /**
-    *  Period is seconds 
+    *  Period between two consecutive refreshes (in seconds)  
     */
    @Parameter(required = true, defaultPrefix = BindingConstants.LITERAL)
    private int period;
@@ -100,7 +103,6 @@ public class ZoneRefresh
          return callback.getResult();
       }
       
-      return zone;
+      return zone.getBody();
    }
-
 }
