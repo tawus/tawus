@@ -1,11 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Zone Refresh Mixin" annotations="1.5" verbose="2">
+<suite name="Tawus Addons" annotations="1.5" verbose="2">
 <test name="Unit Tests" enabled="true">
-  <classes>
-      <class name="com.googlecode.tawus.addons.mixins.ZoneRefreshTest"/>
-      <class name="com.googlecode.tawus.addons.mixins.HideModalDialogTest"/>
-      <class name="com.googlecode.tawus.addons.components.ModalDialogTest"/>
-   </classes>
+  <packages>
+      <package name="com.googlecode.tawus.addons.components"/>
+   </packages>
 </test>
 <test name="Integration Tests" enabled="true">
    <parameter name="tapestry.web-app-folder" value="src/test/webapp"/>

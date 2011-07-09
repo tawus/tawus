@@ -5,8 +5,11 @@ import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
+
+import com.googlecode.tawus.addons.ModalDialogUtils;
 
 public class ModalDialogWithForm
 {
@@ -28,23 +31,40 @@ public class ModalDialogWithForm
    @Property
    private String message;
    
-   void onSuccess()
+   @InjectComponent
+   private Form form;
+
+   private boolean hide;
+   
+   void beginRender()
+   {
+     
+   }
+   
+   Object onSuccess()
    {
       message = String.format("Hello %s, your address is %s", name, address);
+      if(hide)
+      {
+         return ModalDialogUtils.JSONToCloseDialog();
+      }
+       return zone.getBody();
    }
    
-   void onFailure()
+   Object onFailure()
    {
       message = String.format("Submission failed");
+      return zone.getBody();
    }
    
-   Object onSubmit()
+   void onSelectedFromSubmitAndHide()
    {
-      return zone;
+      hide = true;
    }
    
    Block onShowDialog()
    {
+      form.clearErrors();
       return formBlock;
    }
 }

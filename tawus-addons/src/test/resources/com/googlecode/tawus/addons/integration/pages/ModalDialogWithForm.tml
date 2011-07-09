@@ -1,24 +1,29 @@
 <html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <head>
+      <style>
+         body { font-size:0.9em;}
+      </style>
+   </head>
    <body>
-      <a t:type='tawus/modaldialog' title='Dialog Form'>Open Dialog With Form</a>
+      <a t:type='tawus/modaldialog' width='600' height='400' title='Dialog Form'>Open Dialog With Form</a>
 
       <t:block t:id='formBlock'>
          <div t:type='zone' t:id='zone' id='zone'>
             <div style='font-size:12px;font-weight:bold;color:green'>${message}</div>
-            <form t:type='form' t:zone='zone'>
+            <form t:id='form' t:clientValidation='none' t:type='form' t:zone='zone'>
                <t:errors />
-               <label t:type='label' for='name'>Name : 
+               <label t:type='label' for='name'>Name : <br/>
                   <input t:type='textfield' t:id='name' t:validate='required'/>
                </label>
-               <br />
+               <br /><br/>
 
-               <label t:type='label' for='address'>Address: 
+               <label t:type='label' for='address'>Address: <br/>
                   <textarea t:type='textarea' t:id='address' t:validate='required'></textarea>
                </label>
 
                 <br/>
-                <input t:type='submit' value='submit' t:id='submit'/>
-               <input t:type='submit' value='submit And Hide' t:id='submitAndHide' t:mixins='tawus/hidemodaldialog'/>
+                <input t:type='submit' value='submit' t:id='submit' mode='cancel'/>
+               <input t:type='submit' value='submit And Hide' t:id='submitAndHide'/>
             </form>
          </div>
       </t:block>

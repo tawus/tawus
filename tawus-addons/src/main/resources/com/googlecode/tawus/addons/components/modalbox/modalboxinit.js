@@ -18,15 +18,22 @@ Tapestry.Initializer.setupModalDialog = function(params)
    // Setup zone
    var element = $(params.id);
    $T(element).zoneId = params.zone;
+
+   var resizeModalbox = function(event)
+   {
+      Modalbox.resizeToContent();
+   };
    
    var showModalbox = function()
    {
          var loadContentWithScripts = function(transport) 
          {
-            var node = new Element('div').update(transport.responseJSON.content);
-            params.options.onContentLoaded = function()
+            var reply = transport.responseJSON;
+            var node = new Element('div').update(reply.content);
+            
+            params.options.afterLoad = function()
             {
-               Tapestry.loadScriptsInReply(transport.responseJSON, function() {});
+               Tapestry.loadScriptsInReply(reply, function() {});
             };
             
             params.options.afterHide = function()
@@ -36,9 +43,11 @@ Tapestry.Initializer.setupModalDialog = function(params)
                   var zoneManager = Tapestry.findZoneManager(element);
                   zoneManager.updateFromURL(params.closeLink);    
                }
+               Event.stopObserving(document, Tapestry.ZONE_UPDATED_EVENT, resizeModalbox);
             };
             
             Modalbox.show(node, params.options);
+            Event.observe(document, Tapestry.ZONE_UPDATED_EVENT, resizeModalbox);
          };
 
          Tapestry.ajaxRequest(params.openLink, {
@@ -48,17 +57,11 @@ Tapestry.Initializer.setupModalDialog = function(params)
    };
    
    Event.observe($(params.id), params.event, showModalbox);
-
+   
 };
 
 Tapestry.Initializer.hideModalDialog = function(params)
 {
-   var hideDialog = function()
-   {
-      Modalbox.hide();   
-   };
-   
-   Event.observe($(params.id), params.event, hideDialog);
-
+   Modalbox.hide();   
 };
 
