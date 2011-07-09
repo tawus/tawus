@@ -1,0 +1,14 @@
+<html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+
+   <body>
+      <div t:type='zone' t:id='zone' id='zone'>
+         <div t:type='tawus/tabpanel' t:zone='zone' t:tabs='tabA, tabB' t:active='prop:active'>
+
+            <div t:type='tawus/tab' title='Tab A' t:id='tabA'>Content of Tab A</div>
+
+            <div t:type='tawus/tab' title='Tab B' t:id='tabB'>Content of Tab B</div>
+
+         </div>
+      </div>
+   </body>
+</html>

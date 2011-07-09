@@ -15,6 +15,8 @@
 // 
 
 apply plugin: "eclipse"
+manifest.mainAttributes(
+'Tapestry-Module-Classes': 'com.googlecode.tawus.addons.services.TawusAddonsModule')
 
 dependencies {
    compile "org.apache.tapestry:tapestry-core:5.2.5"
@@ -24,11 +26,5 @@ dependencies {
    testCompile "org.apache.tapestry:tapestry-test:5.2.5"
    testCompile "org.testng:testng:5.14.6"
    testCompile "org.easymock:easymock:2.5.2"
-}
-
-jar{
-   manifest {
-    attributes 'Tapestry-Module-Classes': 'com.googlecode.tawus.addons.services.TawusAddonsModule'
-   }
 }
 

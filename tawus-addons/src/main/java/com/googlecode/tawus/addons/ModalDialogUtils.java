@@ -5,7 +5,7 @@ import org.apache.tapestry5.json.JSONObject;
 
 public class ModalDialogUtils
 {
-   public static JSONObject JSONToCloseDialog()
+   public static JSONObject createJSONToCloseDialog()
    {
       return new JSONObject().put("inits", getInitializerArray());
    }

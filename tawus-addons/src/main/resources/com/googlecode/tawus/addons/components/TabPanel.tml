@@ -1,0 +1,20 @@
+<t:container xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <div class='t-tab-panel'>
+      <ul class='t-tab-links'>
+         <t:loop t:source='tabs' t:value='currentTabId' t:index='index'>
+
+            <t:unless test='currentTab.disabled'>
+            
+               <li class='${cssClass}'>
+                  <a t:zone='inherit:zone' t:type='eventlink' t:context='index' t:event='selectTab'>${currentTab.title}</a>
+               </li>
+               
+            </t:unless>
+            
+         </t:loop>
+      </ul>
+      <div class='t-tab-content'>
+         <t:body/>
+      </div>
+   </div>
+</t:container>

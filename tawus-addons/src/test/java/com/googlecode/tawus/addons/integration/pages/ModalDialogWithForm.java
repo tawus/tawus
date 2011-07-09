@@ -46,7 +46,7 @@ public class ModalDialogWithForm
       message = String.format("Hello %s, your address is %s", name, address);
       if(hide)
       {
-         return ModalDialogUtils.JSONToCloseDialog();
+         return ModalDialogUtils.createJSONToCloseDialog();
       }
        return zone.getBody();
    }
