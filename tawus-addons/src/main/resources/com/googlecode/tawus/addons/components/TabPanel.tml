@@ -6,7 +6,7 @@
             <t:unless test='currentTab.disabled'>
             
                <li class='${cssClass}'>
-                  <a t:zone='inherit:zone' t:type='eventlink' t:context='index' t:event='selectTab'>${currentTab.title}</a>
+                  <a t:zone='inherit:zone' t:type='eventlink' t:context='currentTabId' t:event='selectTab'>${currentTab.title}</a>
                </li>
                
             </t:unless>

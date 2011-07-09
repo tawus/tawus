@@ -1,13 +1,31 @@
+// 
+// Copyright 2011 Taha Hafeez Siddiqi (tawushafeez@gmail.com)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// 
 package com.googlecode.tawus.addons.components;
 
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.ComponentResources;
+import org.apache.tapestry5.EventConstants;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.internal.TapestryInternalUtils;
+import org.apache.tapestry5.internal.util.CaptureResultCallback;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.internal.util.TapestryException;
 import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
@@ -18,6 +36,7 @@ import com.googlecode.tawus.addons.internal.TabContext;
  * Tab Panel which acts as a container for the {@Tab tabs}
  * 
  */
+@Import(stylesheet = "tab-panel.css")
 public class TabPanel implements ClientElement
 {
    /**
@@ -33,6 +52,7 @@ public class TabPanel implements ClientElement
    /**
     * Zone to be updated on each click
     */
+   @SuppressWarnings("unused")
    @Parameter(defaultPrefix = BindingConstants.LITERAL)
    private String zone;
 
@@ -123,20 +143,18 @@ public class TabPanel implements ClientElement
       return assignedClientId;
    }
 
-   Object onSelectTab(int index)
+   Object onSelectTab(String selected)
    {
-      if(index >= getTabs().length)
-      {
-         throw new IllegalArgumentException("Invalid tab index : " + index);
-      }
-      active = getTabs()[index];
+      active = selected;
       
-      if(request.isXHR())
+      CaptureResultCallback<Object> callback = new CaptureResultCallback<Object>();
+      
+      boolean handled = resources.triggerEvent(EventConstants.SELECTED, new Object[]{selected}, callback);
+      if(request.isXHR() & !handled)
       {
-         return ((Zone)resources.getContainerResources().getEmbeddedComponent(zone)).getBody();
-      }else {
-         return null;
+         throw new TapestryException(String.format("Event %s not handled", EventConstants.SELECTED), null);
       }
+      return callback.getResult();
    }
 
    public String getCssClass()

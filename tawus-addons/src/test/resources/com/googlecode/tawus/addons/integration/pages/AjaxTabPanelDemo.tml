@@ -1,7 +1,8 @@
 <html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
 
    <body>
-         <div t:type='tawus/tabpanel' t:tabs='tabA, tabB,tabC' t:active='prop:active' t:id='outer'>
+      <div t:type='zone' t:id='outerZone' id='outerZone'>
+         <div t:type='tawus/tabpanel' t:id='outerTab' t:zone='outerZone' t:tabs='tabA, tabB,tabC'>
 
             <div t:type='tawus/tab' title='Tab A' t:id='tabA'>Content of Tab A</div>
 
@@ -9,9 +10,8 @@
 
             <div t:type='tawus/tab' title='Tab C' t:id='tabC'>
             <br/><br/>
-               <div style='padding:5px 15px'>
-                  Content of Tab C
-                  <div t:type='tawus/tabpanel' t:tabs='tabX, tabY' t:active='prop:active2'>
+               <div style='padding:5px 15px' t:type='zone' t:id='innerZone' id='innerZone'>
+                  <div t:type='tawus/tabpanel' t:id='innerTab' t:zone='innerZone' t:tabs='tabX, tabY'>
 
                      <div t:type='tawus/tab' title='Tab X' t:id='tabX'>Content of Tab X</div>
 
@@ -20,5 +20,6 @@
                </div>
             </div>
          </div>
+      </div>
    </body>
 </html>

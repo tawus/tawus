@@ -1,14 +1,22 @@
 package com.googlecode.tawus.addons.integration.pages;
 
+import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.corelib.components.Zone;
 
-public class TabPanelDemo
+public class AjaxTabPanelDemo
 {
    @Property
    private String active;
    
    @Property
    private String active2;
+   
+   @InjectComponent
+   private Zone outerZone;
+   
+   @InjectComponent
+   private Zone innerZone;
   
    void onActivate(String active)
    {
@@ -29,6 +37,16 @@ public class TabPanelDemo
          return active + "-" + active2;
       }
       return active;
+   }
+   
+   Zone onSelectedFromOuterTab()
+   {
+      return outerZone;
+   }
+   
+   Zone onSelectedFromInnerTab()
+   {
+      return innerZone;
    }
    
 }

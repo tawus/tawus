@@ -16,6 +16,12 @@
          <li>
             <a href='ModalDialogWithForm'>Modal Dialog With Form</a>
          </li>
+         <li>
+            <a href='TabPanelDemo'>TabPanel Demo</a>
+         </li>
+         <li>
+            <a href='AjaxTabPanelDemo'>Ajax TabPanel Demo</a>
+         </li>
       </ul>
    </body>
 </html>
