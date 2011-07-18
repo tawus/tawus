@@ -2,6 +2,7 @@
 <suite name="AjaxUpload" annotations="1.5" verbose="2">
 <test name="Integration Tests" enabled="true">
    <parameter name="tapestry.web-app-folder" value="src/test/webapp"/>
+   <!--<parameter name="tapestry.browser-start-command" value="*googlechrome"/>-->
   <classes>
       <class name="com.googlecode.tawus.ajaxupload.components.AjaxUploadIntegrationTest"/>
       <class name="com.googlecode.tawus.ajaxupload.components.AjaxUploadXHRIntegrationTest"/>

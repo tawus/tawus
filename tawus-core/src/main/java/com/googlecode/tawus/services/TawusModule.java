@@ -1,7 +1,5 @@
 package com.googlecode.tawus.services;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +10,6 @@ import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Autobuild;
 import org.apache.tapestry5.ioc.annotations.Contribute;
-import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.services.ChainBuilder;
 import org.apache.tapestry5.ioc.services.StrategyBuilder;
 import org.apache.tapestry5.ioc.util.UnknownValueException;
@@ -80,23 +77,10 @@ public class TawusModule {
     * @param tawusDefaultDataTypeAnalyzer
     */
    public static void contributeDataTypeAnalyzer(
-         OrderedConfiguration<DataTypeAnalyzer> configuration,
-         @InjectService("TawusDefaultDataTypeAnalyzer") DataTypeAnalyzer tawusDefaultDataTypeAnalyzer) {
+         OrderedConfiguration<DataTypeAnalyzer> configuration){
       configuration.add("entity", new EntityAnalyzer("entity"), "before:Default");
       configuration.add("entity_list", new EntityListAnalyzer("entity_list"), "before:Default");
       configuration.add("time", new TimeAnalyzer("time"), "before:Default");
-      configuration.add("tawus", tawusDefaultDataTypeAnalyzer);
-   }
-
-   public void contributeTawusDefaultDataTypeAnalyzer(
-         @SuppressWarnings("rawtypes") MappedConfiguration<Class, String> configuration) {
-      configuration.add(Object.class, "");
-      configuration.add(String.class, "text");
-      configuration.add(Number.class, "number");
-      configuration.add(Enum.class, "enum");
-      configuration.add(Boolean.class, "boolean");
-      configuration.add(Date.class, "date");
-      configuration.add(Calendar.class, "calendar");
    }
 
    /**
@@ -114,7 +98,7 @@ public class TawusModule {
       addEditBlock(configuration, "boolean");
       addEditBlock(configuration, "password");
       addEditBlock(configuration, "calendar");
-      addEditBlock(configuration, "long_text");
+      addEditBlock(configuration, "longtext");
       addEditBlock(configuration, "entity");
       addEditBlock(configuration, "entity_list");
       addEditBlock(configuration, "time");

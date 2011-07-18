@@ -1,0 +1,12 @@
+<html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd' xmlns:p='tapestry:parameter'>
+
+   <body>
+      <div t:mixins='tawus/tooltip' t:type='any' t:tip='My Tip' t:tipEvent='toolTip' t:tipTitle='My Ajax Tooltip'>
+      This is text, hover over it to see the tooltip
+      </div>
+      
+      <t:block t:id='toolTip'>
+         This content is extracted using Ajax
+      </t:block>
+   </body>
+</html>

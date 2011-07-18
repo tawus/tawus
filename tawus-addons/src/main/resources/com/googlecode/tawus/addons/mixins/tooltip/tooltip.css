@@ -1,0 +1,29 @@
+#_tooltip {
+   position:absolute;
+   display:block;
+   background:url(tt_left.gif) top left no-repeat;
+}
+
+#_tooltip_top {
+   display:block;
+   height:5px;
+   margin-left:5px;
+   background:url(tt_top.gif) top right no-repeat;
+   overflow:hidden;
+}
+
+#_tooltip_content {
+   display:block;
+   padding:2px 12px 3px 7px;
+   margin-left:5px;
+   background:#666;
+   color:#fff;
+}
+
+#_tooltip_bottom {
+   display:block;
+   height:5px;
+   margin-left:5px;
+   background:url(tt_bottom.gif) top right no-repeat;
+   overflow:hidden;
+}

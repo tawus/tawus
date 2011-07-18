@@ -90,7 +90,7 @@
       </t:tawus.tdEditor>
    </t:block>
 
-   <t:block id="long_text">
+   <t:block id="longtext">
       <t:tawus.tdEditor>
          <p:label>
             <t:label for='textarea' />

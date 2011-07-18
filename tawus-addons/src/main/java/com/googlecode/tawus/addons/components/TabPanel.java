@@ -107,19 +107,29 @@ public class TabPanel implements ClientElement
 
    void setupRender()
    {
-      if(tabs == null || getTabs().length == 0)
-      {
-         throw new IllegalArgumentException("You must specify atleast one tab");
-      }
-      
-      if(active == null)
-      {
-         active = getTabs()[0];
-      }
+      verifyAtleastOneTabIsPresent();
+
+      setActiveTab();
 
       assignedClientId = javaScriptSupport.allocateClientId(clientId);
    }
 
+   private void verifyAtleastOneTabIsPresent()
+   {
+      if(tabs == null || getTabs().length == 0)
+      {
+         throw new IllegalArgumentException("You must specify atleast one tab");
+      }
+   }
+
+   private void setActiveTab()
+   {
+      if(active == null)
+      {
+         active = getTabs()[0];
+      }      
+   }
+   
    void beginRender()
    {
       environment.push(TabContext.class, new TabContext()

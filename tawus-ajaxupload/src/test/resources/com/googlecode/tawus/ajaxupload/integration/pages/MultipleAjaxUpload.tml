@@ -1,0 +1,28 @@
+<html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <body>
+      <form t:type='Form' t:id='uploadForm'> <!--enctype="multipart/form-data"> -->
+
+         <table>
+            <t:errors />
+            <tr>
+               <td>
+                  <label for='my' accesskey='m'>檔案選取：</label>
+               </td>
+               <td class="ui-widget-content">
+                  <!--<input t:type="upload" t:id="file" validate="required"/> -->
+                  <!--<input t:type='tawus/ajaxupload' t:id='uploads' maxFiles='2'/> -->
+                  <t:ajaxUpload t:id='ajaxUpload' value='uploads' />
+               </td>
+            </tr>
+            <tr>
+               <td alignt="right">
+                  <br></br>
+                  <br></br>
+                  <!--<input type="button" id="uploadButton" value="上傳" align="right"/> -->
+                  <input id="uploadButton" type="submit" value="Submit" />
+               </td>
+            </tr>
+         </table>
+      </form>
+   </body>
+</html>

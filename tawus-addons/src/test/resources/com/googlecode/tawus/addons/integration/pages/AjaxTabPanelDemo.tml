@@ -11,6 +11,7 @@
             <div t:type='tawus/tab' title='Tab C' t:id='tabC'>
             <br/><br/>
                <div style='padding:5px 15px' t:type='zone' t:id='innerZone' id='innerZone'>
+               Content of Tab C
                   <div t:type='tawus/tabpanel' t:id='innerTab' t:zone='innerZone' t:tabs='tabX, tabY'>
 
                      <div t:type='tawus/tab' title='Tab X' t:id='tabX'>Content of Tab X</div>
