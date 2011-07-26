@@ -1,6 +1,9 @@
 <t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
-   <h1>Ajax Upload Integration Testing</h1>
+   <h3>Ajax Upload Integration Testing</h3>
    <hr />
-   <a t:type='pagelink' href='#' t:page='singleajaxupload'>Single Ajax Upload</a><bt/>
-   <a t:type='pagelink' href='#' t:page='singleajaxupload'>Single Ajax Upload XHR</a><br/>
+   <ul>
+      <li><a t:type='pagelink' href='#' t:page='singleajaxupload'>Single Ajax Upload</a></li>
+      <li><a t:type='pagelink' href='#' t:page='singleajaxupload' t:context='literal:context'>Single Ajax Upload With Context</a></li>
+      <li><a t:type='pagelink' href='#' t:page='singleajaxupload'>Single Ajax Upload XHR</a></li>
+   </ul>
 </t:layout>

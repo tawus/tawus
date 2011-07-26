@@ -25,6 +25,23 @@ public class AjaxUploadIntegrationTest extends SeleniumTestCase
    }
    
    @Test
+   public void check_ajax_upload_works_for_single_file_with_context() throws Exception
+   {
+      openBaseURL();
+      clickAndWait("link=Single Ajax Upload With Context");
+      
+      File file = new File("src/test/data/hello.txt");
+      
+      type("textValue", file.getCanonicalPath());
+      type("uploads_file", file.getCanonicalPath());
+      Thread.sleep(2000);
+      clickAndWait("//input[@type='submit'][1]");
+      
+      assertText("message", "File uploaded");
+      assertText("content", "Hello World");
+   }
+   
+   @Test
    public void check_ajax_upload_works_on_resubmission_after_validation_error() throws Exception
    {
       openBaseURL();

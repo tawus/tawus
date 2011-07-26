@@ -352,7 +352,17 @@ qq.FileUploaderBasic =
                      },
                      onRemove : function(serverIndex)
                      {
-                        Tapestry.ajaxRequest(this.removeLink + '/' + serverIndex, {method:'get'});
+                        var url;
+                        if(this.removeLink.indexOf("?") == -1)
+                        {
+                           url = this.removeLink + "?serverIndex=" + serverIndex;
+                        }
+                        else 
+                        {
+                           url = this.removeLink + "&serverIndex=" + serverIndex;   
+                        }
+                        
+                        Tapestry.ajaxRequest(url, {method:'get'});
                      },
 
                      // messages
