@@ -22,6 +22,9 @@
          <li>
             <a href='AjaxTabPanelDemo'>Ajax TabPanel Demo</a>
          </li>
+         <li>
+            <a href='PreventDoubleSubmissionDemo'>Prevent Form Submission Demo</a>
+         </li>
       </ul>
    </body>
 </html>

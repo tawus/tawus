@@ -1,0 +1,17 @@
+<html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+
+   <body>
+   
+      Counter : <span id='counter'>${counter}</span>  | <a href='#' t:type='eventlink' t:event='reset'>reset</a><br/>
+      <form t:type='form'>
+         <input id='submit' type='submit' value='Submit'/>      
+      </form>
+   
+      <br/>
+      
+      <form t:type='form' t:mixins='tawus/preventdoublesubmission'>
+         <input id='submitPreventDouble' type='submit' value='Prevent Double Submit'/>
+      </form>
+   </body>
+
+</html>

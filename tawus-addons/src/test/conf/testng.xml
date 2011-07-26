@@ -8,6 +8,7 @@
 <test name="Integration Tests" enabled="true">
    <parameter name="tapestry.web-app-folder" value="src/test/webapp"/>
   <classes>
+     <class name="com.googlecode.tawus.addons.integration.PreventDoubleSubmissionTest"/>
      <class name="com.googlecode.tawus.addons.integration.ZoneRefreshTest"/>
      <class name="com.googlecode.tawus.addons.integration.ModalDialogTest"/>
      <class name="com.googlecode.tawus.addons.integration.TabPanelTest"/>
