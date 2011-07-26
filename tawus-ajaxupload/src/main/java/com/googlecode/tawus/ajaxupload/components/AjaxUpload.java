@@ -4,7 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Vector;
 
 import org.apache.tapestry5.Binding;
 import org.apache.tapestry5.BindingConstants;
@@ -134,6 +136,10 @@ public class AjaxUpload extends AbstractField
          FieldValidationSupport fieldValidationSupport, JavaScriptSupport javaScriptSupport)
    {
       this.value = value;
+      if(value == null)
+      {
+         this.value = new Vector<UploadedFile>();
+      }
       if (validate != null)
          this.validate = validate;
       this.multipartDecoder = multipartDecoder;
@@ -143,6 +149,14 @@ public class AjaxUpload extends AbstractField
       this.javaScriptSupport = javaScriptSupport;
       this.ajaxDecoder = ajaxDecoder;
       maxFiles = 1;
+   }
+   
+   void setupRender()
+   {
+      if (value == null)
+      {
+         value = new Vector<UploadedFile>();
+      }
    }
 
    void beginRender(MarkupWriter writer)
@@ -294,11 +308,6 @@ public class AjaxUpload extends AbstractField
          uploadedFile = createUploadedFileFromMultipartForm();
       }
 
-      if (value == null)
-      {
-         value = new ArrayList<UploadedFile>();
-      }
-
       value.add(uploadedFile);
 
       return createSuccessResponse(value.size() - 1); // Last index
@@ -413,15 +422,7 @@ public class AjaxUpload extends AbstractField
 
    private void removeNullsFromValue()
    {
-      List<UploadedFile> uploads = new ArrayList<UploadedFile>();
-      for (UploadedFile upload : value)
-      {
-         if (upload != null)
-         {
-            uploads.add(upload);
-         }
-      }
-      value = uploads;
+      value.removeAll(Collections.singleton(null));
    }
 
    public List<UploadedFile> getValue()

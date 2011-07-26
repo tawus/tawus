@@ -2,6 +2,7 @@ package com.googlecode.tawus.ajaxupload.components;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import org.apache.tapestry5.BaseValidationDecorator;
 import org.apache.tapestry5.ComponentResources;
@@ -114,6 +115,7 @@ public class AjaxUploadTest extends TapestryTestCase
       ComponentResources resources = mockComponentResources();
 
       AjaxUpload component = new AjaxUpload();
+      component.injectValue(new Vector<UploadedFile>());
       component.injectResources(resources);
       setupCreateEventLink(resources, "upload", "uploadLink");
 
@@ -128,6 +130,7 @@ public class AjaxUploadTest extends TapestryTestCase
       ComponentResources resources = mockComponentResources();
 
       AjaxUpload component = new AjaxUpload();
+      component.injectValue(new Vector<UploadedFile>());
       component.injectResources(resources);
       setupCreateEventLink(resources, "cancelUpload", "cancelUploadLink");
 
@@ -144,6 +147,7 @@ public class AjaxUploadTest extends TapestryTestCase
       ComponentResources resources = mockComponentResources();
 
       AjaxUpload component = new AjaxUpload();
+      component.injectValue(new Vector<UploadedFile>());
       component.injectResources(resources);
       setupCreateEventLink(resources, "removeUpload", "removeUploadLink");
 
@@ -158,7 +162,7 @@ public class AjaxUploadTest extends TapestryTestCase
    public void check_current_upload_list()
    {
       AjaxUpload component = new AjaxUpload();
-
+      
       List<UploadedFile> value = new ArrayList<UploadedFile>();
       UploadedFile uploadedFile = mockUploadedFile();
       value.add(uploadedFile);
@@ -280,6 +284,7 @@ public class AjaxUploadTest extends TapestryTestCase
    public void check_on_remove_works_for_null_value()
    {
       AjaxUpload component = new AjaxUpload();
+      component.injectValue(new Vector<UploadedFile>());
       component.onRemoveUpload(0);
    }
 
@@ -287,9 +292,9 @@ public class AjaxUploadTest extends TapestryTestCase
    public void check_on_remove_works_for_boundary_values()
    {
       AjaxUpload component = new AjaxUpload();
-
+      
       // Set 2 elements
-      List<UploadedFile> uploadedFiles = new ArrayList<UploadedFile>();
+      List<UploadedFile> uploadedFiles = new Vector<UploadedFile>();
       uploadedFiles.add(mockUploadedFile());
       uploadedFiles.add(mockUploadedFile());
 
@@ -345,27 +350,6 @@ public class AjaxUploadTest extends TapestryTestCase
       assertEquals(component.getValue().size(), 2);
       component.processSubmission("test");
       assertEquals(component.getValue().size(), 1);
-   }
-
-   @Test
-   public void process_submission_ignores_null_value() throws Exception
-   {
-      ComponentResources resources = mockComponentResources();
-      FieldValidationSupport support = mockFieldValidationSupport();
-      @SuppressWarnings("unchecked")
-      FieldValidator<Object> validate = mockFieldValidator();
-
-      AjaxUpload component = new AjaxUpload(null, validate, null, null, null, resources, support, null);
-
-      support.validate(null, resources, validate);
-
-      replay();
-
-      component.processSubmission("test");
-
-      verify();
-
-      assertNull(component.getValue());
    }
 
    protected final UploadedFile mockUploadedFile()
