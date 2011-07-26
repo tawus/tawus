@@ -34,6 +34,22 @@ public class SingleAjaxUpload
    @InjectComponent
    private Form form;
    
+   private String context;
+   
+   void onActivate()
+   {
+   }
+   
+   void onActivate(String context)
+   {
+      this.context = context;
+   }
+   
+   String onPassivate()
+   {
+      return context;
+   }
+   
    void onValidateFromForm()
    {
       if(textValue.equals("Fail"))

@@ -22,6 +22,7 @@ import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Mixin;
 import org.apache.tapestry5.annotations.Parameter;
+import org.apache.tapestry5.annotations.RequestParameter;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.corelib.base.AbstractField;
 import org.apache.tapestry5.corelib.mixins.RenderDisabled;
@@ -367,7 +368,7 @@ public class AjaxUpload extends AbstractField
       }
    }
 
-   void onRemoveUpload(int serverIndex)
+   void onRemoveUpload(@RequestParameter("serverIndex") int serverIndex)
    {
       // We use index of an uploadedFile in 'value' as a key at
       // the client side and if the uploaded file is removed we cleanup and set
