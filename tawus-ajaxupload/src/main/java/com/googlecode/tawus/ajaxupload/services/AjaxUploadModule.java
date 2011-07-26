@@ -30,7 +30,7 @@ public class AjaxUploadModule
 
    public static void bind(ServiceBinder binder)
    {
-      binder.bind(AjaxUploadDecoder.class, AjaxUploadDecoderImpl.class);
+      binder.bind(AjaxUploadDecoder.class, AjaxUploadDecoderImpl.class).scope(ScopeConstants.PERTHREAD);
    }
 
    @Contribute(ComponentClassResolver.class)
