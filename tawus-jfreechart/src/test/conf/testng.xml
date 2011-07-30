@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Tawus-JFreeChart" annotations="1.5" verbose="2">
+   <test name="Integration Tests" enabled="true">
+      <parameter name="tapestry.web-app-folder" value="src/test/webapp"/>
+     <packages>
+         <package name="com.googlecode.tawus.jfreechart"/>
+      </packages>
+   </test>
+</suite>

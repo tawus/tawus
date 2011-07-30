@@ -1,0 +1,20 @@
+apply plugin: "groovy"
+apply plugin: "eclipse"
+
+sourceSets.main.java.srcDirs
+
+dependencies {
+  compile "jfree:jfreechart:1.0.12"
+  compile "org.apache.tapestry:tapestry-beanvalidator:5.2.5"
+  compile "org.apache.tapestry:tapestry-core:5.2.5"
+  testCompile "org.apache.tapestry:tapestry-test:5.2.5"
+  compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.0.Final"
+  testCompile "org.hibernate:hibernate-validator:4.1.0.Final"
+  compile "javax.servlet:servlet-api:2.5"
+}
+jar {
+    manifest {
+        attributes 'Tapestry-Module-Classes': 'com.googlecode.tawus.services.TawusModule'
+    }
+}
+

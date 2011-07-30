@@ -1,0 +1,12 @@
+<html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <body>
+      <img src='${mylink}' />
+      
+      <br/>
+      
+      <t:loop source='[1,2,3]' t:value='index'>
+         <t:jpegchart chart='chart' width='500' height='200' context='index'/>
+      </t:loop>
+      
+   </body>
+</html>

@@ -1,0 +1,12 @@
+<html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <body>
+   
+      <t:zone t:id='myZone' id='zone'>${message}</t:zone>
+      
+      <t:pngchart t:id='chartWithoutMap' cliendId='chartWithoutMap' chart='chart' width='300' height='200' />
+      
+      <t:pngchart t:id='chartWithMap' cliendId='chartWithMap' chart='chart' width='300' height='200'
+         useMap='true' zone='zone' />
+         
+   </body>
+</html>

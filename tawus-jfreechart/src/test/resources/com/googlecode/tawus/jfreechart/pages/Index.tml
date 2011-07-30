@@ -1,0 +1,11 @@
+<html>
+   <head>
+      <title>Tawus-JFreeChart</title>
+   </head>
+   <body>
+      <ul>
+         <li><a href='JPEGChartDemo'>JPEGChart Demo</a></li>
+         <li><a href='PNGChartDemo'>PNGChart Demo</a></li>
+      </ul>
+   </body>
+</html>
