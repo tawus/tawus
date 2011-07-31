@@ -38,7 +38,7 @@ subprojects {
 
    }
 
-   test { useJUnit(); }
+   check.dependsOn testng
 
    repositories {
      mavenCentral()

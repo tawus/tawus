@@ -199,7 +199,7 @@ public class AjaxUpload extends AbstractField
       }
 
       spec.put("element", getElementId());
-      spec.put("sizeField", getControlName());
+      spec.put("sizeField", getClientId());
       spec.put("uploadText", messages.get("ajaxupload.upload-text"));
       spec.put("dropText", messages.get("ajaxupload.drop-text"));
       spec.put("cancelText", messages.get("ajaxupload.cancel-text"));
