@@ -28,6 +28,9 @@ public class ToolTip
    @Parameter(defaultPrefix = BindingConstants.LITERAL)
    private String tipEvent;
    
+   @Parameter
+   private Object [] tipContext;
+   
    @InjectContainer
    private ClientElement element;
    
@@ -58,7 +61,7 @@ public class ToolTip
 
    private String createAjaxTipEvent()
    {
-      return resources.createEventLink(tipEvent).toURI();
+      return resources.createEventLink(tipEvent, tipContext).toURI();
    }
 
    private JSONObject createOptionsFromInformalParameters()
