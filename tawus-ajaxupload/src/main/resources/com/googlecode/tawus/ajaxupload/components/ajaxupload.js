@@ -682,9 +682,9 @@ qq.FileUploader =
                                  + '<span class="qq-upload-file"></span>'
                                     + '<span class="qq-upload-spinner"></span>'
                                     + '<span class="qq-upload-size"></span>'
-                                    + '<a class="qq-upload-cancel" href="#">Cancel</a>'
-                                    + '<a class="qq-upload-remove" href="#">Remove</a>'
-                                    + '<span class="qq-upload-failed-text">Failed</span>'
+                                    + '<a class="qq-upload-cancel" href="#">'+ this._options.cancelText + '</a>'
+                                    + '<a class="qq-upload-remove" href="#">'+ this._options.removeText + '</a>'
+                                    + '<span class="qq-upload-failed-text">'+ this._options.failedText + '</span>'
                                     + '</li>',
 
                            classes : {
@@ -811,7 +811,7 @@ qq.extend(qq.FileUploader.prototype, {
          {
             text =
                   Math.round(loaded / total * 100)
-                        + '% from '
+                        + '% / '
                            + this._formatSize(total);
          }
          else
