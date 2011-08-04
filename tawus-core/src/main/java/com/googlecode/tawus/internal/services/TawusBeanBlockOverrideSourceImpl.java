@@ -9,14 +9,17 @@ import org.apache.tapestry5.services.BeanBlockOverrideSource;
 
 import com.googlecode.tawus.services.TawusBeanBlockOverrideSource;
 
-public class TawusBeanBlockOverrideSourceImpl extends BeanBlockOverrideSourceImpl implements TawusBeanBlockOverrideSource {
+public class TawusBeanBlockOverrideSourceImpl extends BeanBlockOverrideSourceImpl implements
+      TawusBeanBlockOverrideSource
+{
 
-   public TawusBeanBlockOverrideSourceImpl(RequestPageCache pageCache,
-         Collection<BeanBlockContribution> configuration) {
+   public TawusBeanBlockOverrideSourceImpl(RequestPageCache pageCache, Collection<BeanBlockContribution> configuration)
+   {
       super(pageCache, configuration);
    }
 
-   public BeanBlockOverrideSource getBeanBlockOverrideSource() {
+   public BeanBlockOverrideSource getBeanBlockOverrideSource()
+   {
       return this;
    }
 

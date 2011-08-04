@@ -12,23 +12,29 @@ import com.googlecode.tawus.EntityDAONotFoundException;
 import com.googlecode.tawus.services.EntityDAO;
 import com.googlecode.tawus.services.EntityDAOSource;
 
-public class EntityDAOServiceDef implements ServiceDef {
+public class EntityDAOServiceDef implements ServiceDef
+{
 
    private EntityDef entityDef;
 
-   public EntityDAOServiceDef(EntityDef entityDef) {
+   public EntityDAOServiceDef(EntityDef entityDef)
+   {
       this.entityDef = entityDef;
    }
 
-   public ObjectCreator createServiceCreator(final ServiceBuilderResources resources) {
-      return new ObjectCreator() {
+   public ObjectCreator createServiceCreator(final ServiceBuilderResources resources)
+   {
+      return new ObjectCreator()
+      {
 
-         public Object createObject() {
+         public Object createObject()
+         {
             Object object = resources.getService(EntityDAOSource.class).get(entityDef.getType());
-            
-            if(object == null){
-               throw new EntityDAONotFoundException(
-                     "Could not find EntityDAO implementation for " + entityDef.getType());
+
+            if(object == null)
+            {
+               throw new EntityDAONotFoundException("Could not find EntityDAO implementation for "
+                     + entityDef.getType());
             }
             return object;
          }
@@ -36,25 +42,30 @@ public class EntityDAOServiceDef implements ServiceDef {
       };
    }
 
-   public String getServiceId() {
+   public String getServiceId()
+   {
       return entityDef.getServiceId();
    }
 
    @SuppressWarnings("rawtypes")
-   public Set<Class> getMarkers() {
+   public Set<Class> getMarkers()
+   {
       return CollectionFactory.newSet();
    }
 
    @SuppressWarnings("rawtypes")
-   public Class getServiceInterface() {
+   public Class getServiceInterface()
+   {
       return EntityDAO.class;
    }
 
-   public String getServiceScope() {
+   public String getServiceScope()
+   {
       return ScopeConstants.DEFAULT;
    }
 
-   public boolean isEagerLoad() {
+   public boolean isEagerLoad()
+   {
       return false;
    }
 

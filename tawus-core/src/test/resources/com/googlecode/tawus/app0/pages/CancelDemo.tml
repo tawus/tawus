@@ -1,0 +1,15 @@
+<t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+
+   <div t:type='zone'>
+      <div id='message'>${message}</div>
+   </div>
+   
+   <form t:type='form' t:id='form'>
+      <t:tawus.cancel t:id='cancelForm' />
+   </form>
+
+   <form t:type='form' t:id='ajaxForm' t:zone='zone'>
+      <t:tawus.cancel t:id='cancelAjaxForm' value='Ajax Cancel' />
+   </form>
+   
+</t:layout>

@@ -21,26 +21,24 @@ import org.apache.tapestry5.services.BeanModelSource;
 import com.googlecode.tawus.internal.table.TableColumn;
 import com.googlecode.tawus.internal.table.TableColumnEncoder;
 
-
 /**
- * An alternative bean display which displays the form in 
- * a configurable table rather than divs
- * The reorder parameter has been modified to accomidate
- * the same. A include parameter can take a list of row configurations.
- * separated by semicolon(',')<p/>
- * Each row configuration consists of a list of column configurations
- * separated by comma(,)<p/>
- * Each column configuration consisting of four fields separated by 
+ * An alternative bean display which uses &lt;tr&gt;/&lt;td&gt; tags instead of
+ * &lt;div&gt; tags. The <code>include</code> parameter has been modified to
+ * accomidate the same. A include parameter can take a list of row
+ * configurations. separated by semicolon(',')
+ * 
+ * <p/>
+ * Each row configuration consists of a list of column configurations separated
+ * by comma(,)
+ * <p/>
+ * 
+ * Each column configuration consisting of four fields separated by
  * <strong>'/'</strong>. The order is
- * fieldName/columnSeparator/rowSeparator/rowClass 
+ * fieldName/columnSeparator/rowSeparator/rowClass
  */
 @SupportsInformalParameters
-public class EntityDisplay {
-
-   /* Component resources */
-   @Inject
-   @Property(write = false)
-   private ComponentResources resources;
+public class EntityDisplay
+{
 
    /* Bean model */
    @SuppressWarnings("rawtypes")
@@ -61,20 +59,16 @@ public class EntityDisplay {
    private String include;
 
    /** Column multiple */
-   @Parameter(value="2", allowNull = false)
+   @Parameter(value = "2", allowNull = false)
    private int colspanMultiple;
-
-   @SuppressWarnings("unused")
-   @Component(id = "propertyDisplay", parameters = { "overrides=overrides",
-         "object=object", "model=propertyModel" })
-   private PropertyDisplay propertyDisplay;
 
    /** Property overrides */
    @SuppressWarnings("unused")
    @Parameter(value = "resources", required = true, allowNull = false)
    @Property
    private PropertyOverrides overrides;
-   
+
+   /** If set to true, help text will be show */
    @SuppressWarnings("unused")
    @Parameter(value = "true", defaultPrefix = BindingConstants.LITERAL)
    @Property
@@ -102,27 +96,43 @@ public class EntityDisplay {
    @Property
    private BeanModelSource modelSource;
 
-   public PropertyModel getPropertyModel(){
+   @Inject
+   @Property(write = false)
+   private ComponentResources resources;
+
+   @SuppressWarnings("unused")
+   @Component(id = "propertyDisplay", parameters = { "overrides=overrides", "object=object", "model=propertyModel" })
+   private PropertyDisplay propertyDisplay;
+
+   public PropertyModel getPropertyModel()
+   {
       return model.get(currentProperty);
    }
 
-   public Object getObject(){
+   public Object getObject()
+   {
       return object;
    }
 
    @SuppressWarnings("unchecked")
-   public List<String> getRows(){
-      if(include == null){
+   public List<String> getRows()
+   {
+      if(include == null)
+      {
          return model.getPropertyNames();
-      }else {
+      }
+      else
+      {
          return Arrays.asList(include.trim().split(TableColumn.ROW_SEPARATOR));
       }
    }
 
-   public List<TableColumn> getColumns(){
+   public List<TableColumn> getColumns()
+   {
       final List<TableColumn> columns = new ArrayList<TableColumn>();
-      for(String col: currentRow.split(TableColumn.COLUMN_SEPARATOR)){
-         String [] colParts = col.split(TableColumn.FIELD_SEPARATOR);
+      for(String col : currentRow.split(TableColumn.COLUMN_SEPARATOR))
+      {
+         String[] colParts = col.split(TableColumn.FIELD_SEPARATOR);
          columns.add(new TableColumn(colParts, colspanMultiple));
       }
 
@@ -130,8 +140,10 @@ public class EntityDisplay {
    }
 
    @SuppressWarnings("unchecked")
-   void doPrepare(){     
-      if(model == null){
+   void doPrepare()
+   {
+      if(model == null)
+      {
          @SuppressWarnings("rawtypes")
          Class type = resources.getBoundType("object");
          model = modelSource.createDisplayModel(type, resources.getContainerMessages());
@@ -139,15 +151,14 @@ public class EntityDisplay {
       }
    }
 
-   void setupRender(){
+   void setupRender()
+   {
       doPrepare();
    }
-   
-   
-   public int getFieldColspan() {
+
+   public int getFieldColspan()
+   {
       return currentColumn.getColspan() - 1;
    }
-   
+
 }
-
-

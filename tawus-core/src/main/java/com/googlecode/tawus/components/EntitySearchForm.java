@@ -19,15 +19,15 @@ import com.googlecode.tawus.annotations.XHR;
 import com.googlecode.tawus.internal.GridRuntime;
 
 @SupportsInformalParameters
-public class EntitySearchForm {
+public class EntitySearchForm
+{
    @Inject
    @Property(write = false)
    private ComponentResources resources;
 
    @SuppressWarnings("unused")
-   @Component(id = "editor", publishParameters = "include", parameters = { "readOnly=false",
-         "validate=false", "showHelp=prop:showHelp", "overrides=this", "add=add", "model=model",
-         "object=grid.searchObject" })
+   @Component(id = "editor", publishParameters = "include", parameters = { "readOnly=false", "validate=false",
+         "showHelp=prop:showHelp", "overrides=this", "add=add", "model=model", "object=grid.searchObject" })
    private EntityEditor editor;
 
    @SuppressWarnings("rawtypes")
@@ -54,11 +54,13 @@ public class EntitySearchForm {
    @Inject
    private Block defaultButtonPanel;
 
-   Block defaultButtonPanel() {
+   Block defaultButtonPanel()
+   {
       return defaultButtonPanel;
    }
 
-   public Block getButtonPanel() {
+   public Block getButtonPanel()
+   {
       return buttonPanel;
    }
 
@@ -71,9 +73,11 @@ public class EntitySearchForm {
     * On prepare
     */
    @SuppressWarnings("unchecked")
-   void onPrepareFromForm() {
+   void onPrepareFromForm()
+   {
       resources.triggerEvent(EventConstants.PREPARE, null, null);
-      if (model == null) {
+      if(model == null)
+      {
          @SuppressWarnings("rawtypes")
          Class beanType = grid.getSearchObject().getClass();
          model = beanModelSource.createEditModel(beanType, resources.getContainerMessages());
@@ -81,30 +85,40 @@ public class EntitySearchForm {
       }
    }
 
-   void onSelectedFromSearch() {
+   void onSelectedFromSearch()
+   {
       search = true;
    }
 
-   void onValidateFromForm() {
+   void onValidateFromForm()
+   {
       resources.triggerEvent(EventConstants.VALIDATE, null, null);
    }
 
-   void onSuccess() {
-      if (search) {
+   void onSuccess()
+   {
+      if(search)
+      {
          grid.showGrid();
          grid.enableSearch();
          resources.triggerEvent(TawusEvents.SEARCH, null, null);
-      } else {
+      }
+      else
+      {
          grid.cancel();
          resources.triggerEvent(TawusEvents.CANCEL_SEARCH, null, null);
       }
    }
 
    @XHR
-   Object onSubmitFromForm() {
-      if (grid.getZone() != null) {
-         return ((Zone)resources.getContainerResources().getEmbeddedComponent(grid.getZone())).getBody();
-      } else {
+   Object onSubmitFromForm()
+   {
+      if(grid.getZone() != null)
+      {
+         return ((Zone) resources.getContainerResources().getEmbeddedComponent(grid.getZone())).getBody();
+      }
+      else
+      {
          return null;
       }
    }

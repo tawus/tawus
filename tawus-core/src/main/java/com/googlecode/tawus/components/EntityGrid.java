@@ -150,8 +150,8 @@ public class EntityGrid implements GridRuntime
     */
    PropertyOverrides defaultOverrides()
    {
-      return new PropertyOverridesDelegator(typeCoercer.coerce(resources, PropertyOverrides.class), typeCoercer.coerce(
-            grid, PropertyOverrides.class), actionProperty + "Cell");
+      return new PropertyOverridesDelegator(typeCoercer.coerce(resources, PropertyOverrides.class),
+            typeCoercer.coerce(grid, PropertyOverrides.class), actionProperty + "Cell");
    }
 
    public PropertyOverrides getOverrides()
@@ -185,7 +185,8 @@ public class EntityGrid implements GridRuntime
    {
       setShowDetails(true);
       resources.triggerEvent(TawusEvents.SHOW_DETAILS,
-            new Object[] { object = locator.get(criteria.getType()).get(id) }, null);
+            new Object[] { object = locator.get(criteria.getType()).get(id) },
+            null);
       return returnValue();
    }
 
@@ -193,7 +194,7 @@ public class EntityGrid implements GridRuntime
    {
       if(zone != null)
       {
-         return ((Zone)resources.getContainerResources().getEmbeddedComponent(zone)).getBody();
+         return ((Zone) resources.getContainerResources().getEmbeddedComponent(zone)).getBody();
       }
       else
       {

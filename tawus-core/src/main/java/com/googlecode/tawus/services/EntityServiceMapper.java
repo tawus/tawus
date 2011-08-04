@@ -1,9 +1,10 @@
 package com.googlecode.tawus.services;
 
-public interface EntityServiceMapper {
+public interface EntityServiceMapper
+{
 
    String getServiceId(Class<?> value);
-   
+
    String getServiceOverrideId(Class<?> value);
 
 }

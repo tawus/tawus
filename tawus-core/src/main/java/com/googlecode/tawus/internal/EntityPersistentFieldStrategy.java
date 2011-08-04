@@ -10,26 +10,29 @@ import org.slf4j.LoggerFactory;
 import com.googlecode.tawus.TawusUtils;
 import com.googlecode.tawus.services.EntityDAOLocator;
 
-
-public class EntityPersistentFieldStrategy extends AbstractSessionPersistentFieldStrategy {
+public class EntityPersistentFieldStrategy extends AbstractSessionPersistentFieldStrategy
+{
    private final EntityDAOLocator locator;
    private static final Logger logger = LoggerFactory.getLogger(EntityPersistentFieldStrategy.class);
-   
-   public EntityPersistentFieldStrategy(final Request request, 
-         final EntityDAOLocator locator){
+
+   public EntityPersistentFieldStrategy(final Request request, final EntityDAOLocator locator)
+   {
       super("entity:", request);
       this.locator = locator;
    }
 
    @Override
    @SuppressWarnings({ "unchecked", "rawtypes" })
-   protected Object convertApplicationValueToPersisted(Object newValue){
-      if(!TawusUtils.isEntity(newValue)){
+   protected Object convertApplicationValueToPersisted(Object newValue)
+   {
+      if(!TawusUtils.isEntity(newValue))
+      {
          throw new RuntimeException(newValue.getClass().getName() + " is not an entity");
       }
 
       Serializable id = locator.get(newValue.getClass()).getIdentifier(newValue);
-      if(id == null){
+      if(id == null)
+      {
          logger.debug("Using default persistence strategy as id is null");
          return super.convertApplicationValueToPersisted(newValue);
       }
@@ -40,17 +43,19 @@ public class EntityPersistentFieldStrategy extends AbstractSessionPersistentFiel
 
    @Override
    @SuppressWarnings("unchecked")
-   protected Object convertPersistedToApplicationValue(Object persistedValue){
-      if(!(persistedValue instanceof PersistedEntity)){
+   protected Object convertPersistedToApplicationValue(Object persistedValue)
+   {
+      if(!(persistedValue instanceof PersistedEntity))
+      {
          return super.convertPersistedToApplicationValue(persistedValue);
       }
-      
+
       @SuppressWarnings("rawtypes")
-      PersistedEntity persistedEntity = (PersistedEntity)persistedValue;
+      PersistedEntity persistedEntity = (PersistedEntity) persistedValue;
       Object entity = locator.get(persistedEntity.getEntityClass()).find(persistedEntity.getId());
-      logger.debug("converted persisted entity " + persistedEntity + " to " + entity + " of type " + 
-            (entity != null ? entity.getClass(): "unknown"));
+      logger.debug("converted persisted entity " + persistedEntity + " to " + entity + " of type "
+            + (entity != null ? entity.getClass() : "unknown"));
       return entity;
    }
-   
+
 }

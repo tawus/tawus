@@ -21,7 +21,8 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import com.googlecode.tawus.TawusEvents;
 
 @SupportsInformalParameters
-public class ListEditor implements ClientElement {
+public class ListEditor implements ClientElement
+{
 
    @Parameter(value = "prop:componentResources.id", defaultPrefix = BindingConstants.LITERAL)
    private String clientId;
@@ -32,7 +33,7 @@ public class ListEditor implements ClientElement {
    private ComponentResources resources;
 
    /** Model to be used for the current object */
-   @SuppressWarnings( { "unused" })
+   @SuppressWarnings({ "unused" })
    @Property
    @Parameter
    private BeanModel<?> model;
@@ -56,7 +57,7 @@ public class ListEditor implements ClientElement {
    @Parameter(defaultPrefix = BindingConstants.LITERAL)
    private String include;
 
-   @SuppressWarnings( {  "rawtypes" })
+   @SuppressWarnings({ "rawtypes" })
    @Parameter(required = true)
    @Property
    private List source;
@@ -69,11 +70,11 @@ public class ListEditor implements ClientElement {
    @Parameter
    @Property
    private ValueEncoder<?> encoder;
-   
+
    @SuppressWarnings("unused")
    @Parameter
    private int index;
-   
+
    @SuppressWarnings("unused")
    @Parameter(defaultPrefix = BindingConstants.BLOCK)
    private Block addRow;
@@ -89,7 +90,6 @@ public class ListEditor implements ClientElement {
 
    @Inject
    private Environment environment;
-   
 
    /**
     * Return read or write block based on whether the parameter readOnly is true
@@ -97,49 +97,60 @@ public class ListEditor implements ClientElement {
     * 
     * @return read block if readOnly is true otherwise write block
     */
-   public Block getReadWriteBlock() {
+   public Block getReadWriteBlock()
+   {
       return readOnly ? read : write;
    }
 
-   public void doPrepare() {
-      if (value != null) {
+   public void doPrepare()
+   {
+      if(value != null)
+      {
 
       }
    }
 
-   private Class<?> getEntityType() {
+   private Class<?> getEntityType()
+   {
       return resources.getBoundType("value");
 
    }
 
-   void setupRender() {
+   void setupRender()
+   {
       assignedClientId = javaScriptSupport.allocateClientId(clientId);
-      if(source != null){
+      if(source != null)
+      {
          index = source.size();
       }
    }
 
-   public String getClientId() {
+   public String getClientId()
+   {
       return assignedClientId;
    }
 
    @SuppressWarnings("unchecked")
-   Object onAddRow() {
+   Object onAddRow()
+   {
       Object obj;
-      try {
+      try
+      {
          obj = getEntityType().newInstance();
-         resources.triggerEvent(TawusEvents.LIST_ADD_ROW, new Object[]{obj}, null);
+         resources.triggerEvent(TawusEvents.LIST_ADD_ROW, new Object[] { obj }, null);
          source.add(obj);
          index = source.size();
-         environment.push(BeanValidationContext.class,
-               new BeanValidationContextImpl(obj));
+         environment.push(BeanValidationContext.class, new BeanValidationContextImpl(obj));
          return obj;
-      } catch (Exception e) {
+      }
+      catch(Exception e)
+      {
          throw new RuntimeException(e);
       }
    }
 
-   void onRemoveRow(Object object) {
+   void onRemoveRow(Object object)
+   {
       source.remove(object);
       index = source.size();
    }

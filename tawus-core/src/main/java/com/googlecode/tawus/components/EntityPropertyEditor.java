@@ -17,9 +17,11 @@ import com.googlecode.tawus.internal.table.TdEditorContext;
 import com.googlecode.tawus.services.TawusBeanBlockSource;
 
 @SuppressWarnings("unused")
-public class EntityPropertyEditor {
-   
-   static public class SetupEnvironment implements ComponentAction<EntityPropertyEditor> {
+public class EntityPropertyEditor
+{
+
+   static public class SetupEnvironment implements ComponentAction<EntityPropertyEditor>
+   {
       private static final long serialVersionUID = 1L;
       private int columnSpan;
       private String cssClassPrefix;
@@ -27,8 +29,8 @@ public class EntityPropertyEditor {
       private boolean showHelp;
       private String helpText;
 
-      public SetupEnvironment(int rowSpan, int columnSpan,
-            String cssClassPrefix, String helpText, boolean showHelp) {
+      public SetupEnvironment(int rowSpan, int columnSpan, String cssClassPrefix, String helpText, boolean showHelp)
+      {
          this.rowSpan = rowSpan;
          this.columnSpan = columnSpan;
          this.cssClassPrefix = cssClassPrefix;
@@ -36,25 +38,28 @@ public class EntityPropertyEditor {
          this.helpText = helpText;
       }
 
-      public void execute(EntityPropertyEditor editor) {
-         editor.setupEnvironment(rowSpan, columnSpan, cssClassPrefix, helpText, showHelp);         
+      public void execute(EntityPropertyEditor editor)
+      {
+         editor.setupEnvironment(rowSpan, columnSpan, cssClassPrefix, helpText, showHelp);
       }
-      
+
    }
-   
-   static public class CleanupEnvironment implements ComponentAction<EntityPropertyEditor>{
+
+   static public class CleanupEnvironment implements ComponentAction<EntityPropertyEditor>
+   {
       private static final long serialVersionUID = 1L;
 
-      public void execute(EntityPropertyEditor editor) {
+      public void execute(EntityPropertyEditor editor)
+      {
          editor.cleanupEnvironment();
       }
-      
+
    }
-   
+
    private static CleanupEnvironment CLEANUP_ENVIRONMENT = new CleanupEnvironment();
-   
-   @Component(id = "propertyEditor",  parameters  = {"overrides=inherit:overrides",
-         "object=inherit:object", "model=inherit:model", "property=inherit:property", "beanBlockSource=prop:beanBlockSource"})
+
+   @Component(id = "propertyEditor", parameters = { "overrides=inherit:overrides", "object=inherit:object",
+         "model=inherit:model", "property=inherit:property", "beanBlockSource=prop:beanBlockSource" })
    private PropertyEditor propertyEditor;
 
    @Parameter(required = true)
@@ -68,81 +73,96 @@ public class EntityPropertyEditor {
 
    @Parameter(required = true)
    private boolean showHelp;
-   
+
    @Parameter
    private PropertyOverrides overrides;
-   
+
    @Parameter
    private Object object;
-   
+
    @Parameter
    private BeanModel<?> model;
-   
+
    @Parameter
    private String property;
 
    @Inject
    private Environment environment;
-   
+
    @Environmental
    private FormSupport formSupport;
-   
+
    @Inject
    private TawusBeanBlockSource beanBlockSource;
 
-   public void setupEnvironment(final int rowSpan, final int columnSpan,
-         final String cssClassPrefix,  final String helpText, final boolean showHelp) {
-      environment.push(TdEditorContext.class, new TdEditorContext() {
+   public void setupEnvironment(final int rowSpan,
+         final int columnSpan,
+         final String cssClassPrefix,
+         final String helpText,
+         final boolean showHelp)
+   {
+      environment.push(TdEditorContext.class, new TdEditorContext()
+      {
 
-         public int getColumnSpan() {
+         public int getColumnSpan()
+         {
             return columnSpan;
          }
 
-         public String getCssClassPrefix() {
+         public String getCssClassPrefix()
+         {
             return cssClassPrefix;
          }
 
-         public String getHelpText() {
+         public String getHelpText()
+         {
             return helpText;
          }
 
-         public int getRowSpan() {
+         public int getRowSpan()
+         {
             return rowSpan;
          }
 
-         public boolean getShowHelp() {
+         public boolean getShowHelp()
+         {
             return showHelp;
          }
 
       });
    }
 
-   public void cleanupEnvironment() {
+   public void cleanupEnvironment()
+   {
       environment.pop(TdEditorContext.class);
    }
 
-   void setupRender(){
-      formSupport.storeAndExecute(this, 
-            new SetupEnvironment(rowSpan, columnSpan, cssClassPrefix,
-                  getHelpText(),
-                  showHelp
-            ));
+   void setupRender()
+   {
+      formSupport.storeAndExecute(this, new SetupEnvironment(rowSpan, columnSpan, cssClassPrefix, getHelpText(),
+            showHelp));
    }
-   
-   void cleanupRender(){
+
+   void cleanupRender()
+   {
       formSupport.storeAndExecute(this, CLEANUP_ENVIRONMENT);
    }
-   
-   public BeanBlockSource getBeanBlockSource(){
+
+   public BeanBlockSource getBeanBlockSource()
+   {
       return beanBlockSource.getBeanBlockSource();
    }
-   
-   public String getHelpText() {
+
+   public String getHelpText()
+   {
       final Messages messages = overrides.getOverrideMessages();
       final String message;
-      if (messages.contains(property + "-help")) {
+      if(messages.contains(property + "-help"))
+      {
          message = messages.get(property + "-help");
-      } else {
+      }
+      else
+      {
          message = "";
       }
       return message;

@@ -6,7 +6,8 @@ import java.util.List;
 /**
  * ICondition interface
  */
-public interface ICondition extends Serializable {
+public interface ICondition extends Serializable
+{
    /**
     * Get condition type
     */

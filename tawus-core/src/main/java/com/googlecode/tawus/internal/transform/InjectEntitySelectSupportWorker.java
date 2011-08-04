@@ -18,34 +18,41 @@ import com.googlecode.tawus.SearchCriteria;
 import com.googlecode.tawus.annotations.InjectEntitySelectSupport;
 import com.googlecode.tawus.services.EntityDAOLocator;
 
-public class InjectEntitySelectSupportWorker implements ComponentClassTransformWorker {
+public class InjectEntitySelectSupportWorker implements ComponentClassTransformWorker
+{
 
    private EntityDAOLocator locator;
 
-   public InjectEntitySelectSupportWorker(final EntityDAOLocator locator) {
+   public InjectEntitySelectSupportWorker(final EntityDAOLocator locator)
+   {
       this.locator = locator;
    }
 
-   public void transform(ClassTransformation transform, MutableComponentModel model) {
-      for (final TransformField field : transform.matchFieldsWithAnnotation(InjectEntitySelectSupport.class)) {
+   public void transform(ClassTransformation transform, MutableComponentModel model)
+   {
+      for(final TransformField field : transform.matchFieldsWithAnnotation(InjectEntitySelectSupport.class))
+      {
          addModelMethod(transform, field);
          addEncoderMethod(transform, field);
       }
    }
 
-   private void addEncoderMethod(ClassTransformation transform, TransformField field) {
+   private void addEncoderMethod(ClassTransformation transform, TransformField field)
+   {
       String name = stripCriteriaIfPresent(field.getName());
       String methodName = "get" + capitalize(name) + "Encoder";
 
-      TransformMethodSignature sig = new TransformMethodSignature(Modifier.PUBLIC,
-            EntityValueEncoder.class.getName(), methodName, null, null);
+      TransformMethodSignature sig = new TransformMethodSignature(Modifier.PUBLIC, EntityValueEncoder.class.getName(),
+            methodName, null, null);
 
       final TransformMethod method = transform.getOrCreateMethod(sig);
       final FieldAccess access = field.getAccess();
-      method.addAdvice(new ComponentMethodAdvice() {
+      method.addAdvice(new ComponentMethodAdvice()
+      {
 
          @SuppressWarnings({ "unchecked", "rawtypes" })
-         public void advise(ComponentMethodInvocation invocation) {
+         public void advise(ComponentMethodInvocation invocation)
+         {
             SearchCriteria criteria = (SearchCriteria) access.read(invocation.getInstance());
             invocation.overrideResult(new EntityValueEncoder(locator.get(criteria.getType())));
          }
@@ -53,36 +60,41 @@ public class InjectEntitySelectSupportWorker implements ComponentClassTransformW
       });
    }
 
-   private void addModelMethod(ClassTransformation transform, TransformField field) {
+   private void addModelMethod(ClassTransformation transform, TransformField field)
+   {
       String name = stripCriteriaIfPresent(field.getName());
 
       String methodName = "get" + capitalize(name) + "Model";
 
-      TransformMethodSignature sig = new TransformMethodSignature(Modifier.PUBLIC,
-            EntitySelectModel.class.getName(), methodName, null, null);
+      TransformMethodSignature sig = new TransformMethodSignature(Modifier.PUBLIC, EntitySelectModel.class.getName(),
+            methodName, null, null);
 
       final TransformMethod method = transform.getOrCreateMethod(sig);
       final FieldAccess access = field.getAccess();
-      method.addAdvice(new ComponentMethodAdvice() {
+      method.addAdvice(new ComponentMethodAdvice()
+      {
 
          @SuppressWarnings({ "unchecked", "rawtypes" })
-         public void advise(ComponentMethodInvocation invocation) {
+         public void advise(ComponentMethodInvocation invocation)
+         {
             SearchCriteria criteria = (SearchCriteria) access.read(invocation.getInstance());
-            invocation.overrideResult(new EntitySelectModel(locator.get(criteria.getType()).list(
-                  criteria)));
+            invocation.overrideResult(new EntitySelectModel(locator.get(criteria.getType()).list(criteria)));
          }
 
       });
    }
 
-   private String stripCriteriaIfPresent(String name) {
-      if (name.endsWith("Criteria")) {
+   private String stripCriteriaIfPresent(String name)
+   {
+      if(name.endsWith("Criteria"))
+      {
          name = name.replaceAll("Criteria$", "");
       }
       return name;
    }
 
-   private String capitalize(String name) {
+   private String capitalize(String name)
+   {
       return Character.toUpperCase(name.charAt(0)) + name.substring(1);
    }
 

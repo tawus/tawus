@@ -48,18 +48,21 @@ import com.googlecode.tawus.services.EntityDAOLocator;
  * fieldName/columnSeparator/rowSeparator/rowClass
  */
 @SupportsInformalParameters
-public class EntityEditor {
+public class EntityEditor
+{
 
    /**
     * Component action to prepare the model and object
     */
-   static class Prepare implements ComponentAction<EntityEditor> {
+   static class Prepare implements ComponentAction<EntityEditor>
+   {
       private static final long serialVersionUID = 1L;
 
       /**
        * {@inheritDocs}
        */
-      public void execute(EntityEditor component) {
+      public void execute(EntityEditor component)
+      {
          component.doPrepare();
       }
 
@@ -67,7 +70,8 @@ public class EntityEditor {
        * {@inheritDocs}
        */
       @Override
-      public String toString() {
+      public String toString()
+      {
          return "BeanEditor.doPrepare()";
       }
 
@@ -76,13 +80,15 @@ public class EntityEditor {
    /**
     * Component action to cleanup after rendering
     */
-   static class CleanupEnvironment implements ComponentAction<EntityEditor> {
+   static class CleanupEnvironment implements ComponentAction<EntityEditor>
+   {
       private static final long serialVersionUID = 1L;
 
       /**
        * {@inheritDocs}
        */
-      public void execute(EntityEditor component) {
+      public void execute(EntityEditor component)
+      {
          component.cleanupEnvironment();
       }
 
@@ -90,7 +96,8 @@ public class EntityEditor {
        * {@inheritDocs}
        */
       @Override
-      public String toString() {
+      public String toString()
+      {
          return "BeanEditor.cleanupEnviroment()";
       }
 
@@ -98,22 +105,26 @@ public class EntityEditor {
 
    /** Cleanup component environment instance */
    private final CleanupEnvironment CLEANUP_ENVIRONMENT = new CleanupEnvironment();
-   
-   static class ReadOnlyOverrides implements PropertyOverrides {
+
+   static class ReadOnlyOverrides implements PropertyOverrides
+   {
       private PropertyOverrides delegate;
-      
-      public ReadOnlyOverrides(PropertyOverrides delegate){
+
+      public ReadOnlyOverrides(PropertyOverrides delegate)
+      {
          this.delegate = delegate;
       }
 
-      public Messages getOverrideMessages() {
+      public Messages getOverrideMessages()
+      {
          return delegate.getOverrideMessages();
       }
 
-      public Block getOverrideBlock(String name) {
+      public Block getOverrideBlock(String name)
+      {
          return delegate.getOverrideBlock(name + "ReadOnly");
       }
-      
+
    }
 
    /** Object to be edited */
@@ -156,17 +167,15 @@ public class EntityEditor {
 
    /** Property field to be used */
    @SuppressWarnings("unused")
-   @Component(parameters = { "object=object", "overrides=overrides", "model=model",
-         "showHelp=prop:showHelp", "cssClassPrefix=currentColumn.property",
-         "columnspan=prop:fieldColspan", "rowspan=prop:currentColumn.rowspan",
+   @Component(parameters = { "object=object", "overrides=overrides", "model=model", "showHelp=prop:showHelp",
+         "cssClassPrefix=currentColumn.property", "columnspan=prop:fieldColspan", "rowspan=prop:currentColumn.rowspan",
          "property=prop:currentColumn.property" })
    private EntityPropertyEditor propertyField;
-   
+
    @SuppressWarnings("unused")
-   @Component(id = "propertyDisplay", parameters = { "overrides=readOnlyOverrides",
-         "object=object", "model=propertyModel" })
+   @Component(id = "propertyDisplay", parameters = { "overrides=readOnlyOverrides", "object=object",
+         "model=propertyModel" })
    private PropertyDisplay propertyDisplay;
-   
 
    /** Property Overrides to be used, by default use container's resources */
    @Parameter(value = "this", allowNull = false)
@@ -206,7 +215,8 @@ public class EntityEditor {
    @Inject
    private Block _write;
 
-   public Block getComponent() {
+   public Block getComponent()
+   {
       return getReadOnly() ? _read : _write;
    }
 
@@ -215,17 +225,19 @@ public class EntityEditor {
     * 
     * @return object being edited
     */
-   public Object getObject() {
+   public Object getObject()
+   {
       return cachedObject;
    }
 
-   public boolean getReadOnly() {
+   public boolean getReadOnly()
+   {
       return !updatable
-            || (locator.get(object.getClass()).getIdentifier(getObject()) != null && model.get(
-                  currentColumn.getProperty()).getAnnotation(NonUpdatable.class) != null);
+            || (locator.get(object.getClass()).getIdentifier(getObject()) != null && model.get(currentColumn.getProperty()).getAnnotation(NonUpdatable.class) != null);
    }
-   
-   public PropertyOverrides getReadOnlyOverrides(){
+
+   public PropertyOverrides getReadOnlyOverrides()
+   {
       return new ReadOnlyOverrides(overrides);
    }
 
@@ -233,10 +245,14 @@ public class EntityEditor {
     * Get rows
     */
    @SuppressWarnings("unchecked")
-   public List<String> getRows() {
-      if (include == null) {
+   public List<String> getRows()
+   {
+      if(include == null)
+      {
          return model.getPropertyNames();
-      } else {
+      }
+      else
+      {
          return Arrays.asList(include.trim().split(TableColumn.ROW_SEPARATOR));
       }
    }
@@ -244,51 +260,65 @@ public class EntityEditor {
    /**
     * Get columns of a particular row
     */
-   public List<TableColumn> getColumns() {
+   public List<TableColumn> getColumns()
+   {
       final List<TableColumn> columns = new ArrayList<TableColumn>();
-      for (String col : currentRow.split(TableColumn.COLUMN_SEPARATOR)) {
+      for(String col : currentRow.split(TableColumn.COLUMN_SEPARATOR))
+      {
          String[] colParts = col.split(TableColumn.FIELD_SEPARATOR);
          columns.add(new TableColumn(colParts, colspanMultiple));
       }
 
       return columns;
    }
-   
-   public PropertyModel getPropertyModel(){
+
+   public PropertyModel getPropertyModel()
+   {
       return model.get(currentColumn.getProperty());
    }
-   
-   public int getFieldColspan() {
+
+   public int getFieldColspan()
+   {
       return currentColumn.getColspan() - 1;
    }
 
    @SuppressWarnings("unchecked")
-   void doPrepare() {
-      if (model == null) {
+   void doPrepare()
+   {
+      if(model == null)
+      {
          @SuppressWarnings("rawtypes")
          Class type = object != null ? object.getClass() : resources.getBoundType("object");
          model = modelSource.createEditModel(type, overrides.getOverrideMessages());
          BeanModelUtils.modify(model, add, null, null, null);
       }
 
-      if (object == null) {
-         try {
+      if(object == null)
+      {
+         try
+         {
             object = model.newInstance();
-         } catch (Exception ex) {
+         }
+         catch(Exception ex)
+         {
             String message = InternalMessages.failureInstantiatingObject(model.getBeanType(),
-                  resources.getCompleteId(), ex);
+                  resources.getCompleteId(),
+                  ex);
             throw new TapestryException(message, resources.getLocation(), ex);
          }
          refreshBeanValidationContext();
       }
 
       /** Push bean context */
-      BeanEditContext context = new BeanEditContext() {
-         public Class<?> getBeanClass() {
+      BeanEditContext context = new BeanEditContext()
+      {
+         public Class<?> getBeanClass()
+         {
             return model.getBeanType();
          }
 
-         public <T extends Annotation> T getAnnotation(Class<T> type) {
+         public <T extends Annotation> T getAnnotation(Class<T> type)
+         {
             return getBeanClass().getAnnotation(type);
          }
       };
@@ -297,45 +327,53 @@ public class EntityEditor {
       environment.push(BeanEditContext.class, context);
    }
 
-   private void refreshBeanValidationContext() {
-      if (environment.peek(BeanValidationContext.class) != null) {
+   private void refreshBeanValidationContext()
+   {
+      if(environment.peek(BeanValidationContext.class) != null)
+      {
          environment.pop(BeanValidationContext.class);
          environment.push(BeanValidationContext.class, new BeanValidationContextImpl(object));
       }
    }
 
-   void setupRender() {
+   void setupRender()
+   {
       formSupport.storeAndExecute(this, new Prepare());
    }
 
-   void cleanupRender() {
+   void cleanupRender()
+   {
       formSupport.storeAndExecute(this, CLEANUP_ENVIRONMENT);
    }
 
-   public void cleanupEnvironment() {
+   public void cleanupEnvironment()
+   {
       environment.pop(BeanEditContext.class);
    }
-   
-   public String getHelpText() {
+
+   public String getHelpText()
+   {
       final Messages messages = overrides.getOverrideMessages();
       final String message;
-      
-      if (messages.contains(currentColumn.getProperty() + "-help")) {
+
+      if(messages.contains(currentColumn.getProperty() + "-help"))
+      {
          message = messages.get(currentColumn.getProperty() + "-help");
-      } else {
+      }
+      else
+      {
          message = "";
       }
       return message;
    }
-   
-   void inject(ComponentResources resources, PropertyOverrides overrides,
-         BeanModelSource source, Environment env) {
+
+   void inject(ComponentResources resources, PropertyOverrides overrides, BeanModelSource source, Environment env)
+   {
       this.resources = resources;
       this.overrides = overrides;
       this.modelSource = source;
       this.environment = env;
-      
+
    }
-  
 
 }

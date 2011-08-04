@@ -19,14 +19,15 @@ import com.googlecode.tawus.services.EntityDAOLocator;
  * new item can be added using the new button and existing items can be viewed
  * or modified
  */
-public class EntityList {
+public class EntityList
+{
 
    /**
     * Grid for displaying list of objects
     */
    @Component(publishParameters = "add, columnIndex,empty,encoder, include, exclude, "
-         + "class, lean, pagerPosition, reorder, rowClass, rowsPerPage, overrides,row,volatile"
-         + "sortModel, model", parameters = { "source=source", "rowIndex=prop:rowIndex" })
+         + "class, lean, pagerPosition, reorder, rowClass, rowsPerPage, overrides,row,volatile" + "sortModel, model",
+         parameters = { "source=source", "rowIndex=prop:rowIndex" })
    private Grid grid;
 
    @Persist
@@ -37,7 +38,8 @@ public class EntityList {
     * 
     * @return data source
     */
-   public EntityGridDataSource<?> getSource() {
+   public EntityGridDataSource<?> getSource()
+   {
       return source;
    }
 
@@ -59,40 +61,50 @@ public class EntityList {
    @Parameter
    private List<Object> selected;
 
-   public Grid getGrid() {
+   public Grid getGrid()
+   {
       return grid;
    }
-   
+
    @SuppressWarnings({ "rawtypes", "unchecked" })
-   public void setupRender() {
-      if(source == null){
-        source = new EntityGridDataSource(locator.get(criteria.getType()),
-            criteria);
+   public void setupRender()
+   {
+      if(source == null)
+      {
+         source = new EntityGridDataSource(locator.get(criteria.getType()), criteria);
       }
-      
-      if (getIsMultipleSelection() && selected == null) {
+
+      if(getIsMultipleSelection() && selected == null)
+      {
          throw new RuntimeException("In Multiple Selection, selected cannot be null");
       }
    }
 
-   public boolean getIsMultipleSelection() {
+   public boolean getIsMultipleSelection()
+   {
       return multiple != null && multiple;
    }
 
-   public boolean getIsSingleSelection() {
+   public boolean getIsSingleSelection()
+   {
       return multiple != null && !multiple;
    }
 
-   public void setSelection(boolean context) {
+   public void setSelection(boolean context)
+   {
       Object row = source.getRowValue(rowIndex);
-      if (context) {
+      if(context)
+      {
          selected.add(row);
-      } else {
+      }
+      else
+      {
          selected.remove(row);
       }
    }
 
-   public boolean getSelection() {
+   public boolean getSelection()
+   {
       return selected.contains(source.getRowValue(rowIndex));
    }
 

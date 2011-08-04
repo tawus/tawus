@@ -10,22 +10,24 @@ import org.apache.tapestry5.services.TransformField;
 import com.googlecode.tawus.annotations.InjectDAO;
 import com.googlecode.tawus.services.EntityDAOLocator;
 
-public class InjectDAOWorker implements ComponentClassTransformWorker {
+public class InjectDAOWorker implements ComponentClassTransformWorker
+{
 
    private EntityDAOLocator locator;
 
-   public InjectDAOWorker(EntityDAOLocator locator) {
+   public InjectDAOWorker(EntityDAOLocator locator)
+   {
       this.locator = locator;
    }
 
    /**
     * {@inheritDoc}
     */
-   public void transform(final ClassTransformation transformation,
-         final MutableComponentModel model) {
-      final List<TransformField> fields = transformation
-            .matchFieldsWithAnnotation(InjectDAO.class);
-      for (final TransformField field : fields) {
+   public void transform(final ClassTransformation transformation, final MutableComponentModel model)
+   {
+      final List<TransformField> fields = transformation.matchFieldsWithAnnotation(InjectDAO.class);
+      for(final TransformField field : fields)
+      {
          InjectDAO annotation = field.getAnnotation(InjectDAO.class);
          field.claim(annotation);
          Class<?> entityClass = (Class<?>) annotation.value();

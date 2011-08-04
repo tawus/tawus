@@ -4,7 +4,8 @@ import java.util.Set;
 
 import com.googlecode.tawus.internal.def.EntityDef;
 
-public interface EntityLocator {
+public interface EntityLocator
+{
 
    Set<EntityDef> getEntityDefs();
 

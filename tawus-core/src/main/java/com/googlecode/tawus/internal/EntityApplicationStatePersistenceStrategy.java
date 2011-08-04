@@ -9,27 +9,27 @@ import org.apache.tapestry5.services.Request;
 import com.googlecode.tawus.TawusUtils;
 import com.googlecode.tawus.services.EntityDAOLocator;
 
-public class EntityApplicationStatePersistenceStrategy extends
-      SessionApplicationStatePersistenceStrategy {
+public class EntityApplicationStatePersistenceStrategy extends SessionApplicationStatePersistenceStrategy
+{
    private final EntityDAOLocator locator;
 
-   public EntityApplicationStatePersistenceStrategy(final Request request,
-         final EntityDAOLocator locator) {
+   public EntityApplicationStatePersistenceStrategy(final Request request, final EntityDAOLocator locator)
+   {
       super(request);
       this.locator = locator;
    }
 
    @Override
    @SuppressWarnings("unchecked")
-   public <T> T get(final Class<T> ssoClass,
-         final ApplicationStateCreator<T> creator) {
+   public <T> T get(final Class<T> ssoClass, final ApplicationStateCreator<T> creator)
+   {
       final Object object = getOrCreate(ssoClass, creator);
-      if (object instanceof PersistedEntity) {
+      if(object instanceof PersistedEntity)
+      {
          @SuppressWarnings("rawtypes")
          final PersistedEntity entity = (PersistedEntity) object;
          final Object restoredEntity;
-         restoredEntity = locator.get(entity.getEntityClass()).find(
-               entity.getId());
+         restoredEntity = locator.get(entity.getEntityClass()).find(entity.getId());
          return (T) restoredEntity;
       }
       return (T) object;
@@ -37,17 +37,24 @@ public class EntityApplicationStatePersistenceStrategy extends
 
    @Override
    @SuppressWarnings({ "unchecked", "rawtypes" })
-   public <T> void set(Class<T> ssoClass, T sso) {
+   public <T> void set(Class<T> ssoClass, T sso)
+   {
       final String key = buildKey(ssoClass);
       final Object entity;
-      if (sso != null) {
-         if (!TawusUtils.isEntity(sso)) {
+      if(sso != null)
+      {
+         if(!TawusUtils.isEntity(sso))
+         {
             entity = sso;
-         } else {
+         }
+         else
+         {
             Serializable id = locator.get(ssoClass).getIdentifier(sso);
             entity = new PersistedEntity(sso.getClass(), id);
          }
-      } else {
+      }
+      else
+      {
          entity = null;
       }
       getSession().setAttribute(key, entity);

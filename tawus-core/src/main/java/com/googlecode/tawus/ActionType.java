@@ -1,5 +1,6 @@
 package com.googlecode.tawus;
 
-public enum ActionType {
+public enum ActionType
+{
    SAVE, DELETE, CANCEL, EDIT
 }

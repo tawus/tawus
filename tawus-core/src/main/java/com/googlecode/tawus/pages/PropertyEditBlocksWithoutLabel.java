@@ -23,26 +23,20 @@ import com.googlecode.tawus.internal.table.TdEditorContext;
 import com.googlecode.tawus.services.CriteriaSource;
 import com.googlecode.tawus.services.EntityDAOLocator;
 
-public class PropertyEditBlocksWithoutLabel extends PropertyEditBlocks {
-   @Component(id = "entitySelect", parameters = {
-      "encoder=prop:entityValueEncoder", "value=prop:context.propertyValue",
-      "label=prop:context.label",
-      "model=prop:entitySelectModel", "clientId=prop:context.propertyId",
-      "validate=prop:entityValidator" })
+public class PropertyEditBlocksWithoutLabel extends PropertyEditBlocks
+{
+   @Component(id = "entitySelect", parameters = { "encoder=prop:entityValueEncoder",
+         "value=prop:context.propertyValue", "label=prop:context.label", "model=prop:entitySelectModel",
+         "clientId=prop:context.propertyId", "validate=prop:entityValidator" })
    private Select entitySelect;
 
-   @Component(id = "entityPalette", parameters = {
-      "encoder=prop:entityListValueEncoder",
-      "label=prop:context.label",
-      "selected=prop:context.propertyValue",
-      "model=prop:entityListSelectModel", "clientId=prop:context.propertyId",
-      "validate=prop:entityPaletteValidator" })
+   @Component(id = "entityPalette", parameters = { "encoder=prop:entityListValueEncoder", "label=prop:context.label",
+         "selected=prop:context.propertyValue", "model=prop:entityListSelectModel", "clientId=prop:context.propertyId",
+         "validate=prop:entityPaletteValidator" })
    private Palette entityPalette;
 
-   @Component(id = "timeField", parameters = {
-      "format=HH:MM:SS",
-      "clientId=prop:context.propertyId", "value=context.propertyValue",
-      "label=prop:context.label", "validate=prop:timeFieldValidator" })
+   @Component(id = "timeField", parameters = { "format=HH:MM:SS", "clientId=prop:context.propertyId",
+         "value=context.propertyValue", "label=prop:context.label", "validate=prop:timeFieldValidator" })
    private SimpleDateField timeField;
 
    @Environmental
@@ -52,80 +46,93 @@ public class PropertyEditBlocksWithoutLabel extends PropertyEditBlocks {
    @Environmental
    @Property
    private TdEditorContext editorContext;
-   
+
    @Environmental
    private BeanEditContext beanEditContext;
 
    @Inject
    private EntityDAOLocator locator;
-   
+
    @Inject
    private CriteriaSource criteriaSource;
 
    @Override
-   public PropertyEditContext getContext() {
+   public PropertyEditContext getContext()
+   {
       return context;
    }
 
    @SuppressWarnings({ "rawtypes", "unchecked" })
-   public EntityValueEncoder getEntityValueEncoder() {
+   public EntityValueEncoder getEntityValueEncoder()
+   {
       return new EntityValueEncoder(locator.get(getPropertyType()));
    }
-   
+
    @SuppressWarnings({ "rawtypes" })
-   public Class getPropertyType(){
-      if(Collection.class.isAssignableFrom(context.getPropertyType())){
+   public Class getPropertyType()
+   {
+      if(Collection.class.isAssignableFrom(context.getPropertyType()))
+      {
          return getListEntityType();
-      }else {
+      }
+      else
+      {
          return context.getPropertyType();
       }
    }
 
    @SuppressWarnings({ "unchecked", "rawtypes" })
-   public EntitySelectModel getEntitySelectModel() {
-      return new EntitySelectModel(locator.get(getPropertyType())
-         .list(criteriaSource.get(context.getPropertyType())));
+   public EntitySelectModel getEntitySelectModel()
+   {
+      return new EntitySelectModel(locator.get(getPropertyType()).list(criteriaSource.get(context.getPropertyType())));
    }
 
    @SuppressWarnings({ "unchecked", "rawtypes" })
-   public EntitySelectModel getEntityListSelectModel() {
+   public EntitySelectModel getEntityListSelectModel()
+   {
       Class<?> type = getListEntityType();
-      return new EntitySelectModel(locator.get(getPropertyType()).list(
-         (SearchCriteria) criteriaSource.get(type)));
+      return new EntitySelectModel(locator.get(getPropertyType()).list((SearchCriteria) criteriaSource.get(type)));
    }
 
    @SuppressWarnings({ "unchecked", "rawtypes" })
-   public EntityValueEncoder getEntityListValueEncoder() {
+   public EntityValueEncoder getEntityListValueEncoder()
+   {
       return new EntityValueEncoder(locator.get(getPropertyType()));
    }
 
-   private Class<?> getListEntityType() {
+   private Class<?> getListEntityType()
+   {
       Class<?> clazz = context.getPropertyType();
-      if(Collection.class.isAssignableFrom(clazz)){
-         try{
-            Type[] type = ((ParameterizedType) beanEditContext.getBeanClass()
-               .getDeclaredField(context.getPropertyId()).getGenericType())
-               .getActualTypeArguments();
-            if(type.length == 1){
+      if(Collection.class.isAssignableFrom(clazz))
+      {
+         try
+         {
+            Type[] type = ((ParameterizedType) beanEditContext.getBeanClass().getDeclaredField(context.getPropertyId()).getGenericType()).getActualTypeArguments();
+            if(type.length == 1)
+            {
                return (Class<?>) type[0];
             }
-         }catch(NoSuchFieldException nsfe){
+         }
+         catch(NoSuchFieldException nsfe)
+         {
             throw new RuntimeException(nsfe);
          }
       }
-      throw new RuntimeException("Could not create SelectModel for "
-         + getPropertyType());
+      throw new RuntimeException("Could not create SelectModel for " + getPropertyType());
    }
 
-   public FieldValidator<?> getEntityValidator() {
+   public FieldValidator<?> getEntityValidator()
+   {
       return context.getValidator(entitySelect);
    }
 
-   public FieldValidator<?> getEntityPaletteValidator() {
+   public FieldValidator<?> getEntityPaletteValidator()
+   {
       return context.getValidator(entityPalette);
    }
 
-   public FieldValidator<?> getTimeFieldValidator() {
+   public FieldValidator<?> getTimeFieldValidator()
+   {
       return context.getValidator(timeField);
    }
 

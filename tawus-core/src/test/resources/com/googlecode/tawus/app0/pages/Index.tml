@@ -1,58 +1,31 @@
 <t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
-	<table>
-		<tr>
-			<th>Test Page</th>
-			<th>Description</th>
-		</tr>
-		<tr>
-			<td>
-				<t:pageLink id='entityeditorajax' page='entityeditorajax'>Entity Editor Ajax
-				</t:pageLink>
-			</td>
-			<td>It tests the ajax behavior of entity editor</td>
-		</tr>
-		<tr>
-			<td>
-				<t:pageLink id='entityeditformajax' page='entityeditformajax'>Entity Edit Form
-					Ajax</t:pageLink>
-			</td>
-			<td>It tests the ajax behavior of entity Edit Form. It also checks
-				the
-				functionality of cancel button</td>
-		</tr>
-		<tr>
-			<td>
-				<t:pageLink page='entitygridajax' context='literal:disabled'>Entity Grid
-					with
-					Criteria Disabled</t:pageLink>
-			</td>
-			<td>It tests the ajax behavior of entity grid when criteria is
-				disabled</td>
-		</tr>
-		<tr>
-			<td>
-				<t:pageLink page='entitygridajax' context='literal:enabled'>Entity Grid
-					with
-					Criteria Enabled</t:pageLink>
-			</td>
-			<td>It tests the ajax behavior of entity grid when criteria is
-				enabled</td>
-		</tr>
-		<tr>
-			<td>
-				<t:pageLink page='entitygridwithsearchajax'>Entity Grid
-					with
-					Search</t:pageLink>
-			</td>
-			<td>It tests the ajax behavior of entity grid with search form</td>
-		</tr>
-		<tr>
-			<td>
-				<t:pageLink page='entitygridwitheditajax'>Entity Grid
-					with
-					Edit</t:pageLink>
-			</td>
-			<td>It tests the ajax behavior of entity grid when edit is on</td>
-		</tr>
-	</table>
+   <ul>
+      <li>
+         <a href='canceldemo'>Cancel Demo</a>
+      </li>
+      
+      <li>
+         <a href='entityeditorajax' id='entityeditorajax'>Entity Editor Ajax </a>
+      </li>
+      
+      <li>
+         <a href='entityeditformajax' id='entityeditformajax'>Entity Edit Form Ajax</a>
+      </li>
+      
+      <li>
+         <t:pageLink page='entitygridajax' context='literal:disabled'>Entity Grid with Criteria Disabled</t:pageLink>
+      </li>
+      
+      <li>
+         <t:pageLink page='entitygridajax' context='literal:enabled'>Entity Grid with Criteria Enabled</t:pageLink>
+      </li>
+      
+      <li>
+         <t:pageLink page='entitygridwithsearchajax'>Entity Grid with Search</t:pageLink>
+      </li>
+      
+      <li>
+         <t:pageLink page='entitygridwitheditajax'>Entity Grid with Edit</t:pageLink>
+      </li>
+   </ul>
 </t:layout>

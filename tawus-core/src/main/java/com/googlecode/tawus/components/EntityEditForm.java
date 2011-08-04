@@ -45,7 +45,8 @@ import com.googlecode.tawus.services.EntityValidator;
  * 
  */
 @SupportsInformalParameters
-public class EntityEditForm implements FormValidationControl, ClientElement {
+public class EntityEditForm implements FormValidationControl, ClientElement
+{
    @Inject
    @Property(write = false)
    private ComponentResources resources;
@@ -128,7 +129,7 @@ public class EntityEditForm implements FormValidationControl, ClientElement {
    @Property
    @Persist
    private String zone;
-   
+
    @Inject
    private EntityValidator entityValidator;
 
@@ -139,21 +140,25 @@ public class EntityEditForm implements FormValidationControl, ClientElement {
     * On prepare
     */
    @SuppressWarnings("unchecked")
-   void onPrepareFromForm() {
+   void onPrepareFromForm()
+   {
       resources.triggerEvent(EventConstants.PREPARE, null, null);
-      if (model == null) {
+      if(model == null)
+      {
          @SuppressWarnings("rawtypes")
          Class beanType = object.getClass();
          model = beanModelSource.createEditModel(beanType, resources.getContainerMessages());
          BeanModelUtils.modify(model, add, null, null, null);
       }
    }
-   
-   void onPrepareForRenderFromForm(){
+
+   void onPrepareForRenderFromForm()
+   {
       resources.triggerEvent(EventConstants.PREPARE_FOR_RENDER, null, null);
    }
-   
-   void onPrepareForSubmitFromForm(){
+
+   void onPrepareForSubmitFromForm()
+   {
       resources.triggerEvent(EventConstants.PREPARE_FOR_SUBMIT, null, null);
    }
 
@@ -162,50 +167,61 @@ public class EntityEditForm implements FormValidationControl, ClientElement {
     * 
     * @throws ValidationException
     */
-   void onValidateFromForm() throws ValidationException {
+   void onValidateFromForm() throws ValidationException
+   {
       entityValidator.validate(object);
       resources.triggerEvent(EventConstants.VALIDATE, new Object[] { object }, null);
    }
 
-   private Object returnValue(ActionType actionType) {
+   private Object returnValue(ActionType actionType)
+   {
       CaptureResultCallback<Object> callback = new CaptureResultCallback<Object>();
-      resources.triggerEvent(TawusEvents.FINISHED, new Object[]{actionType}, callback);
-      if (callback.getResult() != null) {
+      resources.triggerEvent(TawusEvents.FINISHED, new Object[] { actionType }, callback);
+      if(callback.getResult() != null)
+      {
          return callback.getResult();
       }
 
-      if (grid != null) {
-         if (!form.getHasErrors() && !getHasErrors()) {
+      if(grid != null)
+      {
+         if(!form.getHasErrors() && !getHasErrors())
+         {
             grid.showGrid();
          }
-         if (zone == null) {
+         if(zone == null)
+         {
             zone = grid.getZone();
          }
       }
 
-      if (zone != null) {
-         return ((Zone)resources.getContainerResources().getEmbeddedComponent(zone)).getBody();
-      } else {
+      if(zone != null)
+      {
+         return ((Zone) resources.getContainerResources().getEmbeddedComponent(zone)).getBody();
+      }
+      else
+      {
          return null;
       }
    }
-   
-   public String getZoneId(){
-      return zone == null ? null : 
-         ((Zone)resources.getContainerResources().getEmbeddedComponent(zone)).getClientId();
+
+   public String getZoneId()
+   {
+      return zone == null ? null : ((Zone) resources.getContainerResources().getEmbeddedComponent(zone)).getClientId();
    }
 
    /**
     * If cancel button is hit
     */
    @XHR
-   public Object onCancelFromCancel() {
+   public Object onCancelFromCancel()
+   {
       CaptureResultCallback<Object> callback = new CaptureResultCallback<Object>();
       resources.triggerEvent(TawusEvents.CANCEL, null, callback);
-      if(callback.getResult() != null){
+      if(callback.getResult() != null)
+      {
          return callback.getResult();
       }
-      
+
       return returnValue(ActionType.CANCEL);
    }
 
@@ -213,14 +229,19 @@ public class EntityEditForm implements FormValidationControl, ClientElement {
     * When delete button is hit
     */
    @SuppressWarnings("unchecked")
-   public Object onDeleteFromDelete() {
-      try {
+   public Object onDeleteFromDelete()
+   {
+      try
+      {
          CaptureResultCallback<Object> callback = new CaptureResultCallback<Object>();
          resources.triggerEvent(TawusEvents.DELETE, null, callback);
-         if (callback.getResult() == null) {
+         if(callback.getResult() == null)
+         {
             locator.get(getObjectType()).remove(object);
          }
-      } catch (Exception ex) {
+      }
+      catch(Exception ex)
+      {
          ex.printStackTrace();
          this.recordError(ex.getMessage());
       }
@@ -231,75 +252,89 @@ public class EntityEditForm implements FormValidationControl, ClientElement {
     * On successful submission
     */
    @SuppressWarnings("unchecked")
-   public Object onSuccessFromForm() {
-      try {
+   public Object onSuccessFromForm()
+   {
+      try
+      {
          CaptureResultCallback<Object> callback = new CaptureResultCallback<Object>();
          resources.triggerEvent(TawusEvents.SAVE, null, callback);
-         if (callback.getResult() == null) {
+         if(callback.getResult() == null)
+         {
             locator.get(getObjectType()).saveOrUpdate(object);
          }
          return returnValue(ActionType.SAVE);
-      } catch (Exception ex) {
-         //locator.get(getObjectType()).setIdentifier(object, null);
+      }
+      catch(Exception ex)
+      {
+         // locator.get(getObjectType()).setIdentifier(object, null);
          recordError(TawusUtils.stripExceptionPrefix(ex.getMessage()));
          return returnValue(ActionType.SAVE);
       }
 
    }
-   
-   public Object onFailureFromForm(){
+
+   public Object onFailureFromForm()
+   {
       return returnValue(ActionType.SAVE);
    }
 
    @SuppressWarnings("rawtypes")
-   private Class getObjectType() {
+   private Class getObjectType()
+   {
       return object.getClass();
    }
 
    /**
     * Returns the client id of the embedded form. {@inheritDoc}
     */
-   public String getClientId() {
+   public String getClientId()
+   {
       return form.getClientId();
    }
 
    /**
     * {@inheritDoc}
     */
-   public void clearErrors() {
+   public void clearErrors()
+   {
       form.clearErrors();
    }
 
    /**
     * {@inheritDoc}
     */
-   public boolean getHasErrors() {
+   public boolean getHasErrors()
+   {
       return form.getHasErrors();
    }
 
    /**
     * {@inheritDoc}
     */
-   public boolean isValid() {
+   public boolean isValid()
+   {
       return form.isValid();
    }
 
    /**
     * {@inheritDoc}
     */
-   public void recordError(Field field, String errorMessage) {
+   public void recordError(Field field, String errorMessage)
+   {
       form.recordError(field, TawusUtils.stripExceptionPrefix(errorMessage));
    }
 
    /**
     * {@inheritDoc}
     */
-   public void recordError(String errorMessage) {
+   public void recordError(String errorMessage)
+   {
       form.recordError(TawusUtils.stripExceptionPrefix(errorMessage));
    }
-   
-   void setupRender(){
-      zone = (_zone != null ? _zone : (grid != null ? grid.getZone(): null));
+
+   void setupRender()
+   {
+      zone = (_zone != null ? _zone : (grid != null ? grid.getZone() : null));
    }
 
 }

@@ -40,13 +40,15 @@ import com.googlecode.tawus.internal.transform.XHRWorker;
 /**
  * Tawus Module Configuration File
  */
-public class TawusModule {
+public class TawusModule
+{
    /**
     * Service binder
     * 
     * @param binder
     */
-   public static void bind(ServiceBinder binder) {
+   public static void bind(ServiceBinder binder)
+   {
       binder.bind(TawusBeanBlockSource.class, TawusBeanBlockSourceImpl.class);
       binder.bind(TawusBeanBlockOverrideSource.class, TawusBeanBlockOverrideSourceImpl.class);
       binder.bind(EntityServiceMapper.class, SimpleEntityServiceMapper.class);
@@ -55,8 +57,8 @@ public class TawusModule {
 
    /*
     */
-   public DataTypeAnalyzer buildTawusDefaultDataTypeAnalyzer(
-         @Autobuild TawusDefaultDataTypeAnalyzer service) {
+   public DataTypeAnalyzer buildTawusDefaultDataTypeAnalyzer(@Autobuild TawusDefaultDataTypeAnalyzer service)
+   {
       return service;
    }
 
@@ -66,7 +68,8 @@ public class TawusModule {
     * @param configuration
     */
    @Contribute(ComponentClassResolver.class)
-   public void provideComponentClassResolver(Configuration<LibraryMapping> configuration) {
+   public void provideComponentClassResolver(Configuration<LibraryMapping> configuration)
+   {
       configuration.add(new LibraryMapping("tawus", "com.googlecode.tawus"));
    }
 
@@ -76,8 +79,8 @@ public class TawusModule {
     * @param configuration
     * @param tawusDefaultDataTypeAnalyzer
     */
-   public static void contributeDataTypeAnalyzer(
-         OrderedConfiguration<DataTypeAnalyzer> configuration){
+   public static void contributeDataTypeAnalyzer(OrderedConfiguration<DataTypeAnalyzer> configuration)
+   {
       configuration.add("entity", new EntityAnalyzer("entity"), "before:Default");
       configuration.add("entity_list", new EntityListAnalyzer("entity_list"), "before:Default");
       configuration.add("time", new TimeAnalyzer("time"), "before:Default");
@@ -89,8 +92,8 @@ public class TawusModule {
     * 
     * @param configuration
     */
-   public static void contributeTawusBeanBlockSource(
-         Configuration<BeanBlockContribution> configuration) {
+   public static void contributeTawusBeanBlockSource(Configuration<BeanBlockContribution> configuration)
+   {
       addEditBlock(configuration, "text");
       addEditBlock(configuration, "number");
       addEditBlock(configuration, "date");
@@ -104,38 +107,44 @@ public class TawusModule {
       addEditBlock(configuration, "time");
    }
 
-   private static void addEditBlock(Configuration<BeanBlockContribution> configuration,
-         String dataType) {
-      configuration.add(new EditBlockContribution(dataType, "tawus/PropertyEditBlocksWithoutLabel",
-            dataType));
+   private static void addEditBlock(Configuration<BeanBlockContribution> configuration, String dataType)
+   {
+      configuration.add(new EditBlockContribution(dataType, "tawus/PropertyEditBlocksWithoutLabel", dataType));
    }
 
-   public static void contributePersistentFieldManager(MappedConfiguration<String, PersistentFieldStrategy> configuration) {
+   public static void contributePersistentFieldManager(MappedConfiguration<String, PersistentFieldStrategy> configuration)
+   {
       configuration.addInstance("entity", EntityPersistentFieldStrategy.class);
    }
 
    @Contribute(ComponentClassTransformWorker.class)
-   public static void provideWorkers(OrderedConfiguration<ComponentClassTransformWorker> workers) {
+   public static void provideWorkers(OrderedConfiguration<ComponentClassTransformWorker> workers)
+   {
       workers.addInstance("injectEntitySelectSupport", InjectEntitySelectSupportWorker.class);
       workers.addInstance("injectDAOWorker", InjectDAOWorker.class);
       workers.addInstance("XHRWorker", XHRWorker.class);
    }
 
-   public EntityDAOSource buildEntityDAOSource(ChainBuilder chainBuilder,
-         List<EntityDAOSource> commands) {
+   public EntityDAOSource buildEntityDAOSource(ChainBuilder chainBuilder, List<EntityDAOSource> commands)
+   {
       return chainBuilder.build(EntityDAOSource.class, commands);
    }
 
    public void contributeEntityDAOSource(final ObjectLocator locator,
          final EntityServiceMapper entityServiceMapper,
-         OrderedConfiguration<EntityDAOSource> contributions) {
-      EntityDAOSource daoSource = new EntityDAOSource() {
+         OrderedConfiguration<EntityDAOSource> contributions)
+   {
+      EntityDAOSource daoSource = new EntityDAOSource()
+      {
          @SuppressWarnings("unchecked")
-         public <E> EntityDAO<E> get(Class<E> type) {
-            try {
-               return locator.getService(entityServiceMapper.getServiceOverrideId(type),
-                     EntityDAO.class);
-            } catch (UnknownValueException e) {
+         public <E> EntityDAO<E> get(Class<E> type)
+         {
+            try
+            {
+               return locator.getService(entityServiceMapper.getServiceOverrideId(type), EntityDAO.class);
+            }
+            catch(UnknownValueException e)
+            {
                return null;
             }
          }
@@ -144,17 +153,19 @@ public class TawusModule {
       contributions.add("Default", daoSource, "after:*");
    }
 
-   public void contributeApplicationStatePersistenceStrategySource(
-         MappedConfiguration<String, ApplicationStatePersistenceStrategy> configuration) {
+   public void contributeApplicationStatePersistenceStrategySource(MappedConfiguration<String, ApplicationStatePersistenceStrategy> configuration)
+   {
       configuration.addInstance("entity", EntityApplicationStatePersistenceStrategy.class);
    }
 
-   public EntityValidator build(ChainBuilder chainBuilder, List<EntityValidator> contribution) {
+   public EntityValidator build(ChainBuilder chainBuilder, List<EntityValidator> contribution)
+   {
       return chainBuilder.build(EntityValidator.class, contribution);
    }
 
    public CriteriaSource buildCriteriaSource(StrategyBuilder builder,
-         @SuppressWarnings("rawtypes") Map<Class, CriteriaSource> registrations) {
+         @SuppressWarnings("rawtypes") Map<Class, CriteriaSource> registrations)
+   {
       registrations.put(Object.class, new DefaultCriteriaSource());
       return builder.build(CriteriaSource.class, registrations);
    }

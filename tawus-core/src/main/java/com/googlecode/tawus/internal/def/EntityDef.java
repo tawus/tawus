@@ -1,6 +1,7 @@
 package com.googlecode.tawus.internal.def;
 
-public interface EntityDef {
+public interface EntityDef
+{
 
    String getServiceId();
 

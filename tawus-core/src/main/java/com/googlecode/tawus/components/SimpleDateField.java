@@ -26,7 +26,8 @@ import org.apache.tapestry5.services.Request;
  * A simple date field which does not contain a date picker. It is sometimes
  * required for have a date picker which is required for time only
  */
-public class SimpleDateField extends AbstractField {
+public class SimpleDateField extends AbstractField
+{
 
    @Parameter(required = true, principal = true, autoconnect = true)
    private Date value;
@@ -58,52 +59,63 @@ public class SimpleDateField extends AbstractField {
    @Inject
    private Locale locale;
 
-   DateFormat defaultFormat() {
+   DateFormat defaultFormat()
+   {
       final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
       dateFormat.setLenient(false);
       return dateFormat;
    }
 
-   final Binding defaultValidate() {
+   final Binding defaultValidate()
+   {
       return defaultProvider.defaultValidatorBinding("value", resources);
    }
 
    @Override
-   protected void processSubmission(String elementName) {
+   protected void processSubmission(String elementName)
+   {
       String value = request.getParameter(elementName);
       validationTracker.recordInput(this, value);
 
       Date parseValue = null;
-      try {
-         if (InternalUtils.isNonBlank(value)) {
+      try
+      {
+         if(InternalUtils.isNonBlank(value))
+         {
             parseValue = format.parse(value);
          }
-      } catch (ParseException pe) {
-         validationTracker.recordError(this, messages.format(
-               "date-value-not-parseable", value));
+      }
+      catch(ParseException pe)
+      {
+         validationTracker.recordError(this, messages.format("date-value-not-parseable", value));
          return;
       }
       putPropertyNameIntoBeanValidationContext("value");
-      try {
+      try
+      {
          fieldValidationSupport.validate(parseValue, resources, validate);
          this.value = parseValue;
-      } catch (ValidationException ve) {
+      }
+      catch(ValidationException ve)
+      {
          validationTracker.recordError(this, ve.getMessage());
       }
 
       removePropertyNameFromBeanValidationContext();
    }
 
-   void beginRender(MarkupWriter writer) {
+   void beginRender(MarkupWriter writer)
+   {
       String value = validationTracker.getInput(this);
 
-      if (value == null) {
+      if(value == null)
+      {
          value = formatCurrentValue();
       }
 
-      writer.element("input", "type", "text", "value", value, "id",
-            getClientId(), "name", getControlName());
-      if (isDisabled()) {
+      writer.element("input", "type", "text", "value", value, "id", getClientId(), "name", getControlName());
+      if(isDisabled())
+      {
          writer.attributes("disabled", "disabled");
       }
 
@@ -116,18 +128,23 @@ public class SimpleDateField extends AbstractField {
       writer.end();
    }
 
-   private String formatCurrentValue() {
+   private String formatCurrentValue()
+   {
       final String value;
-      if (this.value == null) {
+      if(this.value == null)
+      {
          value = "";
-      } else {
+      }
+      else
+      {
          value = format.format(this.value);
       }
       return value;
    }
 
    @Override
-   public boolean isRequired() {
+   public boolean isRequired()
+   {
       return validate.isRequired();
    }
 
