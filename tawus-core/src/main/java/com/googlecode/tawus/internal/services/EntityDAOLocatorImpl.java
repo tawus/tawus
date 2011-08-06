@@ -21,7 +21,13 @@ public class EntityDAOLocatorImpl implements EntityDAOLocator
    @SuppressWarnings("unchecked")
    public <T> EntityDAO<T> get(Class<T> entityClass)
    {
+      try {
       return locator.getService(entityServiceMapper.getServiceId(entityClass), EntityDAO.class);
+      }
+      catch(Exception ex)
+      {
+         throw new RuntimeException("No service configured for entity class " + entityClass.getCanonicalName());
+      }
    }
 
 }

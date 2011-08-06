@@ -1,19 +1,19 @@
 package com.googlecode.tawus.internal.transform;
 
 import org.apache.tapestry5.model.MutableComponentModel;
-import org.apache.tapestry5.services.ClassTransformation;
-import org.apache.tapestry5.services.ComponentClassTransformWorker;
-import org.apache.tapestry5.services.ComponentMethodAdvice;
-import org.apache.tapestry5.services.ComponentMethodInvocation;
+import org.apache.tapestry5.plastic.MethodAdvice;
+import org.apache.tapestry5.plastic.MethodDescription;
+import org.apache.tapestry5.plastic.MethodInvocation;
+import org.apache.tapestry5.plastic.PlasticClass;
+import org.apache.tapestry5.plastic.PlasticMethod;
 import org.apache.tapestry5.services.Request;
-import org.apache.tapestry5.services.TransformMethod;
-import org.apache.tapestry5.services.TransformMethodSignature;
+import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
+import org.apache.tapestry5.services.transform.TransformationSupport;
 
 import com.googlecode.tawus.annotations.XHR;
 
-public class XHRWorker implements ComponentClassTransformWorker
+public class XHRWorker implements ComponentClassTransformWorker2
 {
-
    private Request request;
 
    public XHRWorker(Request request)
@@ -21,21 +21,21 @@ public class XHRWorker implements ComponentClassTransformWorker
       this.request = request;
    }
 
-   public void transform(ClassTransformation transformation, MutableComponentModel model)
+   public void transform(PlasticClass plasticClass, TransformationSupport support, MutableComponentModel model)
    {
-      for(final TransformMethod method : transformation.matchMethodsWithAnnotation(XHR.class))
+      for(final PlasticMethod method : plasticClass.getMethodsWithAnnotation(XHR.class))
       {
-         TransformMethodSignature signature = method.getSignature();
+         MethodDescription description = method.getDescription();
 
-         if(!"void".equals(signature.getReturnType()))
+         if(!"void".equals(description.returnType))
          {
-            method.addAdvice(new ComponentMethodAdvice()
+            method.addAdvice(new MethodAdvice()
             {
 
-               public void advise(ComponentMethodInvocation invocation)
+               public void advise(MethodInvocation invocation)
                {
                   invocation.proceed();
-                  Object result = invocation.getResult();
+                  Object result = invocation.getReturnValue();
                   if(!request.isXHR())
                   {
                      if(result != null)
@@ -43,7 +43,7 @@ public class XHRWorker implements ComponentClassTransformWorker
                         result = defaultForReturnType(result.getClass());
                      }
                   }
-                  invocation.overrideResult(result);
+                  invocation.setReturnValue(result);
                }
 
             });
@@ -53,6 +53,7 @@ public class XHRWorker implements ComponentClassTransformWorker
             throw new RuntimeException("XHR can be applied to non-void event handlers only");
          }
       }
+
    }
 
    private Object defaultForReturnType(Class<?> returnType)
@@ -63,4 +64,5 @@ public class XHRWorker implements ComponentClassTransformWorker
          return false;
       return 0;
    }
+
 }

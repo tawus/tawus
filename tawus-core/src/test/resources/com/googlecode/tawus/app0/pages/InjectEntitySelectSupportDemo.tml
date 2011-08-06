@@ -1,0 +1,15 @@
+<t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   
+   <div id='message'>${user}</div>
+   
+   <form t:type='form'>
+
+      <label t:type='label' for='user'></label>
+
+      <select t:type='select' t:id='user' t:model='userModel' t:encoder='userEncoder'>
+      </select>
+
+      <input type='submit' value='submit' />
+   </form>
+
+</t:layout>

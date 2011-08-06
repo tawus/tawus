@@ -16,11 +16,11 @@ import org.apache.tapestry5.ioc.util.UnknownValueException;
 import org.apache.tapestry5.services.ApplicationStatePersistenceStrategy;
 import org.apache.tapestry5.services.BeanBlockContribution;
 import org.apache.tapestry5.services.ComponentClassResolver;
-import org.apache.tapestry5.services.ComponentClassTransformWorker;
 import org.apache.tapestry5.services.DataTypeAnalyzer;
 import org.apache.tapestry5.services.EditBlockContribution;
 import org.apache.tapestry5.services.LibraryMapping;
 import org.apache.tapestry5.services.PersistentFieldStrategy;
+import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
 
 import com.googlecode.tawus.internal.EntityApplicationStatePersistenceStrategy;
 import com.googlecode.tawus.internal.EntityPersistentFieldStrategy;
@@ -29,11 +29,11 @@ import com.googlecode.tawus.internal.dataanalyzers.EntityListAnalyzer;
 import com.googlecode.tawus.internal.dataanalyzers.TimeAnalyzer;
 import com.googlecode.tawus.internal.services.DefaultCriteriaSource;
 import com.googlecode.tawus.internal.services.EntityDAOLocatorImpl;
-import com.googlecode.tawus.internal.services.InjectDAOWorker;
 import com.googlecode.tawus.internal.services.SimpleEntityServiceMapper;
 import com.googlecode.tawus.internal.services.TawusBeanBlockOverrideSourceImpl;
 import com.googlecode.tawus.internal.services.TawusBeanBlockSourceImpl;
 import com.googlecode.tawus.internal.services.TawusDefaultDataTypeAnalyzer;
+import com.googlecode.tawus.internal.transform.InjectDAOWorker;
 import com.googlecode.tawus.internal.transform.InjectEntitySelectSupportWorker;
 import com.googlecode.tawus.internal.transform.XHRWorker;
 
@@ -116,13 +116,12 @@ public class TawusModule
    {
       configuration.addInstance("entity", EntityPersistentFieldStrategy.class);
    }
-
-   @Contribute(ComponentClassTransformWorker.class)
-   public static void provideWorkers(OrderedConfiguration<ComponentClassTransformWorker> workers)
+   
+   public static void contributeComponentClassTransformWorker(OrderedConfiguration<ComponentClassTransformWorker2> workers)
    {
       workers.addInstance("injectEntitySelectSupport", InjectEntitySelectSupportWorker.class);
-      workers.addInstance("injectDAOWorker", InjectDAOWorker.class);
       workers.addInstance("XHRWorker", XHRWorker.class);
+      workers.addInstance("injectDAOWorker", InjectDAOWorker.class);
    }
 
    public EntityDAOSource buildEntityDAOSource(ChainBuilder chainBuilder, List<EntityDAOSource> commands)

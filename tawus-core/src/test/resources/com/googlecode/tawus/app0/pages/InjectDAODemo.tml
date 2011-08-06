@@ -1,0 +1,5 @@
+<t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+
+   <p>Total Users : ${count}</p>
+   
+</t:layout>

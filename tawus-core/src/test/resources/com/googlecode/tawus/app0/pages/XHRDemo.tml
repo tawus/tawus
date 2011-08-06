@@ -1,0 +1,7 @@
+<t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+
+   <div t:type='zone' t:id='zone'>${message}</div>
+   
+   <a href='#' t:type='actionlink' t:zone='zone' t:id='link'>Ajax Link</a>
+   
+</t:layout>

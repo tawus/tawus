@@ -1,9 +1,21 @@
 <t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
    <ul>
-      <li>
-         <a href='canceldemo'>Cancel Demo</a>
-      </li>
+      <li><a href='canceldemo'>Cancel Demo</a></li>
       
+      <li><a href='InjectEntitySelectSupportDemo/true'>InjectEntitySelectSupport Demo</a></li>
+      
+      <li><a href='InjectEntitySelectSupportDemo/false'>InjectEntitySelectSupport Demo With No Criteria</a></li>
+      
+      <li><a href='xhrdemo'>XHR Demo With Ajax</a></li>
+      
+      <li><a href='xhrdemo.link'>XHR Demo Without Ajax</a></li>
+     
+     <li><a href='xhrvoidpage'>XHR Void Exception</a></li>
+     
+     <li><a href='injectdaodemo'>InjectDAO Demo</a></li>
+     
+     <li><a href='injectdaonotpresentdemo'>InjectDAO Not Present Demo</a></li>
+     
       <li>
          <a href='entityeditorajax' id='entityeditorajax'>Entity Editor Ajax </a>
       </li>

@@ -1,16 +1,15 @@
 package com.googlecode.tawus.internal.transform;
 
-import java.lang.reflect.Modifier;
-
 import org.apache.tapestry5.model.MutableComponentModel;
-import org.apache.tapestry5.services.ClassTransformation;
-import org.apache.tapestry5.services.ComponentClassTransformWorker;
-import org.apache.tapestry5.services.ComponentMethodAdvice;
-import org.apache.tapestry5.services.ComponentMethodInvocation;
-import org.apache.tapestry5.services.FieldAccess;
-import org.apache.tapestry5.services.TransformField;
-import org.apache.tapestry5.services.TransformMethod;
-import org.apache.tapestry5.services.TransformMethodSignature;
+import org.apache.tapestry5.plastic.FieldHandle;
+import org.apache.tapestry5.plastic.MethodAdvice;
+import org.apache.tapestry5.plastic.MethodDescription;
+import org.apache.tapestry5.plastic.MethodInvocation;
+import org.apache.tapestry5.plastic.PlasticClass;
+import org.apache.tapestry5.plastic.PlasticField;
+import org.apache.tapestry5.plastic.PlasticMethod;
+import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
+import org.apache.tapestry5.services.transform.TransformationSupport;
 
 import com.googlecode.tawus.EntitySelectModel;
 import com.googlecode.tawus.EntityValueEncoder;
@@ -18,7 +17,7 @@ import com.googlecode.tawus.SearchCriteria;
 import com.googlecode.tawus.annotations.InjectEntitySelectSupport;
 import com.googlecode.tawus.services.EntityDAOLocator;
 
-public class InjectEntitySelectSupportWorker implements ComponentClassTransformWorker
+public class InjectEntitySelectSupportWorker implements ComponentClassTransformWorker2
 {
 
    private EntityDAOLocator locator;
@@ -28,65 +27,108 @@ public class InjectEntitySelectSupportWorker implements ComponentClassTransformW
       this.locator = locator;
    }
 
-   public void transform(ClassTransformation transform, MutableComponentModel model)
+   public void transform(PlasticClass plasticClass, TransformationSupport support, MutableComponentModel model)
    {
-      for(final TransformField field : transform.matchFieldsWithAnnotation(InjectEntitySelectSupport.class))
+      for(final PlasticField field : plasticClass.getFieldsWithAnnotation(InjectEntitySelectSupport.class))
       {
-         addModelMethod(transform, field);
-         addEncoderMethod(transform, field);
+         addModelMethod(plasticClass, field);
+         addEncoderMethod(plasticClass, field);
       }
    }
 
-   private void addEncoderMethod(ClassTransformation transform, TransformField field)
+   void addEncoderMethod(PlasticClass plasticClass, PlasticField field)
    {
       String name = stripCriteriaIfPresent(field.getName());
+
+      PlasticMethod method = createEncoderMethod(plasticClass, name);
+      PlasticField encoderField = plasticClass.introduceField(EntityValueEncoder.class, getFieldName(name, "Encoder"));
+
+      final FieldHandle handle = field.getHandle();
+      final FieldHandle encoderHandle = encoderField.getHandle();
+
+      method.addAdvice(new MethodAdvice()
+      {
+
+         @SuppressWarnings({ "unchecked", "rawtypes" })
+         public void advise(MethodInvocation invocation)
+         {
+            Object instance = invocation.getInstance();
+
+            SearchCriteria criteria = (SearchCriteria) handle.get(instance);
+            if(criteria == null)
+            {
+               throw new RuntimeException("SearchCriteria cannot be null when annotated with @"
+                     + InjectEntitySelectSupport.class.getSimpleName());
+            }
+
+            if(encoderHandle.get(instance) == null)
+            {
+               encoderHandle.set(instance, new EntityValueEncoder(locator.get(criteria.getType())));
+            }
+
+            invocation.setReturnValue(encoderHandle.get(instance));
+         }
+
+      });
+   }
+
+   private PlasticMethod createEncoderMethod(PlasticClass plasticClass, String name)
+   {
       String methodName = "get" + capitalize(name) + "Encoder";
 
-      TransformMethodSignature sig = new TransformMethodSignature(Modifier.PUBLIC, EntityValueEncoder.class.getName(),
-            methodName, null, null);
+      MethodDescription description = new MethodDescription(EntityValueEncoder.class.getName(), methodName);
 
-      final TransformMethod method = transform.getOrCreateMethod(sig);
-      final FieldAccess access = field.getAccess();
-      method.addAdvice(new ComponentMethodAdvice()
-      {
-
-         @SuppressWarnings({ "unchecked", "rawtypes" })
-         public void advise(ComponentMethodInvocation invocation)
-         {
-            SearchCriteria criteria = (SearchCriteria) access.read(invocation.getInstance());
-            invocation.overrideResult(new EntityValueEncoder(locator.get(criteria.getType())));
-         }
-
-      });
+      return plasticClass.introduceMethod(description);
    }
 
-   private void addModelMethod(ClassTransformation transform, TransformField field)
+   void addModelMethod(PlasticClass plasticClass, PlasticField field)
    {
       String name = stripCriteriaIfPresent(field.getName());
+      PlasticMethod method = createModelMethod(plasticClass, name);
 
-      String methodName = "get" + capitalize(name) + "Model";
+      PlasticField selectField = plasticClass.introduceField(EntitySelectModel.class, getFieldName(name, "Model"));
 
-      TransformMethodSignature sig = new TransformMethodSignature(Modifier.PUBLIC, EntitySelectModel.class.getName(),
-            methodName, null, null);
+      final FieldHandle handle = field.getHandle();
+      final FieldHandle selectHandle = selectField.getHandle();
 
-      final TransformMethod method = transform.getOrCreateMethod(sig);
-      final FieldAccess access = field.getAccess();
-      method.addAdvice(new ComponentMethodAdvice()
+      method.addAdvice(new MethodAdvice()
       {
 
          @SuppressWarnings({ "unchecked", "rawtypes" })
-         public void advise(ComponentMethodInvocation invocation)
+         public void advise(MethodInvocation invocation)
          {
-            SearchCriteria criteria = (SearchCriteria) access.read(invocation.getInstance());
-            invocation.overrideResult(new EntitySelectModel(locator.get(criteria.getType()).list(criteria)));
+            Object instance = invocation.getInstance();
+
+            SearchCriteria criteria = (SearchCriteria) handle.get(instance);
+            if(criteria == null)
+            {
+               throw new RuntimeException("SearchCriteria cannot be null when annotated with @"
+                     + InjectEntitySelectSupport.class.getSimpleName());
+            }
+
+            if(selectHandle.get(instance) == null)
+            {
+               selectHandle.set(instance, new EntitySelectModel(locator.get(criteria.getType()).list(criteria)));
+            }
+
+            invocation.setReturnValue(selectHandle.get(instance));
          }
 
       });
    }
 
-   private String stripCriteriaIfPresent(String name)
+   private PlasticMethod createModelMethod(PlasticClass plasticClass, String name)
    {
-      if(name.endsWith("Criteria"))
+      String methodName = "get" + capitalize(name) + "Model";
+
+      MethodDescription description = new MethodDescription(EntitySelectModel.class.getName(), methodName);
+
+      return plasticClass.introduceMethod(description);
+   }
+
+   String stripCriteriaIfPresent(String name)
+   {
+      if(name.endsWith("Criteria") && !name.startsWith("Criteria"))
       {
          name = name.replaceAll("Criteria$", "");
       }
@@ -96,6 +138,11 @@ public class InjectEntitySelectSupportWorker implements ComponentClassTransformW
    private String capitalize(String name)
    {
       return Character.toUpperCase(name.charAt(0)) + name.substring(1);
+   }
+
+   private String getFieldName(String name, String prefix)
+   {
+      return "_$" + name + prefix;
    }
 
 }

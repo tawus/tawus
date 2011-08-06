@@ -8,6 +8,7 @@ subprojects {
    group="com.googlecode.tawus"
    version="0.022-SNAPSHOT"
    sourceCompatibility = '1.5'
+   tapestryVersion = "5.3-alpha-9"
 
    targetCompatibility = '1.5'
    configurations {
@@ -15,19 +16,7 @@ subprojects {
       deployerJars
    }
 
-   // See http://jira.codehaus.org/browse/GRADLE-784
-
-   sourceSets {
-      main {
-         compileClasspath += configurations.provided
-      }
-      test {
-         compileClasspath += configurations.provided
-         runtimeClasspath += configurations.provided
-      }
-    }
-
-   task testng(type:Test) {
+   test { //task test(type:Test) {
       useTestNG()
       options.suites("src/test/conf/testng.xml")
       maxHeapSize = "400M"
@@ -38,24 +27,13 @@ subprojects {
 
    }
 
-   check.dependsOn testng
-
    repositories {
      mavenCentral()
      mavenRepo urls: "http://m2repo.spockframework.org/snapshots"
+     mavenRepo urls: "https://repository.apache.org/content/repositories/staging/"
      mavenRepo urls: "http://repository.jboss.org/nexus/content/groups/public-jboss/"
    }
 
-    task sourcesJar(type: Jar, dependsOn:classes) {
-       classifier = 'sources'
-       from sourceSets.main.allSource
-    }
-
-    artifacts {
-       archives sourcesJar
-    }
-
-  
    dependencies {
      groovy "org.codehaus.groovy:groovy-all:1.7.4"
      testCompile 'org.testng:testng:5.10:jdk15@jar'
@@ -66,9 +44,4 @@ subprojects {
      testCompile "org.spockframework:spock-core:0.4-groovy-1.7"
      testCompile "junit:junit:4.8.1"  
    }
-}
-subprojects.each { evaluationDependsOn(it.name) }
-
-task clean(type: Delete) {
-  delete buildDirName
 }

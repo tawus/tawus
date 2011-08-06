@@ -4,9 +4,9 @@ apply plugin: "eclipse"
 sourceSets.main.java.srcDirs
 
 dependencies {
-  compile "org.apache.tapestry:tapestry-beanvalidator:5.2.5"
-  compile "org.apache.tapestry:tapestry-core:5.2.5"
-  testCompile "org.apache.tapestry:tapestry-test:5.2.5"
+  compile group:"org.apache.tapestry", name :"tapestry-beanvalidator", version:tapestryVersion
+  compile group:"org.apache.tapestry", name :"tapestry-core", version:tapestryVersion
+  testCompile group:"org.apache.tapestry", name :"tapestry-test", version:tapestryVersion
   compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.0.Final"
   testCompile "org.hibernate:hibernate-validator:4.1.0.Final"
   compile "javax.servlet:servlet-api:2.5"
