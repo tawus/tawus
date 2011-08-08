@@ -74,10 +74,6 @@ public class EntityDisplay
    @Property
    private boolean showHelp;
 
-   /** Current Property name */
-   @Property
-   private String currentProperty;
-
    /** Current row */
    @Property
    private String currentRow;
@@ -106,7 +102,7 @@ public class EntityDisplay
 
    public PropertyModel getPropertyModel()
    {
-      return model.get(currentProperty);
+      return model.get(currentColumn.getProperty());
    }
 
    public Object getObject()
@@ -140,7 +136,7 @@ public class EntityDisplay
    }
 
    @SuppressWarnings("unchecked")
-   void doPrepare()
+   void setupRender()
    {
       if(model == null)
       {
@@ -149,11 +145,6 @@ public class EntityDisplay
          model = modelSource.createDisplayModel(type, resources.getContainerMessages());
          BeanModelUtils.modify(model, add, null, null, null);
       }
-   }
-
-   void setupRender()
-   {
-      doPrepare();
    }
 
    public int getFieldColspan()
