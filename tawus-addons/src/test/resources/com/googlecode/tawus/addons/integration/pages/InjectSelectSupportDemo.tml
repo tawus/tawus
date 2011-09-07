@@ -1,0 +1,16 @@
+<html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+   <head>
+      <title>Inject Select Support Demo</title>
+   </head>
+   
+   <body>
+   
+       <div id='selected'>${user?.name}</div>
+       <form t:type='form' t:id='form'>
+          <label t:type='label' t:for='user'></label>
+          <select t:type='select' t:id='user' t:encoder='usersSupport' t:model='usersSupport'/>
+          <input type='submit' value='Submit'/>
+       </form>
+       
+   </body>
+</html>

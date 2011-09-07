@@ -15,7 +15,6 @@ import org.apache.tapestry5.services.PropertyConduitSource;
 
 import com.googlecode.tawus.extensions.internal.bindings.PagerBindingFactory;
 import com.googlecode.tawus.extensions.internal.bindings.RuntimePropBindingFactory;
-import com.googlecode.tawus.extensions.internal.transform.InjectListSelectSupportWorker;
 
 @SuppressWarnings("deprecation")
 public class TawusExtensionsModule
@@ -26,12 +25,6 @@ public class TawusExtensionsModule
    public void provideComponentClassResolver(Configuration<LibraryMapping> configuration)
    {
       configuration.add(new LibraryMapping("tawus", "com.googlecode.tawus.extensions"));
-   }
-
-   @Contribute(ComponentClassTransformWorker.class)
-   public static void provideWorkers(OrderedConfiguration<ComponentClassTransformWorker> workers)
-   {
-      workers.addInstance("injectListSelectSupport", InjectListSelectSupportWorker.class);
    }
 
    public static void contributeBindingSource(PropertyConduitSource propertyConduitSource, StringInterner interner,
