@@ -1,17 +1,16 @@
-package com.googlecode.tawus.components;
+package com.googlecode.tawus;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.tapestry5.test.SeleniumTestCase;
 import org.testng.annotations.Test;
 
-public class EntityGridWithEditAjaxTest extends SeleniumTestCase {
+public class EntityGridWithEditDemoTest extends BaseTestCase {
    
    @Test
    public void test_edit_link() throws InterruptedException {
       openBaseURL();
-      clickAndWait("link=Entity Grid with Edit");
+      clickAndWait("link=Entity Grid Ajax with Edit");
       
       assertTexts("xpath=//table[@class='t-data-grid'][1]/thead[1]/tr[1]/th[%d]/a[1]",
             new String[] { "Name", "Id", "Address", "Age", "Gender" });
@@ -47,8 +46,7 @@ public class EntityGridWithEditAjaxTest extends SeleniumTestCase {
       select("name=gender", "value=Female");
 
       click("//form[1]//input[@value='Save'][1]");
-      Thread.sleep(1500);
-      assertText("id=message", params.get("name") + "/" + params.get("address"));
+      assertTextUsingJS("message", params.get("name") + "/" + params.get("address"));
       
       assertTexts("xpath=//table[@class='t-data-grid'][1]/thead[1]/tr[1]/th[%d]/a[1]",
             new String[] { "Name", "Id", "Address", "Age", "Gender" });
@@ -74,27 +72,24 @@ public class EntityGridWithEditAjaxTest extends SeleniumTestCase {
       select("name=gender", "value=Female");
 
       click("//form[1]//input[@value='Save'][1]");
-      Thread.sleep(1500);
-      assertText("id=message", params.get("name") + "/" + params.get("address"));
+      assertTextUsingJS("message", params.get("name") + "/" + params.get("address"));
       
       click("xpath=//table[@class='t-data-grid'][1]/tbody[1]/tr[1]/td[1]/a[1]");//edit link
       Thread.sleep(1500);
       click("//form[1]//button[2]");//cancel button
-      Thread.sleep(1500);
-      assertText("id=message", "canceled");
+      assertTextUsingJS("message", "canceled");
       
       click("xpath=//table[@class='t-data-grid'][1]/tbody[1]/tr[1]/td[1]/a[1]");//edit link
       Thread.sleep(1500);
       click("//form[1]//button[1]");//delete button
-      Thread.sleep(1500);
-      assertText("id=message", "deleted");
+      assertTextUsingJS("message", "deleted");
    }
 
 
    //@Test
    public void test_new_link() throws InterruptedException {
       openBaseURL();
-      clickAndWait("link=Entity Grid with Edit");
+      clickAndWait("link=Entity Grid Ajax with Edit");
       
       assertTexts("xpath=//table[@class='t-data-grid'][1]/thead[1]/tr[1]/th[%d]/a[1]",
             new String[] { "Name", "Id", "Address", "Age", "Gender" });
@@ -129,8 +124,7 @@ public class EntityGridWithEditAjaxTest extends SeleniumTestCase {
       select("name=gender", "value=Female");
 
       click("//form[1]//input[@value='Save'][1]");
-      Thread.sleep(1500);
-      assertText("id=message", params.get("name") + "/" + params.get("address"));
+      assertTextUsingJS("message", params.get("name") + "/" + params.get("address"));
       
       assertTexts("xpath=//table[@class='t-data-grid'][1]/thead[1]/tr[1]/th[%d]/a[1]",
             new String[] { "Name", "Id", "Address", "Age", "Gender" });
@@ -143,14 +137,12 @@ public class EntityGridWithEditAjaxTest extends SeleniumTestCase {
       
       assertTextPresent("User Details");
       click("//form[1]//button[2]");//cancel button
-      Thread.sleep(1500);
-      assertText("id=message", "canceled");
+      assertTextUsingJS("message", "canceled");
       
       click("xpath=//div[@class='t-entity-new'][1]/a[1]");
       Thread.sleep(1500);
       click("//form[1]//button[1]");//delete button
-      Thread.sleep(1500);
-      assertText("id=message", "deleted");
+      assertTextUsingJS("message", "deleted");
    }
 
 

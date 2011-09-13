@@ -21,6 +21,7 @@ import org.easymock.IArgumentMatcher;
 import org.testng.annotations.Test;
 
 import com.googlecode.tawus.RegistrationData;
+import com.googlecode.tawus.components.EntityEditor;
 
 public class EntityEditorCoreTest extends TapestryTestCase {
    @Test

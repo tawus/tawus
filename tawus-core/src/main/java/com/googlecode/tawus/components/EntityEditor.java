@@ -283,6 +283,7 @@ public class EntityEditor
    }
 
    @SuppressWarnings("unchecked")
+   public
    void doPrepare()
    {
       if(model == null)

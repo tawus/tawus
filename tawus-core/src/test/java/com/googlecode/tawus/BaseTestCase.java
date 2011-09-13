@@ -7,19 +7,19 @@ public class BaseTestCase extends SeleniumTestCase
 
    protected void assertTextUsingJS(String id, String text) {
        waitForCondition(String.format(
-               "selenium.browserbot.getCurrentWindow().$('%s').innerHTML=='%s'", id, text),
+               "selenium.browserbot.getCurrentWindow().document.getElementById('%s').innerHTML=='%s'", id, text),
                PAGE_LOAD_TIMEOUT);
    }
 
    protected void assertTextNotPresentUsingJS(String id, String text) {
        waitForCondition(String.format(
-               "selenium.browserbot.getCurrentWindow().$('%s').innerHTML!='%s'", id, text),
+               "selenium.browserbot.getCurrentWindow().document.getElementById('%s').innerHTML!='%s'", id, text),
                PAGE_LOAD_TIMEOUT);
    }
 
    protected void assertValueUsingJS(String id, String text) {
        waitForCondition(String.format(
-               "selenium.browserbot.getCurrentWindow().$('%s').value =='%s'", id, text),
+               "selenium.browserbot.getCurrentWindow().document.getElementById('%s').value =='%s'", id, text),
                PAGE_LOAD_TIMEOUT);
    }
    

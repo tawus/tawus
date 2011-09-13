@@ -39,7 +39,7 @@ public class EntityGrid implements GridRuntime
     */
    @Component(publishParameters = "add, columnIndex,empty,encoder, include, exclude, "
          + "class, lean, reorder, row,rowClass, rowIndex, rowsPerPage, " + "sortModel, volatile, model", parameters = {
-         "source=source", "overrides=overrides", "row=inherit:row", "inplace='inplace'",
+         "source=source", "overrides=overrides", "row=inherit:row", "inplace=prop:inplace",
          "pagerPosition=prop:pagerPosition" })
    private Grid grid;
 
@@ -187,6 +187,7 @@ public class EntityGrid implements GridRuntime
       resources.triggerEvent(TawusEvents.SHOW_DETAILS,
             new Object[] { object = locator.get(criteria.getType()).get(id) },
             null);
+      System.out.println("Reaching here");
       return returnValue();
    }
 
@@ -194,10 +195,12 @@ public class EntityGrid implements GridRuntime
    {
       if(zone != null)
       {
+         System.out.println("Returning ...");
          return ((Zone) resources.getContainerResources().getEmbeddedComponent(zone)).getBody();
       }
       else
       {
+         System.out.println("Returning null");
          return null;
       }
    }

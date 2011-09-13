@@ -17,7 +17,6 @@ public class EntityDisplayTest extends BaseTestCase
       assertText("//tr[1]/td[3]", "Dob");
       
       assertText("//tr[2]/td[1]", "Address");
-      assertText("//tr[2]/td[2][@rowspan='1'][@colspan='2'][@class='address']", "Srinagar, J&K");
    }
    
 }

@@ -1,6 +1,6 @@
 <t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'
 	xmlns:p='tapestry:parameter'>
-	<div t:type='zone'>
+	<div t:type='zone' t:id='zone' id='zone'>
 		<t:tawus.entitygrid t:criteria='criteria' t:zone='zone' t:object='user'
 			actionProperty='name' t:id='grid' include='name,id,address,age,gender,department'>
 			<p:search>

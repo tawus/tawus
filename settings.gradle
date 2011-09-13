@@ -1,1 +1,1 @@
-include "tawus-core", "tawus-hibernate", "tawus-extensions", "tawus-ajaxupload", "tawus-auth", "tawus-addons", "tawus-jfreechart", "tawus-oauth"
+include "tawus-core", "tawus-hibernate", "tawus-ajaxupload", "tawus-addons", "tawus-jfreechart", "tawus-oauth"

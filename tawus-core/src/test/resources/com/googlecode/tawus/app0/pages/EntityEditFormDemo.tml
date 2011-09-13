@@ -1,15 +1,22 @@
-<t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'
-	xmlns:p='tapestry:parameter'>
-	<t:tawus.entityeditform t:object='user' t:updatable='updatable' t:id='form'
-		include='User Details/2/1/caption;name,id;address,dob;age,gender;department,otherDepartments'>
-		<p:address>
-			<t:if test='updatable'>
-				<textarea t:type='textarea' t:id='address' t:value='user.address'></textarea>
-				<p:else>
-				${user.address}
-				</p:else>
-			</t:if>
-		</p:address>
-	</t:tawus.entityeditform>
-	<div id='message'>${message}</div>
+<t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd' xmlns:p='tapestry:parameter'>
+   <t:tawus.entityeditform t:object='user' t:updatable='updatable' t:id='form'
+      include='User Details/2/1/caption;name,id;address,dob;age,gender;department,otherDepartments'>
+      <p:address>
+         <t:tawus.tdEditor>
+            <p:label>
+               <t:label t:for='address'></t:label>
+            </p:label>
+            <p:editor>
+               <t:if test='updatable'>
+                  <textarea t:type='textarea' t:id='address' t:value='user.address'></textarea>
+                  <p:else>
+                     ${user.address}
+                  </p:else>
+               </t:if>
+            </p:editor>
+         </t:tawus.tdEditor>
+
+      </p:address>
+   </t:tawus.entityeditform>
+   <div id='message'>${message}</div>
 </t:layout>

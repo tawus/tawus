@@ -22,9 +22,9 @@ public class EntityDAOServiceDef implements ServiceDef
       this.entityDef = entityDef;
    }
 
-   public ObjectCreator createServiceCreator(final ServiceBuilderResources resources)
+   public ObjectCreator<Object> createServiceCreator(final ServiceBuilderResources resources)
    {
-      return new ObjectCreator()
+      return new ObjectCreator<Object>()
       {
 
          public Object createObject()

@@ -1,11 +1,26 @@
 <t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd' xmlns:p='tapestry:parameter'>
-	<form t:type='form' id='form'>
-		<t:tawus.entityeditor t:object='user'
-			include='User Details/2/1/caption;name,id;address,dob;age,gender;department,otherDepartments'>
-			<p:address>
-			   <textarea t:type='textarea' t:id='address' t:value='user.address'></textarea>
-			</p:address>
-		</t:tawus.entityeditor>
-	</form>
-	<div id='message'>${message}</div>
+   <form t:type='form' id='form'>
+      <table>
+         <t:tawus.entityeditor t:object='user'
+            include='User Details/2/1/caption;name,id;address,dob;age,gender;department,otherDepartments'>
+            <p:address>
+               <t:tawus.tdeditor>
+                  <p:label>
+                     <t:label t:type='label' t:for='address'></t:label>
+                  </p:label>
+                  <p:editor>
+                     <textarea t:type='textarea' t:id='address' t:value='user.address'></textarea>
+                  </p:editor>
+               </t:tawus.tdeditor>
+
+            </p:address>
+         </t:tawus.entityeditor>
+         <tr>
+            <td colspan='4'><input type='submit' value='save' name='save' id='save'/></td>
+         </tr>
+      </table>
+      
+   </form>
+
+   <div id='message'>${message}</div>
 </t:layout>

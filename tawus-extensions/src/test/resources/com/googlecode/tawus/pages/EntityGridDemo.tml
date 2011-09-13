@@ -1,8 +1,0 @@
-<t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'
-	xmlns:p='tapestry:parameter'>
-	<t:tawus.entitygrid t:criteria='criteria'
-	   actionProperty='name'
-		include='name,id,address,age,gender,department'>
-	</t:tawus.entitygrid>
-	<div id='sortColumn'>${sortColumn}</div>
-</t:layout>

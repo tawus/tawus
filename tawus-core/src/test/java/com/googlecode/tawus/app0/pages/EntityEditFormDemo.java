@@ -47,5 +47,9 @@ public class EntityEditFormDemo {
       message = user.getName() + "/" + user.getAddress() + "/" + user.getDepartment() + "/"
             + user.getAge() + "/" + user.getOtherDepartments() + "/" + user.getGender();
    }
+   
+   void onCancel(){
+      message = "Message cleared";
+   }
 
 }

@@ -1,18 +1,25 @@
-package com.googlecode.tawus.components;
+package com.googlecode.tawus;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.tapestry5.test.SeleniumTestCase;
 import org.testng.annotations.Test;
 
-public class EntityEditFormAjaxTest extends SeleniumTestCase {
+public class EntityEditFormDemoTest extends BaseTestCase {
    
    @Test
-   public void test_entity_save() throws InterruptedException {
+   public void test_entity_save_with_ajax() throws InterruptedException {
       openBaseURL();
       clickAndWait("link=Entity Edit Form Ajax");
       
+      fillForm();
+
+      click("//form[1]//input[@type='submit'][1]");
+      assertTextUsingJS("message", "Tawus created");
+   }
+
+   private void fillForm()
+   {
       Map<String, String> params = new HashMap<String, String>();
       params.put("name", "Tawus");
       params.put("address", "Srinagar");
@@ -33,18 +40,30 @@ public class EntityEditFormAjaxTest extends SeleniumTestCase {
       type("name=id_0", params.get("id_0"));
       select("name=department", "value=1");
       select("name=gender", "value=Male");
+   }
 
-      click("//form[1]//input[@type='submit'][1]");
-      Thread.sleep(1000);
-      this.assertText("id=message", "Tawus created");
+   @Test
+   public void test_entity_cancel_with_ajax() throws InterruptedException {
+      openBaseURL();
+      clickAndWait("link=Entity Edit Form Ajax");
+      click("id=cancel");
+      assertTextUsingJS("message", "Message cleared");
+   }
+   
+   @Test
+   public void test_entity_save() throws InterruptedException {
+      openBaseURL();
+      clickAndWait("link=Entity Edit Form Demo");
+      fillForm();
+      clickAndWait("//form[1]//input[@type='submit'][1]");
+      assertText("id=message", "Tawus/Srinagar/Computers/32/[]/Male");
    }
 
    @Test
    public void test_entity_cancel() throws InterruptedException {
       openBaseURL();
-      clickAndWait("link=Entity Edit Form Ajax");
-      click("id=cancel");
-      Thread.sleep(1000);
-      this.assertText("id=message", "Message cleared");
+      clickAndWait("link=Entity Edit Form Demo");
+      clickAndWait("id=cancel");
+      assertText("id=message", "Message cleared");
    }
 }

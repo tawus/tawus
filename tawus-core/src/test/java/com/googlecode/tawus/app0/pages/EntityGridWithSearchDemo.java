@@ -21,14 +21,10 @@ public class EntityGridWithSearchDemo {
    @Property
    private User user;
    
-   void onActivate(String param){
+   void onActivate(){
 
       if(criteria == null){
          criteria = new SearchCriteria<User>(User.class);
-      }
-      
-      if("enabled".equals(param)){
-         criteria.setEnabled(true);
       }
    }
    

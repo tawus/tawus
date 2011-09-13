@@ -1,8 +1,10 @@
 <t:layout xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'
 	xmlns:p='tapestry:parameter'>
-	<t:tawus.entitygrid t:criteria='criteria'
-	   actionProperty='name' t:object='user'
-		include='name,id,address,age,gender,department'>
-	</t:tawus.entitygrid>
-	<div id='sortColumn'>${sortColumn}</div>
+      <t:tawus.entitygrid t:criteria='criteria' t:object='user'
+         add='sortColumn' exclude='otherDepartments,dob' actionProperty='name'
+         reorder='name,id,address,age,gender,department,sortColumn'>
+         <p:sortColumnCell>
+            <div class='sortColumn'>${sortColumn}</div>
+         </p:sortColumnCell>
+      </t:tawus.entitygrid>
 </t:layout>
