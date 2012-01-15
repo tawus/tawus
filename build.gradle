@@ -1,45 +1,106 @@
+apply plugin: "idea"
+
+tapestryVersion = "5.3-rc-3-multipledb-SNAPSHOT"
+testngVersion = "5.14.9"
+nexusUsername = "tawus"
+nexusPassword = "liridwm"
 
 subprojects {
-   apply plugin: "java"
-   apply plugin: "groovy"
-   apply plugin: "maven"
-   apply plugin: "eclipse"
+    apply plugin: "java"
+    apply plugin: "maven"
+    apply plugin: "idea"
 
-   group="com.googlecode.tawus"
-   version="0.1-SNAPSHOT"
-   sourceCompatibility = '1.5'
-   tapestryVersion = "5.3-alpha-9"
-   testngVersion="5.14.9"
+    group = "com.googlecode.tawus"
+    version = "0.2-SNAPSHOT"
+    sourceCompatibility = '1.5'
 
-   targetCompatibility = '1.5'
-   configurations {
-      provided
-      deployerJars
-   }
+    targetCompatibility = '1.5'
 
-   test { //task test(type:Test) {
-      useTestNG()
-      options.suites("src/test/conf/testng.xml")
-      maxHeapSize = "400M"
-      systemProperties["tapestry.service-reloading-enabled"] = "false"
-      jvmArgs("-XX:MaxPermSize=512m")
-      logging.captureStandardOutput LogLevel.INFO 
-      getLogging().setLevel(LogLevel.INFO) 
+    test {
+        useTestNG()
+        options.suites("src/test/conf/testng.xml")
+        maxHeapSize = "400M"
+        systemProperties["tapestry.service-reloading-enabled"] = "false"
+        jvmArgs("-XX:MaxPermSize=512m")
+        logging.captureStandardOutput LogLevel.INFO
+        getLogging().setLevel(LogLevel.INFO)
+    }
 
-   }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        mavenRepo urls: "https://repository.apache.org/content/repositories/staging/"
+        mavenRepo urls: "http://repository.jboss.org/nexus/content/groups/public-jboss/"
+    }
 
-   repositories {
-     mavenCentral()
-     mavenRepo urls: "https://repository.apache.org/content/repositories/staging/"
-     mavenRepo urls: "http://repository.jboss.org/nexus/content/groups/public-jboss/"
-   }
+    dependencies {
+        compile "org.apache.tapestry:tapestry-core:$tapestryVersion"
+        testCompile "org.apache.tapestry:tapestry-test:$tapestryVersion"
+        compile "org.slf4j:slf4j-api:1.6.1"
+        compile "org.slf4j:slf4j-log4j12:1.6.1"
+        compile "javax.servlet:servlet-api:2.5"
+    }
 
-   dependencies {
-     groovy "org.codehaus.groovy:groovy-all:1.7.4"
-     testCompile "org.testng:testng:$testngVersion"
-     testCompile "org.easymock:easymock:2.5.2"
-     testCompile "log4j:log4j:1.2.14"
-     compile "org.slf4j:slf4j-api:1.6.1"
-     compile "org.slf4j:slf4j-log4j12:1.6.1"
-   }
+    // custom tasks for creating source/javadoc jars
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    // add javadoc/source jar tasks as artifacts
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
+
+    uploadArchives {
+        repositories.mavenDeployer {
+            configuration = configurations.archives
+
+            repository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+
+            pom.project {
+                name 'Tawus: A Support library for Tapestry5'
+                packaging 'jar'
+                description 'Tawus is a support library for Tapestry5 '
+                url 'http://github.com/tawus/tawus'
+                inceptionYear '2011'
+
+                scm {
+                    url 'git@github.com:tawus/tawus.git'
+                    connection 'scm:git:git@github.com:tawus/tawus.git'
+                    developerConnection "scm:git:git@github.com:tawus/tawus.git"
+                }
+
+                licenses {
+                    license {
+                        name "The Apache Software License, Version 2.0"
+                        url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'tawus'
+                        name 'Taha Hafeez Siddiqi'
+                        email 'tawushafeez@gmail.com'
+                        url 'http://tawus.wordpress.com'
+                        roles {
+                            role 'Developer'
+                        }
+                        timezone '+5:30'
+                    }
+                }
+            }
+        }
+    }
+
 }

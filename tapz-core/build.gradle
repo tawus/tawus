@@ -5,7 +5,7 @@ dependencies {
 }
 jar {
     manifest {
-        attributes 'Tapestry-Module-Classes': 'com.googlecode.tawus.services.TawusModule'
+        attributes 'Tapestry-Module-Classes': 'com.googlecode.tawus.services.TapzModule'
     }
 }
 
