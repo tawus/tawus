@@ -1,5 +1,7 @@
 package com.googlecode.tawus;
 
+import java.util.Set;
+import java.util.HashSet;
 import javax.persistence.Entity;
 import javax.servlet.ServletContext;
 
@@ -26,8 +28,12 @@ public class TapestryTawusFilter extends TapestryFilter
          return new ModuleDef[] {};
       }
 
-      EntityLocator entityLocator = new AbstractEntityLocator(
-            CollectionFactory.newSet(TapestryInternalUtils.splitAtCommas(packages)))
+      Set<String> packageSet = new HashSet<String>();
+      for(String packageName: TapestryInternalUtils.splitAtCommas(packages)){
+	      packageSet.add(packageName);
+      }
+
+      EntityLocator entityLocator = new AbstractEntityLocator(packageSet)
       {
          @Override
          @SuppressWarnings("unchecked")

@@ -14,9 +14,10 @@
 // limitations under the License.
 // 
 
-apply plugin: "eclipse"
-manifest.mainAttributes(
-'Tapestry-Module-Classes': 'com.googlecode.tawus.addons.services.TawusAddonsModule')
+apply plugin: "java"
+jar {
+  manifest.mainAttributes('Tapestry-Module-Classes': 'com.googlecode.tawus.addons.services.TawusAddonsModule')
+}
 
 dependencies {
    compile "org.apache.tapestry:tapestry-core:5.2.5"

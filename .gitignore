@@ -1,0 +1,8 @@
+tawus-addons/build/
+tawus-ajaxupload/build/
+tawus-auth/
+tawus-core/build/
+tawus-extensions/build/
+tawus-hibernate/build/
+tawus-jfreechart/build/
+.gradle
